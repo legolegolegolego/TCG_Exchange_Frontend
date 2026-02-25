@@ -1,0 +1,21 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #e11a4a;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #fff0f2;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}

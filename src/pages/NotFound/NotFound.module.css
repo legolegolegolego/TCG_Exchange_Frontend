@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.image {
+  width: 320px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1.2rem;
+  image-rendering: pixelated;
+}
+
+.code {
+  font-size: 3rem;
+  margin: 0.2rem 0;
+}
+
+.title {
+  font-size: 1.4rem;
+  margin: 0.2rem 0 0.6rem 0;
+  color: #333;
+}
+
+.message {
+  max-width: 560px;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.homeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.houseIcon {
+  font-size: 1.1rem;
+}

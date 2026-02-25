@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
 import { useAuth } from "../../context/AuthContext.jsx";
+import WishlistButton from "../WishlistButton/WishlistButton.jsx";
 
 const Header = () => {
   const navigate = useNavigate(); // Hook para navegar
@@ -58,6 +59,12 @@ const Header = () => {
           </>
         ) : (
           <div className={styles.profileWrapper}>
+            <WishlistButton
+              onClick={() => navigate("/no-disponible")}
+              title="Favoritos"
+              ariaLabel="Favoritos"
+            />
+
             <button className={styles.profileButton} onClick={() => setOpen((s) => !s)}>
               Mi Perfil ▾
             </button>

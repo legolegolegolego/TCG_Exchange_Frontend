@@ -7,6 +7,7 @@ import EditarPerfil from "./pages/EditarPerfil/EditarPerfil.jsx";
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import CardDetail from "./pages/CardDetail/CardDetail.jsx";
+import NotFound from "./pages/NotFound/NotFound.jsx";
 
 function App() {
   return (
@@ -20,9 +21,7 @@ function App() {
           <Route
             path="/"
             element={
-              <ProtectedRoute>
                 <Explorar />
-              </ProtectedRoute>
             }
           />
           <Route
@@ -41,6 +40,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/no-disponible" element={<NotFound />} />
         </Routes>
         <Footer />
     </BrowserRouter>
