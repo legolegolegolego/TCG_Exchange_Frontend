@@ -6,8 +6,22 @@ export const registerUser = async (username, password, password2) => {
 
 export const loginUser = async (username, password) => {
   const response = await api.post("/auth/login", { username, password });
-  localStorage.setItem("token", response.data); // <-- Solo response.data, no response.data.token
-  return response.data;
+
+  let token;
+  const data = response.data;
+
+  if (typeof data === "string") {
+    token = data;
+  } else if (data && typeof data === "object") {
+    token = data.token || data.accessToken || data.access_token || data?.data?.token;
+  }
+
+  if (!token) {
+    throw new Error("Token no encontrado en la respuesta del servidor");
+  }
+
+  localStorage.setItem("token", token);
+  return token;
 };
 
 export const logoutUser = () => {

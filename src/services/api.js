@@ -6,6 +6,11 @@ const api = axios.create({
 
 // Interceptor para agregar token a todas las peticiones que lo requieran
 api.interceptors.request.use(config => {
+  // No adjuntar Authorization en endpoints de auth (login/register)
+  const url = config.url || "";
+  const isAuthEndpoint = url.startsWith("/auth");
+  if (isAuthEndpoint) return config;
+
   const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
