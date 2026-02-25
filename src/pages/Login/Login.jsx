@@ -21,7 +21,7 @@ const Login = () => {
             login(token);
             setSuccess("Inicio de sesión correcto. Redirigiendo a la página principal...");
             // Mostrar el mensaje brevemente antes de redirigir
-            setTimeout(() => navigate("/"), 1500);
+            setTimeout(() => navigate("/"), 500);
         } catch (err) {
             setError(err.response?.data?.mensaje || "Error inesperado");
         }

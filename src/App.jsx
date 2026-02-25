@@ -8,6 +8,7 @@ import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import CardDetail from "./pages/CardDetail/CardDetail.jsx";
 import NotFound from "./pages/NotFound/NotFound.jsx";
+import UsuarioCartas from "./pages/UsuarioCartas/UsuarioCartas.jsx";
 
 function App() {
   return (
@@ -35,11 +36,10 @@ function App() {
           <Route
             path="/cartas/:id"
             element={
-              <ProtectedRoute>
                 <CardDetail />
-              </ProtectedRoute>
             }
           />
+          <Route path="/usuario/:username" element={<UsuarioCartas />} />
           <Route path="/no-disponible" element={<NotFound />} />
         </Routes>
         <Footer />

@@ -1,0 +1,69 @@
+.card {
+  width: 200px;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.media {
+  height: 140px;
+  background: #f6f6f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.media img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.placeholder {
+  color: #999;
+  font-size: 12px;
+}
+.body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.title {
+  font-weight: 600;
+  font-size: 14px;
+}
+.meta {
+  font-size: 13px;
+  color: #444;
+}
+.status {
+  font-weight: 600;
+}
+.statusExcelente {
+  color: #0f9d58;
+  font-weight: 700;
+}
+.statusAceptable {
+  color: #f39c12;
+  font-weight: 700;
+}
+.statusUnknown {
+  color: #666;
+  font-weight: 600;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+.proposeButton {
+  padding: 7px 12px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.proposeButton:hover {
+  background: #218838;
+}

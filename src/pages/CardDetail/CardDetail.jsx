@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import styles from "./CardDetail.module.css";
 import { getCartaModeloById, getUsuariosConCartaModelo } from "../../services/cartasModelo";
 
@@ -51,13 +51,16 @@ const CardDetail = () => {
 
       <div className={styles.usersSection}>
         <h3>Usuarios que tienen la carta</h3>
-        {usuarios.length === 0 ? (
+            {usuarios.length === 0 ? (
           <div className={styles.noUsers}>Nadie tiene esta carta.</div>
         ) : (
           <ul className={styles.userList}>
             {usuarios.map((u) => (
               <li key={u.id} className={styles.userItem}>
                 <div className={styles.userName}>{u.username || u.nombre || u.email || `Usuario ${u.id}`}</div>
+                <Link to={`/usuario/${u.username || u.nombre || u.email || u.id}`}>
+                  <button className={styles.userButton}>Ver cartas</button>
+                </Link>
               </li>
             ))}
           </ul>
