@@ -1,15 +1,35 @@
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const Header = () => {
   const navigate = useNavigate(); // Hook para navegar
+  const { token, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef(null);
 
-  const handleLoginClick = () => {
-    navigate("/login"); // Redirige a la ruta /login
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLoginClick = () => navigate("/login");
+  const handleRegisterClick = () => navigate("/register");
+  const handleEditProfile = () => {
+    setOpen(false);
+    navigate("/editar-perfil");
   };
-  const handleRegisterClick = () => {
-    navigate("/register"); // Redirige a la ruta /register
+  const handleLogout = () => {
+    setOpen(false);
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -30,9 +50,25 @@ const Header = () => {
         />
       </nav>
 
-      <div className={styles.right}>
-        <button className={styles.button} onClick={handleLoginClick}>Iniciar Sesión</button>
-        <button className={styles.buttonOutline} onClick={handleRegisterClick}>Registrarse</button>
+      <div className={styles.right} ref={wrapperRef}>
+        {!token ? (
+          <>
+            <button className={styles.button} onClick={handleLoginClick}>Iniciar Sesión</button>
+            <button className={styles.buttonOutline} onClick={handleRegisterClick}>Registrarse</button>
+          </>
+        ) : (
+          <div className={styles.profileWrapper}>
+            <button className={styles.profileButton} onClick={() => setOpen((s) => !s)}>
+              Mi Perfil ▾
+            </button>
+            {open && (
+              <div className={styles.dropdown}>
+                <button className={styles.dropdownItem} onClick={handleEditProfile}>Editar Perfil</button>
+                <button className={styles.dropdownItem} onClick={handleLogout}>Cerrar sesión</button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );

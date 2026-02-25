@@ -3,6 +3,7 @@ import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Explorar from "./pages/Explorar/Explorar.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import EditarPerfil from "./pages/EditarPerfil/EditarPerfil.jsx";
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 
@@ -20,6 +21,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Explorar />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/editar-perfil"
+            element={
+              <ProtectedRoute>
+                <EditarPerfil />
               </ProtectedRoute>
             }
           />

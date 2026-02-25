@@ -1,0 +1,35 @@
+.container {
+  padding: 24px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.section {
+  border: 1px solid #e6e6e6;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.section h2 {
+  margin: 0 0 12px 0;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.button {
+  padding: 8px 12px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.success { color: green; margin-top:8px }
+.error { color: red; margin-top:8px }
