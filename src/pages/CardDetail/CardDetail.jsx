@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import styles from "./CardDetail.module.css";
 import { getCartaModeloById, getUsuariosConCartaModelo } from "../../services/cartasModelo";
 
@@ -32,6 +32,7 @@ const CardDetail = () => {
   if (!carta) return <div className={styles.container}>Carta no encontrada</div>;
 
   const { nombre, numero, rareza, tipoPokemon, tipoCarta, evolucion, imagenUrl } = carta;
+  const location = useLocation();
 
   return (
     <div className={styles.container}>
@@ -58,9 +59,14 @@ const CardDetail = () => {
             {usuarios.map((u) => (
               <li key={u.id} className={styles.userItem}>
                 <div className={styles.userName}>{u.username || u.nombre || u.email || `Usuario ${u.id}`}</div>
-                <Link to={`/usuario/${u.username || u.nombre || u.email || u.id}`}>
-                  <button className={styles.userButton}>Ver cartas</button>
-                </Link>
+                {(() => {
+                  const uname = u.username || u.nombre || u.email || u.id;
+                  return (
+                    <Link to={`/usuario/${uname}`} state={{ from: location.pathname, fromLabel: 'vista de carta modelo' }}>
+                      <button className={styles.userButton}>Ver cartas</button>
+                    </Link>
+                  );
+                })()}
               </li>
             ))}
           </ul>

@@ -49,7 +49,7 @@ const Login = () => {
 
             <button type="submit" className={styles.button}>Iniciar sesión</button>
             <hr />
-            <p>¿No tienes una cuenta? <a href="/register">Regístrate aquí</a></p>
+            <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
 
             {success && <p className={styles.success}>{success}</p>}
             {error && <p className={styles.error}>{error}</p>}

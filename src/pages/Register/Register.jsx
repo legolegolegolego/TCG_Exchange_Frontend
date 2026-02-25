@@ -57,6 +57,9 @@ const Register = () => {
 
             <button type="submit" className={styles.button}>Registrarse</button>
 
+            <hr />
+            <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>
+
             {error && <p className={styles.error}>{error}</p>}
             {success && <p className={styles.success}>{success}</p>}
         </form>
