@@ -40,3 +40,41 @@
   font-size: 11px;
   color: #777;
 }
+
+.actions {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+}
+
+.moreButton {
+  display: inline-block;
+  padding: 6px 10px;
+  background: #007bff;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.moreButton:hover {
+  background: #0069d9;
+}
+
+.clickable {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.clickable:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 12px 30px rgba(0, 123, 255, 0.14), 0 6px 12px rgba(0,0,0,0.06);
+}
+
+.clickable:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0,123,255,0.12);
+}
+
+.card:hover .media {
+  filter: saturate(1.05) brightness(1.02);
+}

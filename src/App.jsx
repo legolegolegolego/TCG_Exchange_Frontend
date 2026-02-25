@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import EditarPerfil from "./pages/EditarPerfil/EditarPerfil.jsx";
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import CardDetail from "./pages/CardDetail/CardDetail.jsx";
 
 function App() {
   return (
@@ -29,6 +30,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <EditarPerfil />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cartas/:id"
+            element={
+              <ProtectedRoute>
+                <CardDetail />
               </ProtectedRoute>
             }
           />
