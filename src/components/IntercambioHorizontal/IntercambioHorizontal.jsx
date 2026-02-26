@@ -1,62 +1,62 @@
 import styles from "./IntercambioHorizontal.module.css";
+import { useNavigate } from "react-router-dom";
 
 const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
-  if (!intercambio) return null;
+    const navigate = useNavigate();
+    if (!intercambio) return null;
 
-  const origen = intercambio.cartaOrigen || {};
-  const destino = intercambio.cartaDestino || {};
+    const origen = intercambio.cartaOrigen || {};
+    const destino = intercambio.cartaDestino || {};
 
-  const usernameOrigen = intercambio.usernameOrigen;
-  const usernameDestino = intercambio.usernameDestino;
+    const isOrigen = currentUsername === intercambio.usernameOrigen;
 
-  const estadoIntercambio = intercambio.estado || "PENDIENTE";
+    // Carta del usuario logueado
+    const cartaUsuarioActual = isOrigen ? origen : destino;
+    // Carta del otro usuario
+    const cartaOtroUsuario = isOrigen ? destino : origen;
 
-  // Determinar si el usuario logueado es el origen
-  const isOrigen = currentUsername === usernameOrigen;
+    // Etiquetas "Recibes" / "Das"
+    const titleUsuarioActual = isOrigen ? "Das" : "Recibes";
+    const titleOtroUsuario = isOrigen ? "Recibes" : "Das";
 
-  const cartaUsuarioActual = isOrigen ? origen : destino;
-  const cartaOtroUsuario = isOrigen ? destino : origen;
+    const usernameOtro = isOrigen ? intercambio.usernameDestino : intercambio.usernameOrigen;
+    const estadoIntercambio = intercambio.estado || "PENDIENTE";
 
-  const usernameOtro = isOrigen ? usernameDestino : usernameOrigen;
+    return (
+        <div className={styles.container}>
+            <div className={styles.cartas}>
+                <div className={styles.carta}>
+                    <h4>{titleUsuarioActual}</h4>
+                    <img
+                        src={cartaUsuarioActual?.imagenUrl || "/placeholder.png"}
+                        alt={cartaUsuarioActual?.nombre || "Carta"}
+                    />
+                    <p>{cartaUsuarioActual?.nombre || "Desconocido"} #{cartaUsuarioActual?.numero || "?"}</p>
+                    <p>Estado: {cartaUsuarioActual?.estadoCarta || "?"}</p>
+                </div>
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.cartas}>
-        <div className={styles.carta}>
-          <img
-            src={cartaUsuarioActual?.imagenUrl || "/placeholder.png"}
-            alt={cartaUsuarioActual?.nombre || "Carta"}
-          />
-          <p>
-            {cartaUsuarioActual?.nombre || "Desconocido"} #
-            {cartaUsuarioActual?.numero || "?"}
-          </p>
-          <p>Estado: {cartaUsuarioActual?.estadoCarta || "?"}</p>
+                <div className={styles.carta}>
+                    <h4>{titleOtroUsuario}</h4>
+                    <img
+                        src={cartaOtroUsuario?.imagenUrl || "/placeholder.png"}
+                        alt={cartaOtroUsuario?.nombre || "Carta"}
+                    />
+                    <p>{cartaOtroUsuario?.nombre || "Desconocido"} #{cartaOtroUsuario?.numero || "?"}</p>
+                    <p>Estado: {cartaOtroUsuario?.estadoCarta || "?"}</p>
+                </div>
+            </div>
+
+            <div className={styles.detalle}>
+                <p>
+                    Propuesta {isOrigen ? "a" : "de"} {usernameOtro}
+                </p>
+                <p>Estado intercambio: {estadoIntercambio}</p>
+                <button onClick={() => navigate(`/intercambio/${intercambio.id}`)}>
+                    Ver detalle
+                </button>
+            </div>
         </div>
-
-        <div className={styles.carta}>
-          <img
-            src={cartaOtroUsuario?.imagenUrl || "/placeholder.png"}
-            alt={cartaOtroUsuario?.nombre || "Carta"}
-          />
-          <p>
-            {cartaOtroUsuario?.nombre || "Desconocido"} #
-            {cartaOtroUsuario?.numero || "?"}
-          </p>
-          <p>Estado: {cartaOtroUsuario?.estadoCarta || "?"}</p>
-        </div>
-      </div>
-
-      <div className={styles.detalle}>
-        <p>
-          Propuesta {isOrigen ? "a" : "de"}{" "}
-          {usernameOtro || "Desconocido"}
-        </p>
-        <p>Estado intercambio: {estadoIntercambio}</p>
-        <button>Ver detalle</button>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default IntercambioHorizontal;

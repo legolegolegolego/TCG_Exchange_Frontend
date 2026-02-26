@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound/NotFound.jsx";
 import UsuarioCartas from "./pages/UsuarioCartas/UsuarioCartas.jsx";
 import BackTab from "./components/BackTab/BackTab.jsx";
 import MisIntercambios from "./pages/MisIntercambios/MisIntercambios.jsx";
+import DetalleIntercambio from "./pages/DetalleIntercambio/DetalleIntercambio.jsx";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ const AppContent = () => {
         <Route
           path="/"
           element={
-              <Explorar />
+            <Explorar />
           }
         />
         <Route
@@ -43,6 +44,14 @@ const AppContent = () => {
           element={
             <ProtectedRoute>
               <MisIntercambios />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/intercambio/:id"
+          element={
+            <ProtectedRoute>
+              <DetalleIntercambio />
             </ProtectedRoute>
           }
         />
@@ -57,7 +66,7 @@ const AppContent = () => {
         <Route
           path="/cartas/:id"
           element={
-              <CardDetail />
+            <CardDetail />
           }
         />
         <Route path="/usuario/:username" element={<UsuarioCartas />} />

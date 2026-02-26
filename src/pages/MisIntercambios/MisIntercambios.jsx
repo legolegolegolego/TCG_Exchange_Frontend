@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
+import { enriquecerIntercambios } from "../../utils/intercambioUtils";
 import IntercambioHorizontal from "../../components/IntercambioHorizontal/IntercambioHorizontal";
 import styles from "./MisIntercambios.module.css";
 
@@ -22,47 +23,7 @@ const MisIntercambios = () => {
         const res = await api.get(`/intercambios/usuario/${username}${estadoQuery}`);
         const intercambiosRaw = res.data || [];
 
-        const modeloCache = {};
-
-        // Función para obtener carta física + modelo
-        const fetchCartaCompleta = async (idCartaFisica) => {
-          if (!idCartaFisica) return null;
-
-          // Carta física
-          const cfRes = await api.get(`/cartas-fisicas/${idCartaFisica}`);
-          const cf = cfRes.data;
-
-          // Carta modelo (cached)
-          let cm;
-          if (modeloCache[cf.idCartaModelo]) {
-            cm = modeloCache[cf.idCartaModelo];
-          } else {
-            const cmRes = await api.get(`/cartas-modelo/${cf.idCartaModelo}`);
-            cm = cmRes.data;
-            modeloCache[cf.idCartaModelo] = cm;
-          }
-
-          return {
-            ...cf,
-            nombre: cm?.nombre || "Desconocido",
-            numero: cm?.numero || "?",
-            tipoCarta: cm?.tipoCarta,
-            rareza: cm?.rareza,
-            tipoPokemon: cm?.tipoPokemon,
-            evolucion: cm?.evolucion,
-            imagenUrl: cf?.imagenUrl || cm?.imagenUrl || "/placeholder.png",
-          };
-        };
-
-        // Enriquecer cada intercambio
-        const intercambiosCompletos = await Promise.all(
-          intercambiosRaw.map(async (i) => ({
-            ...i,
-            cartaOrigen: await fetchCartaCompleta(i.idCartaOrigen),
-            cartaDestino: await fetchCartaCompleta(i.idCartaDestino),
-          }))
-        );
-
+        const intercambiosCompletos = await enriquecerIntercambios(intercambiosRaw);
         setIntercambios(intercambiosCompletos);
       } catch (error) {
         console.error("Error al cargar intercambios:", error);
