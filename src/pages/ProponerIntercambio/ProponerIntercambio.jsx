@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
 import CartaIntercambio from "../../components/CartaIntercambio/CartaIntercambio";
+import Notification from "../../components/Notification/Notification";
 import styles from "./ProponerIntercambio.module.css";
 
 const ProponerIntercambio = () => {
@@ -16,7 +17,9 @@ const ProponerIntercambio = () => {
   const [cartaSeleccionada, setCartaSeleccionada] = useState(null);
   const [loading, setLoading] = useState(true);
   const [enviando, setEnviando] = useState(false);
-  const [error, setError] = useState("");
+
+  // Estado para notificación de error
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     if (!username) return;
@@ -24,7 +27,7 @@ const ProponerIntercambio = () => {
     const fetchDatos = async () => {
       setLoading(true);
       try {
-        // Carta destino
+        // Carta destino (física + modelo)
         const cfRes = await api.get(`/cartas-fisicas/${idCartaDestino}`);
         const cf = cfRes.data;
         const cmRes = await api.get(`/cartas-modelo/${cf.idCartaModelo}`);
@@ -70,7 +73,7 @@ const ProponerIntercambio = () => {
         setMisCartas(misCartasCompletas);
       } catch (err) {
         console.error("Error cargando datos:", err);
-        setError("No se pudo cargar la carta de destino o tus cartas.");
+        setNotification({ type: "error", message: "No se pudo cargar la carta de destino o tus cartas." });
       } finally {
         setLoading(false);
       }
@@ -83,10 +86,9 @@ const ProponerIntercambio = () => {
     if (!cartaSeleccionada || enviando) return;
 
     setEnviando(true);
-    setError("");
+    setNotification(null);
 
     try {
-      // POST al backend
       const res = await api.post("/intercambios", {
         cartaOrigenId: cartaSeleccionada.id,
         cartaDestinoId: cartaDestino.id,
@@ -94,13 +96,18 @@ const ProponerIntercambio = () => {
 
       const intercambioCreado = res.data;
 
-      // Redirigir directamente al detalle del intercambio y pasar flag de notificación
+      // Redirigir a detalle del intercambio con notificación de éxito
       navigate(`/intercambio/${intercambioCreado.id}`, {
-        state: { notification: { type: "success", message: "Propuesta enviada correctamente" } },
+        state: {
+          notification: { type: "success", message: "Propuesta enviada correctamente" },
+        },
       });
     } catch (err) {
       console.error("Error enviando propuesta:", err);
-      setError("No se pudo enviar la propuesta. Intenta de nuevo.");
+
+      // Captura mensaje del backend si existe
+      const msg = err.response?.data?.mensaje || "No se pudo enviar la propuesta. Intenta de nuevo.";
+      setNotification({ type: "error", message: msg });
       setEnviando(false);
     }
   };
@@ -113,7 +120,13 @@ const ProponerIntercambio = () => {
       <h1>Proponer intercambio</h1>
       <p>Selecciona una de tus cartas para intercambiar por {cartaDestino.nombre}</p>
 
-      {error && <div className={styles.mensajeError}>{error}</div>}
+      {notification && (
+        <Notification
+          type={notification.type}
+          message={notification.message}
+          onClose={() => setNotification(null)}
+        />
+      )}
 
       <div className={styles.cartas}>
         <CartaIntercambio carta={cartaDestino} title="Carta solicitada" />
@@ -138,16 +151,10 @@ const ProponerIntercambio = () => {
       </div>
 
       <div className={styles.botones}>
-        <button
-          onClick={() => navigate("/")}
-          disabled={enviando}
-        >
+        <button onClick={() => navigate("/")} disabled={enviando}>
           Volver a la página principal
         </button>
-        <button
-          onClick={handleEnviar}
-          disabled={!cartaSeleccionada || enviando}
-        >
+        <button onClick={handleEnviar} disabled={!cartaSeleccionada || enviando}>
           {enviando ? "Enviando..." : "Enviar propuesta"}
         </button>
       </div>
