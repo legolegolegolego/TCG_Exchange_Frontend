@@ -1,0 +1,49 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filtros {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filtroBtn {
+  padding: 8px 16px;
+  border: 1px solid #333;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.filtroBtn:hover {
+  background-color: #f0f0f0;
+}
+
+.active {
+  background-color: #0077ff;
+  color: white;
+  border-color: #0077ff;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.loading, .vacio {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+}

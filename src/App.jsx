@@ -10,6 +10,7 @@ import CardDetail from "./pages/CardDetail/CardDetail.jsx";
 import NotFound from "./pages/NotFound/NotFound.jsx";
 import UsuarioCartas from "./pages/UsuarioCartas/UsuarioCartas.jsx";
 import BackTab from "./components/BackTab/BackTab.jsx";
+import MisIntercambios from "./pages/MisIntercambios/MisIntercambios.jsx";
 
 function App() {
   return (
@@ -35,6 +36,14 @@ const AppContent = () => {
           path="/"
           element={
               <Explorar />
+          }
+        />
+        <Route
+          path="/mis-intercambios"
+          element={
+            <ProtectedRoute>
+              <MisIntercambios />
+            </ProtectedRoute>
           }
         />
         <Route

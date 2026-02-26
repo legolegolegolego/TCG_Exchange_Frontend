@@ -60,11 +60,11 @@ const Header = () => {
         {username && (
           <>
             <a
-              href={`/intercambios/usuario/${username}`}
+              href={`/mis-intercambios`}
               className={styles.navLink}
               onClick={(e) => {
                 e.preventDefault();
-                navigate(`/intercambios/usuario/${username}`);
+                navigate(`/mis-intercambios`);
               }}
             >
               Mis intercambios
