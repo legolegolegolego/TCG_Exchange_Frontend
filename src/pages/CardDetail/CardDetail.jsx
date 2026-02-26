@@ -5,6 +5,7 @@ import { getCartaModeloById, getUsuariosConCartaModelo } from "../../services/ca
 
 const CardDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
   const [carta, setCarta] = useState(null);
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,6 @@ const CardDetail = () => {
   if (!carta) return <div className={styles.container}>Carta no encontrada</div>;
 
   const { nombre, numero, rareza, tipoPokemon, tipoCarta, evolucion, imagenUrl } = carta;
-  const location = useLocation();
 
   return (
     <div className={styles.container}>
