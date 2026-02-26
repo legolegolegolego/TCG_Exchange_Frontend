@@ -20,10 +20,5 @@ export const loginUser = async (username, password) => {
     throw new Error("Token no encontrado en la respuesta del servidor");
   }
 
-  localStorage.setItem("token", token);
   return token;
-};
-
-export const logoutUser = () => {
-  localStorage.removeItem("token");
 };

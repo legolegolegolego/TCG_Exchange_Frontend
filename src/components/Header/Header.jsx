@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { getCurrentUser } from "../../utils/token.js";
 import WishlistButton from "../WishlistButton/WishlistButton.jsx";
 
 const Header = () => {
   const navigate = useNavigate(); // Hook para navegar
   const { token, logout } = useAuth();
+  const currentUser = getCurrentUser();
+  const username = currentUser?.username;
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
 
@@ -43,7 +46,43 @@ const Header = () => {
       </div>
 
       <nav className={styles.nav}>
-        <a href="/" className={styles.navLink}>Explorar Cartas</a>
+        <a
+          href="/"
+          className={styles.navLink}
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/");
+          }}
+        >
+          Explorar Cartas
+        </a>
+
+        {username && (
+          <>
+            <a
+              href={`/intercambios/usuario/${username}`}
+              className={styles.navLink}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(`/intercambios/usuario/${username}`);
+              }}
+            >
+              Mis intercambios
+            </a>
+
+            <a
+              href="/mis-cartas"
+              className={styles.navLink}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/mis-cartas");
+              }}
+            >
+              Mis cartas
+            </a>
+          </>
+        )}
+
         <input
           type="text"
           placeholder="Buscar cartas..."

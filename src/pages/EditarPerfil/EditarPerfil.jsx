@@ -2,7 +2,7 @@ import styles from "./EditarPerfil.module.css";
 import { changeUsername, changePassword } from "../../services/usuarios.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useState, useEffect } from "react";
-import { getCurrentUser } from "../../services/token.js";
+import { getCurrentUser } from "../../utils/token.js";
 
 const EditarPerfil = () => {
     const [username, setUsername] = useState("");
