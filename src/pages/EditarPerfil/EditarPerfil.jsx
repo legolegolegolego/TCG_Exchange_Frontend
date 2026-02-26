@@ -2,22 +2,13 @@ import styles from "./EditarPerfil.module.css";
 import { changeUsername, changePassword } from "../../services/usuarios.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useState, useEffect } from "react";
-import * as jwtDecodeModule from "jwt-decode";
-
-const safeJwtDecode = (token) => {
-    try {
-        const fn = jwtDecodeModule.default || jwtDecodeModule;
-        return fn(token);
-    } catch (e) {
-        return null;
-    }
-};
+import { getCurrentUser } from "../../services/token.js";
 
 const EditarPerfil = () => {
     const [username, setUsername] = useState("");
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [newPassword2, setNewPassword2] = useState("");
+    const [passwordActual, setPasswordActual] = useState("");
+    const [passwordNueva, setPasswordNueva] = useState("");
+    const [passwordNueva2, setPasswordNueva2] = useState("");
 
     const [userMsg, setUserMsg] = useState("");
     const [userErr, setUserErr] = useState("");
@@ -28,25 +19,14 @@ const EditarPerfil = () => {
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        if (!token) return;
-        try {
-            const decoded = safeJwtDecode(token);
-            const decodedUsername = decoded?.sub || decoded?.username || decoded?.user || decoded?.preferred_username;
-            let decodedId = null;
-            if (decoded?.id) decodedId = decoded.id;
-            else if (decoded?.userId) decodedId = decoded.userId;
-            else if (decoded?.usuarioId) decodedId = decoded.usuarioId;
-            else if (decoded?.sub && /^[0-9]+$/.test(String(decoded.sub))) decodedId = Number(decoded.sub);
-
-            if (decodedUsername) setUsername(decodedUsername);
-            if (decodedId !== null && decodedId !== undefined && !isNaN(Number(decodedId))) {
-                setUserId(Number(decodedId));
-            } else {
-                setUserErr("El token no contiene el id del usuario.");
-            }
-        } catch (e) {
-            setUserErr("Token inválido: no se pudo decodificar.");
+        const user = getCurrentUser();
+        if (!user) {
+            setUserErr("Usuario no autenticado.");
+            return;
         }
+
+        if (user.username) setUsername(user.username);
+        setUserId(user.id);
     }, [token]);
 
     const handleUsernameSubmit = async (e) => {
@@ -73,12 +53,12 @@ const EditarPerfil = () => {
         try {
             if (!userId) throw new Error("Usuario no identificado");
 
-            await changePassword(userId, { currentPassword, newPassword, newPassword2 });
+            await changePassword(userId, { passwordActual, passwordNueva, passwordNueva2 });
 
             setPassMsg("Contraseña actualizada correctamente.");
-            setCurrentPassword("");
-            setNewPassword("");
-            setNewPassword2("");
+            setPasswordActual("");
+            setPasswordNueva("");
+            setPasswordNueva2("");
         } catch (err) {
             setPassErr(err.response?.data?.mensaje || err.message || "Error al actualizar contraseña");
         }
@@ -106,15 +86,15 @@ const EditarPerfil = () => {
                 <form onSubmit={handlePasswordSubmit}>
                     <div className={styles.field}>
                         <label>Contraseña actual</label>
-                        <input className={styles.input} type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+                        <input className={styles.input} type="password" value={passwordActual} onChange={(e) => setPasswordActual(e.target.value)} />
                     </div>
                     <div className={styles.field}>
                         <label>Nueva contraseña</label>
-                        <input className={styles.input} type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                        <input className={styles.input} type="password" value={passwordNueva} onChange={(e) => setPasswordNueva(e.target.value)} />
                     </div>
                     <div className={styles.field}>
                         <label>Repetir nueva contraseña</label>
-                        <input className={styles.input} type="password" value={newPassword2} onChange={(e) => setNewPassword2(e.target.value)} />
+                        <input className={styles.input} type="password" value={passwordNueva2} onChange={(e) => setPasswordNueva2(e.target.value)} />
                     </div>
                     <button className={styles.button} type="submit">Actualizar contraseña</button>
                     {passMsg && <p className={styles.success}>{passMsg}</p>}
