@@ -12,11 +12,8 @@ const EditarPerfil = () => {
     const [passwordNueva, setPasswordNueva] = useState("");
     const [passwordNueva2, setPasswordNueva2] = useState("");
 
-    const [userMsg, setUserMsg] = useState("");
     const [userErr, setUserErr] = useState("");
-    const [passMsg, setPassMsg] = useState("");
     const [passErr, setPassErr] = useState("");
-
     const { token, logout } = useAuth();
     const [userId, setUserId] = useState(null);
 
@@ -25,6 +22,7 @@ const EditarPerfil = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteErr, setDeleteErr] = useState("");
 
+    // Centralizamos la notificación
     const [notification, setNotification] = useState(null);
 
     useEffect(() => {
@@ -41,14 +39,17 @@ const EditarPerfil = () => {
     const handleUsernameSubmit = async (e) => {
         e.preventDefault();
         setUserErr("");
-        setUserMsg("");
 
         try {
             if (!userId) throw new Error("Usuario no identificado");
 
             await changeUsername(userId, username);
 
-            setUserMsg("Nombre de usuario actualizado correctamente.");
+            // Usamos notification en vez de <p>
+            setNotification({
+                type: "success",
+                message: "Nombre de usuario actualizado correctamente."
+            });
         } catch (err) {
             setUserErr(err.response?.data?.mensaje || err.message || "Error al actualizar usuario");
         }
@@ -57,14 +58,17 @@ const EditarPerfil = () => {
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         setPassErr("");
-        setPassMsg("");
 
         try {
             if (!userId) throw new Error("Usuario no identificado");
 
             await changePassword(userId, { passwordActual, passwordNueva, passwordNueva2 });
 
-            setPassMsg("Contraseña actualizada correctamente.");
+            setNotification({
+                type: "success",
+                message: "Contraseña actualizada correctamente."
+            });
+
             setPasswordActual("");
             setPasswordNueva("");
             setPasswordNueva2("");
@@ -81,7 +85,7 @@ const EditarPerfil = () => {
 
             await deleteUser(userId);
 
-            // Guardar mensaje temporal
+            // Guardar mensaje temporal para login
             sessionStorage.setItem(
                 "notification",
                 JSON.stringify({
@@ -90,10 +94,8 @@ const EditarPerfil = () => {
                 })
             );
 
-            // Cerrar sesión
             logout();
 
-            // Redirigir a login
             navigate("/login", { replace: true });
 
         } catch (err) {
@@ -128,7 +130,6 @@ const EditarPerfil = () => {
                     <button className={styles.button} type="submit">
                         Actualizar nombre de usuario
                     </button>
-                    {userMsg && <p className={styles.success}>{userMsg}</p>}
                     {userErr && <p className={styles.error}>{userErr}</p>}
                 </form>
             </section>
@@ -166,7 +167,6 @@ const EditarPerfil = () => {
                     <button className={styles.button} type="submit">
                         Actualizar contraseña
                     </button>
-                    {passMsg && <p className={styles.success}>{passMsg}</p>}
                     {passErr && <p className={styles.error}>{passErr}</p>}
                 </form>
             </section>

@@ -12,7 +12,6 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
     const [notification, setNotification] = useState(null);
 
     // Mostrar notificación de logout / cuenta eliminada
@@ -30,9 +29,8 @@ const Login = () => {
         try {
             const token = await loginUser(username, password);
             login(token);
-            setSuccess("Inicio de sesión correcto. Redirigiendo a la página principal...");
 
-            setTimeout(() => navigate("/"), 500);
+            navigate("/"); // Navega inmediatamente a la principal
         } catch (err) {
             setError(err.response?.data?.mensaje || "Error inesperado");
         }
@@ -72,7 +70,6 @@ const Login = () => {
                 <hr />
                 <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
 
-                {success && <p className={styles.success}>{success}</p>}
                 {error && <p className={styles.error}>{error}</p>}
             </form>
         </>
