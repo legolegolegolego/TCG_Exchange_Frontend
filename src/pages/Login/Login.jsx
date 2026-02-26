@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { loginUser } from "../../services/auth.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
+import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./Login.module.css";
 
 const Login = () => {
@@ -12,6 +13,16 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [notification, setNotification] = useState(null);
+
+    // Mostrar notificación de logout / cuenta eliminada
+    useEffect(() => {
+        const stored = sessionStorage.getItem("notification");
+        if (stored) {
+            setNotification(JSON.parse(stored));
+            sessionStorage.removeItem("notification");
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +31,7 @@ const Login = () => {
             const token = await loginUser(username, password);
             login(token);
             setSuccess("Inicio de sesión correcto. Redirigiendo a la página principal...");
-            // Mostrar el mensaje brevemente antes de redirigir
+
             setTimeout(() => navigate("/"), 500);
         } catch (err) {
             setError(err.response?.data?.mensaje || "Error inesperado");
@@ -28,32 +39,43 @@ const Login = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={styles.formContainer}>
-            <h2 className={styles.title}>Iniciar sesión</h2>
+        <>
+            {notification && (
+                <Notification
+                    type={notification.type}
+                    message={notification.message}
+                    onClose={() => setNotification(null)}
+                />
+            )}
 
-            <input
-                type="text"
-                placeholder="Nombre de usuario"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className={styles.input}
-            />
+            <form onSubmit={handleSubmit} className={styles.formContainer}>
+                <h2 className={styles.title}>Iniciar sesión</h2>
 
-            <input
-                type="password"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={styles.input}
-            />
+                <input
+                    type="text"
+                    placeholder="Nombre de usuario"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className={styles.input}
+                />
 
-            <button type="submit" className={styles.button}>Iniciar sesión</button>
-            <hr />
-            <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
+                <input
+                    type="password"
+                    placeholder="Contraseña"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className={styles.input}
+                />
 
-            {success && <p className={styles.success}>{success}</p>}
-            {error && <p className={styles.error}>{error}</p>}
-        </form>
+                <button type="submit" className={styles.button}>Iniciar sesión</button>
+
+                <hr />
+                <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
+
+                {success && <p className={styles.success}>{success}</p>}
+                {error && <p className={styles.error}>{error}</p>}
+            </form>
+        </>
     );
 };
 

@@ -14,3 +14,8 @@ export const changePassword = async (id, passwordDto) => {
 export const getByUsername = async (username) => {
 	return await api.get(`/usuarios/username/${encodeURIComponent(username)}`);
 };
+
+// Eliminar usuario
+export const deleteUser = async (id) => {
+	return await api.delete(`/usuarios/${id}`);
+};
