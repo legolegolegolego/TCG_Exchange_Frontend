@@ -1,0 +1,30 @@
+.container {
+  padding: 16px;
+}
+
+.cartas {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cartaSeleccionable {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.cartaSeleccionable:hover {
+  transform: scale(1.05);
+}
+
+.botones {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}

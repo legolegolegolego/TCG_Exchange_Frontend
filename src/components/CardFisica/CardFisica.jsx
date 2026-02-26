@@ -1,11 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./CardFisica.module.css";
 
 const CardFisica = ({ carta }) => {
+  const navigate = useNavigate();
+
   const modelo = carta?.cartaModelo || {};
   const imagen = carta?.imagenUrl || modelo.imagenUrl || null;
   const nombreModelo = modelo.nombre || carta?.nombre || "-";
 
-  const estadoRaw = carta?.estadoCarta; // espera 'EXCELENTE' | 'ACEPTABLE'
+  const estadoRaw = carta?.estadoCarta; // 'EXCELENTE' | 'ACEPTABLE'
   const estado = estadoRaw
     ? capitalize(estadoRaw)
     : carta?.disponible
@@ -35,7 +38,12 @@ const CardFisica = ({ carta }) => {
         <div className={styles.title}>{nombreModelo}</div>
         <div className={styles.meta}>Estado: <span className={statusClass}>{estado}</span></div>
         <div className={styles.actions}>
-          <button className={styles.proposeButton}>Proponer intercambio</button>
+          <button
+            className={styles.proposeButton}
+            onClick={() => navigate(`/proponer-intercambio/${carta.id}`)}
+          >
+            Proponer intercambio
+          </button>
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import UsuarioCartas from "./pages/UsuarioCartas/UsuarioCartas.jsx";
 import BackTab from "./components/BackTab/BackTab.jsx";
 import MisIntercambios from "./pages/MisIntercambios/MisIntercambios.jsx";
 import DetalleIntercambio from "./pages/DetalleIntercambio/DetalleIntercambio.jsx";
+import ProponerIntercambio from "./pages/ProponerIntercambio/ProponerIntercambio.jsx";
 
 function App() {
   return (
@@ -52,6 +53,14 @@ const AppContent = () => {
           element={
             <ProtectedRoute>
               <DetalleIntercambio />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/proponer-intercambio/:idCartaDestino"
+          element={
+            <ProtectedRoute>
+              <ProponerIntercambio />
             </ProtectedRoute>
           }
         />

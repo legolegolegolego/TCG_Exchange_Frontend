@@ -1,0 +1,30 @@
+.container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  width: 180px;
+  text-align: center;
+  margin: 0 8px;
+  background: #fff;
+}
+
+.imagen {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.placeholder {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #666;
+  border-radius: 4px;
+}
+
+h4 {
+  margin: 4px 0;
+}

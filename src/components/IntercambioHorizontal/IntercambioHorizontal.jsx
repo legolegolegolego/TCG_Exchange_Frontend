@@ -1,21 +1,16 @@
 import styles from "./IntercambioHorizontal.module.css";
 import { useNavigate } from "react-router-dom";
+import CartaVisual from "../CartaVisual/CartaVisual";
 
 const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
     const navigate = useNavigate();
     if (!intercambio) return null;
 
-    const origen = intercambio.cartaOrigen || {};
-    const destino = intercambio.cartaDestino || {};
-
     const isOrigen = currentUsername === intercambio.usernameOrigen;
 
-    // Carta del usuario logueado
-    const cartaUsuarioActual = isOrigen ? origen : destino;
-    // Carta del otro usuario
-    const cartaOtroUsuario = isOrigen ? destino : origen;
+    const cartaUsuarioActual = isOrigen ? intercambio.cartaOrigen : intercambio.cartaDestino;
+    const cartaOtroUsuario = isOrigen ? intercambio.cartaDestino : intercambio.cartaOrigen;
 
-    // Etiquetas "Recibes" / "Das"
     const titleUsuarioActual = isOrigen ? "Das" : "Recibes";
     const titleOtroUsuario = isOrigen ? "Recibes" : "Das";
 
@@ -25,31 +20,12 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
     return (
         <div className={styles.container}>
             <div className={styles.cartas}>
-                <div className={styles.carta}>
-                    <h4>{titleUsuarioActual}</h4>
-                    <img
-                        src={cartaUsuarioActual?.imagenUrl || "/placeholder.png"}
-                        alt={cartaUsuarioActual?.nombre || "Carta"}
-                    />
-                    <p>{cartaUsuarioActual?.nombre || "Desconocido"} #{cartaUsuarioActual?.numero || "?"}</p>
-                    <p>Estado: {cartaUsuarioActual?.estadoCarta || "?"}</p>
-                </div>
-
-                <div className={styles.carta}>
-                    <h4>{titleOtroUsuario}</h4>
-                    <img
-                        src={cartaOtroUsuario?.imagenUrl || "/placeholder.png"}
-                        alt={cartaOtroUsuario?.nombre || "Carta"}
-                    />
-                    <p>{cartaOtroUsuario?.nombre || "Desconocido"} #{cartaOtroUsuario?.numero || "?"}</p>
-                    <p>Estado: {cartaOtroUsuario?.estadoCarta || "?"}</p>
-                </div>
+                <CartaVisual carta={cartaUsuarioActual} title={titleUsuarioActual} />
+                <CartaVisual carta={cartaOtroUsuario} title={titleOtroUsuario} />
             </div>
 
             <div className={styles.detalle}>
-                <p>
-                    Propuesta {isOrigen ? "a" : "de"} {usernameOtro}
-                </p>
+                <p>Propuesta {isOrigen ? "a" : "de"} {usernameOtro}</p>
                 <p>Estado intercambio: {estadoIntercambio}</p>
                 <button onClick={() => navigate(`/intercambio/${intercambio.id}`)}>
                     Ver detalle
