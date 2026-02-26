@@ -1,17 +1,36 @@
 import { useState, useEffect, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
-import CartaVisual from "../../components/CartaVisual/CartaVisual";
+import Notification from "../../components/Notification/Notification";
 import styles from "./DetalleIntercambio.module.css";
+
+const DetalleCarta = ({ carta, title }) => {
+  if (!carta) return null;
+
+  return (
+    <div className={styles.cartaContainer}>
+      <h3>{title}</h3>
+      <img
+        src={carta.imagenUrl || "/placeholder.png"}
+        alt={carta.nombre || "Carta"}
+        className={styles.imagen}
+      />
+      <p>{carta.nombre || "Desconocido"} #{carta.numero || "?"}</p>
+      <p>Estado: {carta.estadoCarta || "?"}</p>
+    </div>
+  );
+};
 
 const DetalleIntercambio = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const currentUser = useMemo(() => getCurrentUser(), []);
 
   const [intercambio, setIntercambio] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState(location.state?.notification || null);
 
   useEffect(() => {
     const fetchIntercambioCompleto = async () => {
@@ -21,7 +40,6 @@ const DetalleIntercambio = () => {
         const data = res.data;
 
         const modeloCache = {};
-
         const fetchCartaCompleta = async (idCartaFisica) => {
           if (!idCartaFisica) return null;
 
@@ -51,7 +69,11 @@ const DetalleIntercambio = () => {
         const cartaOrigen = await fetchCartaCompleta(data.idCartaOrigen);
         const cartaDestino = await fetchCartaCompleta(data.idCartaDestino);
 
-        setIntercambio({ ...data, cartaOrigen, cartaDestino });
+        setIntercambio({
+          ...data,
+          cartaOrigen,
+          cartaDestino,
+        });
       } catch (err) {
         console.error("Error cargando intercambio:", err);
       } finally {
@@ -70,18 +92,26 @@ const DetalleIntercambio = () => {
 
   return (
     <div className={styles.container}>
-      <button className={styles.volverBtn} onClick={() => navigate(-1)}>← Volver</button>
+      {notification && (
+        <Notification
+          type={notification.type}
+          message={notification.message}
+          onClose={() => setNotification(null)}
+        />
+      )}
 
       <h1>Detalle del intercambio</h1>
-      <p>Propuesta {isOrigen ? "a" : "de"} {usernameOtro}</p>
+      <p>
+        Propuesta {isOrigen ? "a" : "de"} {usernameOtro}
+      </p>
       <p>Estado: {intercambio.estado || "PENDIENTE"}</p>
 
       <div className={styles.cartas}>
-        <CartaVisual
+        <DetalleCarta
           carta={isOrigen ? intercambio.cartaDestino : intercambio.cartaOrigen}
           title={isOrigen ? "Recibes" : "Das"}
         />
-        <CartaVisual
+        <DetalleCarta
           carta={isOrigen ? intercambio.cartaOrigen : intercambio.cartaDestino}
           title={isOrigen ? "Das" : "Recibes"}
         />

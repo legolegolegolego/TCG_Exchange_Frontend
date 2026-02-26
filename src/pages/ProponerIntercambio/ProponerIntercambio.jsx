@@ -24,10 +24,9 @@ const ProponerIntercambio = () => {
     const fetchDatos = async () => {
       setLoading(true);
       try {
-        // Carta destino (física + modelo)
+        // Carta destino
         const cfRes = await api.get(`/cartas-fisicas/${idCartaDestino}`);
         const cf = cfRes.data;
-
         const cmRes = await api.get(`/cartas-modelo/${cf.idCartaModelo}`);
         const cm = cmRes.data;
 
@@ -87,15 +86,18 @@ const ProponerIntercambio = () => {
     setError("");
 
     try {
-      // POST con formato correcto
+      // POST al backend
       const res = await api.post("/intercambios", {
         cartaOrigenId: cartaSeleccionada.id,
         cartaDestinoId: cartaDestino.id,
       });
 
       const intercambioCreado = res.data;
-      // Redirigir directamente a detalle del intercambio
-      navigate(`/intercambio/${intercambioCreado.id}`);
+
+      // Redirigir directamente al detalle del intercambio y pasar flag de notificación
+      navigate(`/intercambio/${intercambioCreado.id}`, {
+        state: { notification: { type: "success", message: "Propuesta enviada correctamente" } },
+      });
     } catch (err) {
       console.error("Error enviando propuesta:", err);
       setError("No se pudo enviar la propuesta. Intenta de nuevo.");
@@ -108,10 +110,6 @@ const ProponerIntercambio = () => {
 
   return (
     <div className={styles.container}>
-      <button className={styles.volverBtn} onClick={() => navigate(-1)}>
-        ← Volver
-      </button>
-
       <h1>Proponer intercambio</h1>
       <p>Selecciona una de tus cartas para intercambiar por {cartaDestino.nombre}</p>
 
@@ -140,8 +138,11 @@ const ProponerIntercambio = () => {
       </div>
 
       <div className={styles.botones}>
-        <button onClick={() => navigate(-1)} disabled={enviando}>
-          Cancelar
+        <button
+          onClick={() => navigate("/")}
+          disabled={enviando}
+        >
+          Volver a la página principal
         </button>
         <button
           onClick={handleEnviar}
