@@ -9,19 +9,61 @@ const MisIntercambios = () => {
   const [loading, setLoading] = useState(true);
   const [estadoFiltro, setEstadoFiltro] = useState("TODOS");
 
-  // Memoizamos solo el username para evitar re-render infinito
   const currentUser = useMemo(() => getCurrentUser(), []);
   const username = currentUser?.username;
 
   useEffect(() => {
     if (!username) return;
 
-    const fetchIntercambios = async () => {
+    const fetchIntercambiosCompletos = async () => {
       setLoading(true);
       try {
         const estadoQuery = estadoFiltro !== "TODOS" ? `?estado=${estadoFiltro}` : "";
         const res = await api.get(`/intercambios/usuario/${username}${estadoQuery}`);
-        setIntercambios(res.data || []);
+        const intercambiosRaw = res.data || [];
+
+        const modeloCache = {};
+
+        // Función para obtener carta física + modelo
+        const fetchCartaCompleta = async (idCartaFisica) => {
+          if (!idCartaFisica) return null;
+
+          // Carta física
+          const cfRes = await api.get(`/cartas-fisicas/${idCartaFisica}`);
+          const cf = cfRes.data;
+
+          // Carta modelo (cached)
+          let cm;
+          if (modeloCache[cf.idCartaModelo]) {
+            cm = modeloCache[cf.idCartaModelo];
+          } else {
+            const cmRes = await api.get(`/cartas-modelo/${cf.idCartaModelo}`);
+            cm = cmRes.data;
+            modeloCache[cf.idCartaModelo] = cm;
+          }
+
+          return {
+            ...cf,
+            nombre: cm?.nombre || "Desconocido",
+            numero: cm?.numero || "?",
+            tipoCarta: cm?.tipoCarta,
+            rareza: cm?.rareza,
+            tipoPokemon: cm?.tipoPokemon,
+            evolucion: cm?.evolucion,
+            imagenUrl: cf?.imagenUrl || cm?.imagenUrl || "/placeholder.png",
+          };
+        };
+
+        // Enriquecer cada intercambio
+        const intercambiosCompletos = await Promise.all(
+          intercambiosRaw.map(async (i) => ({
+            ...i,
+            cartaOrigen: await fetchCartaCompleta(i.idCartaOrigen),
+            cartaDestino: await fetchCartaCompleta(i.idCartaDestino),
+          }))
+        );
+
+        setIntercambios(intercambiosCompletos);
       } catch (error) {
         console.error("Error al cargar intercambios:", error);
         setIntercambios([]);
@@ -30,7 +72,7 @@ const MisIntercambios = () => {
       }
     };
 
-    fetchIntercambios();
+    fetchIntercambiosCompletos();
   }, [estadoFiltro, username]);
 
   return (

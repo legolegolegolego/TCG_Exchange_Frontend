@@ -5,17 +5,19 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
 
   const origen = intercambio.cartaOrigen || {};
   const destino = intercambio.cartaDestino || {};
-  const usuarioOrigen = intercambio.usuarioOrigen || {};
-  const usuarioDestino = intercambio.usuarioDestino || {};
 
-  // Determinar si el usuario logueado es origen o destino
-  const isOrigen = currentUsername === usuarioOrigen.username;
+  const usernameOrigen = intercambio.usernameOrigen;
+  const usernameDestino = intercambio.usernameDestino;
+
+  const estadoIntercambio = intercambio.estado || "PENDIENTE";
+
+  // Determinar si el usuario logueado es el origen
+  const isOrigen = currentUsername === usernameOrigen;
 
   const cartaUsuarioActual = isOrigen ? origen : destino;
   const cartaOtroUsuario = isOrigen ? destino : origen;
 
-  const usernameOtro = isOrigen ? usuarioDestino.username : usuarioOrigen.username;
-  const estadoIntercambio = intercambio.estado || "PENDIENTE";
+  const usernameOtro = isOrigen ? usernameDestino : usernameOrigen;
 
   return (
     <div className={styles.container}>
@@ -25,7 +27,10 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
             src={cartaUsuarioActual?.imagenUrl || "/placeholder.png"}
             alt={cartaUsuarioActual?.nombre || "Carta"}
           />
-          <p>{cartaUsuarioActual?.nombre || "Desconocido"} #{cartaUsuarioActual?.numero || "?"}</p>
+          <p>
+            {cartaUsuarioActual?.nombre || "Desconocido"} #
+            {cartaUsuarioActual?.numero || "?"}
+          </p>
           <p>Estado: {cartaUsuarioActual?.estadoCarta || "?"}</p>
         </div>
 
@@ -34,14 +39,18 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
             src={cartaOtroUsuario?.imagenUrl || "/placeholder.png"}
             alt={cartaOtroUsuario?.nombre || "Carta"}
           />
-          <p>{cartaOtroUsuario?.nombre || "Desconocido"} #{cartaOtroUsuario?.numero || "?"}</p>
+          <p>
+            {cartaOtroUsuario?.nombre || "Desconocido"} #
+            {cartaOtroUsuario?.numero || "?"}
+          </p>
           <p>Estado: {cartaOtroUsuario?.estadoCarta || "?"}</p>
         </div>
       </div>
 
       <div className={styles.detalle}>
         <p>
-          Propuesta {isOrigen ? "de" : "a"} {usernameOtro}
+          Propuesta {isOrigen ? "a" : "de"}{" "}
+          {usernameOtro || "Desconocido"}
         </p>
         <p>Estado intercambio: {estadoIntercambio}</p>
         <button>Ver detalle</button>
