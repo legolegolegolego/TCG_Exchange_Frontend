@@ -1,80 +1,73 @@
 .card {
   width: 180px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  height: 320px;
   overflow: hidden;
-  background: #fff;
   display: flex;
   flex-direction: column;
 }
-.media {
-  height: 120px;
-  background: #f6f6f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.media img {
-  max-width: 100%;
-  max-height: 100%;
-}
-.placeholder {
-  color: #999;
-  font-size: 12px;
-}
-.body {
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.title {
-  font-weight: 600;
-  font-size: 14px;
-}
-.meta {
-  font-size: 12px;
-  color: #555;
-}
-.metaSmall {
-  font-size: 11px;
-  color: #777;
+
+/* CONTENEDOR IMAGEN */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  overflow: hidden;
+  background: #000;
 }
 
-.actions {
-  display: flex;
-  justify-content: center;
-  padding: 8px;
+/* IMAGEN */
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
 }
 
-.moreButton {
-  display: inline-block;
-  padding: 6px 10px;
-  background: #007bff;
-  color: #fff;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 13px;
-}
-
-.moreButton:hover {
-  background: #0069d9;
-}
-
+/* HOVER GENERAL */
 .clickable {
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
+/* HOVER COLOR */
 .clickable:hover {
   transform: translateY(-6px) scale(1.04);
-  box-shadow: 0 12px 30px rgba(0, 123, 255, 0.14), 0 6px 12px rgba(0,0,0,0.06);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.2),
+    0 0 12px var(--glow) !important;
 }
 
-.clickable:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(0,123,255,0.12);
+/* ZOOM IMAGEN */
+.clickable:hover img {
+  transform: scale(1.06);
 }
 
-.card:hover .media {
-  filter: saturate(1.05) brightness(1.02);
+/* TEXTO */
+.title {
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  font-size: 12px;
+  color: #555;
+}
+
+.small {
+  font-size: 11px;
+  color: #777;
+  min-height: 14px;
+}
+
+.noImage {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.tipo {
+  color: var(--glow);
+  font-weight: 600;
 }

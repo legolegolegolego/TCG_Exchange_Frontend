@@ -1,42 +1,103 @@
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./CardModel.module.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import styles from './CardModel.module.css';
+
+const rarezaLabels = {
+  COMUN: "Común",
+  INFRECUENTE: "Infrecuente",
+  RARA: "Rara",
+  RARA_HOLO: "Rara Holo",
+};
+
+// Colores por tipo
+const tipoColores = {
+  AGUA: "#3498db",
+  FUEGO: "#e74c3c",
+  PLANTA: "#2ecc71",
+  ELECTRICO: "#f1c40f",
+  PSIQUICO: "#8e44ad",
+  LUCHA: "#d35400",
+  INCOLORO: "#bdc3c7",
+  OSCURO: "#2c3e50",
+  METAL: "#95a5a6",
+  HADA: "#ff9ff3",
+  DRAGON: "#6c5ce7",
+  ENTRENADOR: "#ffffff"
+};
+
+// Colores por rareza
+const rarezaColores = {
+  COMUN: "#95a5a6",
+  INFRECUENTE: "#3498db",
+  RARA: "#ff8c08",
+  RARA_HOLO: "#c00ff1"
+};
 
 const CardModel = ({ carta }) => {
   const navigate = useNavigate();
   const { id, numero, nombre, rareza, tipoPokemon, tipoCarta, imagenUrl } = carta || {};
 
-  const handleClick = () => {
-    if (id) navigate(`/cartas/${id}`);
-  };
-
+  const handleClick = () => { if (id) navigate(`/cartas/${id}`); };
   const handleKeyDown = (e) => {
     if ((e.key === "Enter" || e.key === " ") && id) navigate(`/cartas/${id}`);
   };
 
-  const rootClass = id ? `${styles.card} ${styles.clickable}` : styles.card;
+  const glowColor = tipoColores[tipoPokemon] || "#999";
 
   return (
     <div
-      className={rootClass}
+      className={`card h-100 shadow-sm rounded ${styles.clickable} ${styles.card}`}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       role={id ? "link" : undefined}
       tabIndex={id ? 0 : undefined}
+      style={{
+        "--glow": glowColor
+      }}
     >
-      <div className={styles.media}>
-        {imagenUrl ? <img src={imagenUrl} alt={nombre} /> : <div className={styles.placeholder}>No image</div>}
+      <div className={styles.imageContainer}>
+        {imagenUrl ? (
+          <img src={imagenUrl} alt={nombre} />
+        ) : (
+          <div className={styles.noImage}>No image</div>
+        )}
+
+        {rareza && (
+          <span
+            className="badge position-absolute top-0 start-0 m-2"
+            style={{
+              backgroundColor: rarezaColores[rareza] || "#777",
+              color: "#fff",
+              fontWeight: 600
+            }}
+          >
+            {rarezaLabels[rareza]}
+          </span>
+        )}
       </div>
-      <div className={styles.body}>
+
+      <div className="card-body p-2 d-flex flex-column gap-1">
         <div className={styles.title}>{nombre || "-"}</div>
-        <div className={styles.meta}>#{numero ?? "-"} • {tipoCarta || "-"}</div>
-        <div className={styles.metaSmall}>Tipo: {tipoPokemon || "-"} • Rareza: {rareza || "-"}</div>
-        <div className={styles.actions}>
-          {id ? (
-            <Link to={`/cartas/${id}`} onClick={(e)=>e.stopPropagation()} className={styles.moreButton}>
-              Ver más
-            </Link>
-          ) : null}
+        <div className={styles.meta}>
+          #{numero ?? "-"} • {tipoCarta || "-"}
         </div>
+        <div className={`${styles.meta} ${styles.small}`}>
+          {tipoPokemon && tipoPokemon !== "ENTRENADOR" ? (
+            <>Tipo: <span className={styles.tipo}>{tipoPokemon}</span></>
+          ) : (
+            <>&nbsp;</>
+          )}
+        </div>
+
+        {id && (
+          <Link
+            to={`/cartas/${id}`}
+            onClick={(e) => e.stopPropagation()}
+            className="btn btn-primary w-100 mt-1"
+          >
+            Ver más
+          </Link>
+        )}
       </div>
     </div>
   );

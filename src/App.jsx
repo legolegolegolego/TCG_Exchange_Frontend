@@ -14,6 +14,7 @@ import MisIntercambios from "./pages/MisIntercambios/MisIntercambios.jsx";
 import DetalleIntercambio from "./pages/DetalleIntercambio/DetalleIntercambio.jsx";
 import ProponerIntercambio from "./pages/ProponerIntercambio/ProponerIntercambio.jsx";
 import MisCartas from "./pages/MisCartas/MisCartas.jsx";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
