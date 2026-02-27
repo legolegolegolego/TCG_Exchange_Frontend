@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Explorar from "./pages/Explorar/Explorar.jsx";
@@ -89,6 +89,8 @@ const AppContent = () => {
         />
         <Route path="/usuario/:username" element={<UsuarioCartas />} />
         <Route path="/no-disponible" element={<NotFound />} />
+        {/* Ruta para URLs no existentes */}
+        <Route path="*" element={<Navigate to="/no-disponible" replace />} />
       </Routes>
       <Footer />
     </>
