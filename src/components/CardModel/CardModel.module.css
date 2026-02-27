@@ -1,16 +1,16 @@
 .card {
-  width: 180px;
-  height: 320px;
-  overflow: hidden;
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 /* CONTENEDOR IMAGEN */
 .imageContainer {
   position: relative;
   width: 100%;
-  height: 60%;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   background: #000;
 }
@@ -45,26 +45,26 @@
 /* TEXTO */
 .title {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .meta {
-  font-size: 12px;
+  font-size: 0.875rem;
   color: #555;
 }
 
 .small {
-  font-size: 11px;
+  font-size: 0.75rem;
   color: #777;
   min-height: 14px;
 }
 
 .noImage {
   color: #aaa;
-  font-size: 12px;
+  font-size: 0.875rem;
 }
 
 .tipo {
