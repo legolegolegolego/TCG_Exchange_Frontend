@@ -13,6 +13,7 @@ import BackTab from "./components/BackTab/BackTab.jsx";
 import MisIntercambios from "./pages/MisIntercambios/MisIntercambios.jsx";
 import DetalleIntercambio from "./pages/DetalleIntercambio/DetalleIntercambio.jsx";
 import ProponerIntercambio from "./pages/ProponerIntercambio/ProponerIntercambio.jsx";
+import MisCartas from "./pages/MisCartas/MisCartas.jsx";
 
 function App() {
   return (
@@ -61,6 +62,14 @@ const AppContent = () => {
           element={
             <ProtectedRoute>
               <ProponerIntercambio />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mis-cartas"
+          element={
+            <ProtectedRoute>
+              <MisCartas />
             </ProtectedRoute>
           }
         />

@@ -4,6 +4,7 @@ import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
 import Notification from "../../components/Notification/Notification";
 import styles from "./DetalleIntercambio.module.css";
+import { aceptarIntercambio, rechazarIntercambio } from "../../services/intercambios.js";
 
 const DetalleCarta = ({ carta, title }) => {
   if (!carta) return null;
@@ -31,6 +32,51 @@ const DetalleIntercambio = () => {
   const [intercambio, setIntercambio] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState(location.state?.notification || null);
+
+  const [showAceptarModal, setShowAceptarModal] = useState(false);
+  const [showRechazarModal, setShowRechazarModal] = useState(false);
+  const [actionError, setActionError] = useState("");
+
+  const handleAceptar = async () => {
+    setActionError("");
+
+    try {
+      await aceptarIntercambio(id);
+
+      navigate(`/intercambio/${id}`, {
+        state: {
+          notification: {
+            type: "success",
+            message: "Intercambio aceptado correctamente"
+          }
+        }
+      });
+
+    } catch (err) {
+      setActionError(err.response?.data?.mensaje || "Error al aceptar intercambio");
+    }
+  };
+
+  const handleRechazar = async () => {
+    setActionError("");
+
+    try {
+      await rechazarIntercambio(id);
+
+      navigate(`/intercambio/${id}`, {
+        state: {
+          notification: {
+            type: "success",
+            message: "Intercambio rechazado"
+          }
+        }
+      });
+
+    } catch (err) {
+      setActionError(err.response?.data?.mensaje || "Error al rechazar intercambio");
+    }
+  };
+
 
   useEffect(() => {
     const fetchIntercambioCompleto = async () => {
@@ -87,6 +133,9 @@ const DetalleIntercambio = () => {
   if (loading) return <p>Cargando intercambio...</p>;
   if (!intercambio) return <p>Intercambio no encontrado</p>;
 
+  const esDestino = currentUser?.username === intercambio.usernameDestino;
+  const puedeActuar = esDestino && intercambio.estado === "PENDIENTE";
+
   const isOrigen = currentUser?.username === intercambio.usernameOrigen;
   const usernameOtro = isOrigen ? intercambio.usernameDestino : intercambio.usernameOrigen;
 
@@ -116,6 +165,76 @@ const DetalleIntercambio = () => {
           title={isOrigen ? "Das" : "Recibes"}
         />
       </div>
+      {puedeActuar && (
+        <div className={styles.actions}>
+          <button
+            className={styles.acceptButton}
+            onClick={() => setShowAceptarModal(true)}
+          >
+            Aceptar intercambio
+          </button>
+
+          <button
+            className={styles.rejectButton}
+            onClick={() => setShowRechazarModal(true)}
+          >
+            Rechazar intercambio
+          </button>
+        </div>
+      )}
+      {showAceptarModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>¿Aceptar intercambio?</h3>
+            <p>Esta acción confirmará el intercambio.</p>
+
+            {actionError && <p className={styles.error}>{actionError}</p>}
+
+            <div className={styles.modalActions}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setShowAceptarModal(false)}
+              >
+                Volver
+              </button>
+
+              <button
+                className={styles.confirmButton}
+                onClick={handleAceptar}
+              >
+                Sí, aceptar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showRechazarModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>¿Rechazar intercambio?</h3>
+            <p>Esta acción cancelará el intercambio.</p>
+
+            {actionError && <p className={styles.error}>{actionError}</p>}
+
+            <div className={styles.modalActions}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setShowRechazarModal(false)}
+              >
+                Volver
+              </button>
+
+              <button
+                className={styles.confirmDeleteButton}
+                onClick={handleRechazar}
+              >
+                Sí, rechazar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

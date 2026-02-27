@@ -1,105 +1,136 @@
-// import { useEffect, useState } from "react";
-// import styles from "./MisCartas.module.css";
-// import {
-//   getDisponiblesByUsername,
-//   getNoDisponiblesByUsername,
-//   deleteCartaFisica,
-//   createCartaFisica,
-//   updateCartaFisica
-// } from "../../services/cartasFisicas";
-// import { useAuth } from "../../context/AuthContext";
-// import CardFisica from "../../components/CardFisica/CardFisica";
-// import CartaModal from "./CartaModal";
+import { useEffect, useState } from "react";
+import {
+  getDisponiblesByUsername,
+  getNoDisponiblesByUsername,
+  deleteCartaFisica,
+  createCartaFisica,
+  updateCartaFisica
+} from "../../services/cartasFisicas";
+import { getCurrentUser } from "../../utils/token";
+import MiCarta from "../../components/MiCarta/MiCarta.jsx";
+import CartaModal from "../../components/CartaModal/CartaModal.jsx";
 
-// const MisCartas = () => {
-//   const { username } = useAuth();
+const MisCartas = () => {
+  const [cartas, setCartas] = useState([]);
+  const [filtro, setFiltro] = useState("disponibles");
 
-//   const [cartas, setCartas] = useState([]);
-//   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [editingCarta, setEditingCarta] = useState(null);
 
-//   const [openModal, setOpenModal] = useState(false);
-//   const [editingCarta, setEditingCarta] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
-//   const loadCartas = async () => {
-//     try {
-//       setLoading(true);
-//       const [disp, nodisp] = await Promise.all([
-//         getDisponiblesByUsername(username),
-//         getNoDisponiblesByUsername(username),
-//       ]);
+  const user = getCurrentUser();
 
-//       const all = [...(disp.data || []), ...(nodisp.data || [])];
-//       setCartas(all);
-//     } catch (e) {
-//       console.error(e);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+  const fetchCartas = async () => {
+    if (!user) return;
 
-//   useEffect(() => {
-//     if (username) loadCartas();
-//   }, [username]);
+    const [disp, noDisp] = await Promise.all([
+      getDisponiblesByUsername(user.username),
+      getNoDisponiblesByUsername(user.username)
+    ]);
 
-//   const handleDelete = async (id) => {
-//     await deleteCartaFisica(id);
-//     loadCartas();
-//   };
+    const disponibles = disp.data.map(c => ({ ...c, disponible: true }));
+    const noDisponibles = noDisp.data.map(c => ({ ...c, disponible: false }));
 
-//   const handleEdit = (carta) => {
-//     setEditingCarta(carta);
-//     setOpenModal(true);
-//   };
+    setCartas([...disponibles, ...noDisponibles]);
+  };
 
-//   const handleCreate = () => {
-//     setEditingCarta(null);
-//     setOpenModal(true);
-//   };
+  useEffect(() => {
+    fetchCartas();
+  }, []);
 
-//   const handleSubmit = async (data) => {
-//     if (editingCarta) {
-//       await updateCartaFisica(editingCarta.id, data);
-//     } else {
-//       await createCartaFisica(data);
-//     }
-//     setOpenModal(false);
-//     loadCartas();
-//   };
+  const handleDelete = async () => {
+    await deleteCartaFisica(deleteTarget.id);
+    setDeleteTarget(null);
+    fetchCartas();
+  };
 
-//   return (
-//     <div className={styles.container}>
-//       <h2>Mis cartas</h2>
+  const handleSave = async (data) => {
+    if (editingCarta) {
+      await updateCartaFisica(editingCarta.id, data);
+    } else {
+      await createCartaFisica(data);
+    }
 
-//       {loading ? (
-//         <div>Cargando...</div>
-//       ) : (
-//         <div className={styles.grid}>
-//           {cartas.map((c) => (
-//             <CardFisica
-//               key={c.id}
-//               carta={c}
-//               onEdit={() => handleEdit(c)}
-//               onDelete={() => handleDelete(c.id)}
-//               isOwner
-//             />
-//           ))}
-//         </div>
-//       )}
+    setShowModal(false);
+    setEditingCarta(null);
+    fetchCartas();
+  };
 
-//       {/* Botón flotante */}
-//       <button className={styles.fab} onClick={handleCreate}>
-//         +
-//       </button>
+  const filteredCartas = cartas.filter(c => {
+    if (filtro === "disponibles") return c.disponible;
+    if (filtro === "no") return !c.disponible;
+    return true;
+  });
 
-//       {openModal && (
-//         <CartaModal
-//           carta={editingCarta}
-//           onClose={() => setOpenModal(false)}
-//           onSubmit={handleSubmit}
-//         />
-//       )}
-//     </div>
-//   );
-// };
+  return (
+    <div>
+      <h2>Mis Cartas</h2>
 
-// export default MisCartas;
+      {/* Tabs */}
+      <div>
+        <button onClick={() => setFiltro("todas")}>Todas</button>
+        <button onClick={() => setFiltro("disponibles")}>Disponibles</button>
+        <button onClick={() => setFiltro("no")}>No disponibles</button>
+      </div>
+
+      {/* Cartas */}
+      <div>
+        {filteredCartas.map(carta => (
+          <MiCarta
+            key={carta.id}
+            carta={carta}
+            onEdit={(c) => {
+              setEditingCarta(c);
+              setShowModal(true);
+            }}
+            onDelete={(c) => setDeleteTarget(c)}
+          />
+        ))}
+      </div>
+
+      {/* Botón crear */}
+      <button
+        onClick={() => {
+          setEditingCarta(null);
+          setShowModal(true);
+        }}
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px"
+        }}
+      >
+        + Subir nueva carta
+      </button>
+
+      {/* Modal crear/editar */}
+      <CartaModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSave={handleSave}
+        initialData={editingCarta}
+      />
+
+      {/* Modal eliminar */}
+      {deleteTarget && (
+        <div className="modalOverlay">
+          <div className="modal">
+            <h3>¿Seguro que quieres eliminar esta carta?</h3>
+
+            <div className="modalActions">
+              <button onClick={() => setDeleteTarget(null)}>
+                Cancelar
+              </button>
+              <button onClick={handleDelete}>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MisCartas;
