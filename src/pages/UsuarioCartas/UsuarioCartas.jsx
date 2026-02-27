@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import styles from "./UsuarioCartas.module.css";
 import { getDisponiblesByUsername } from "../../services/cartasFisicas";
 import CardFisica from "../../components/CardFisica/CardFisica";
 import Notification from "../../components/Notification/Notification";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './UsuarioCartas.module.css';
 
 const UsuarioCartas = () => {
   const { username } = useParams();
@@ -23,9 +24,7 @@ const UsuarioCartas = () => {
       try {
         const res = await getDisponiblesByUsername(username);
         const data = res.data || [];
-        if (data.length === 0) {
-          throw { response: { data: { mensaje: "Usuario no válido o sin cartas" } } };
-        }
+        if (data.length === 0) throw { response: { data: { mensaje: "Usuario no válido o sin cartas" } } };
         setCartas(data);
         setIsValid(true);
       } catch (err) {
@@ -42,7 +41,7 @@ const UsuarioCartas = () => {
   if (!isValid) return null;
 
   return (
-    <div className={styles.container}>
+    <div className="container usuario-cartas-container">
       {notification && (
         <Notification
           type={notification.type}
@@ -50,16 +49,26 @@ const UsuarioCartas = () => {
           onClose={() => setNotification(null)}
         />
       )}
-      <h2 className={styles.username}>{username}</h2>
-      <h3 className={styles.sectionTitle}>Cartas disponibles para intercambio</h3>
+
+      <h2 className="username text-center text-md-start">{username}</h2>
+      <h3 className="sectionTitle text-center text-md-start">Cartas disponibles para intercambio</h3>
+
       {loading ? (
-        <div className={styles.loading}>Cargando...</div>
+        <div className="loading text-center">Cargando...</div>
       ) : (
-        <div className={styles.grid}>
-          {cartas.map((c) => (
-            <CardFisica key={c.id} carta={c} />
-          ))}
-        </div>
+        <>
+          {cartas.length === 0 ? (
+            <p className="empty text-center w-100">No se encontraron cartas.</p>
+          ) : (
+            <div className="row g-3">
+              {cartas.map((c) => (
+                <div key={c.id} className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center">
+                  <CardFisica carta={c} />
+                </div>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

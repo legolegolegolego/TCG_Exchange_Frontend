@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import styles from "./CardDetail.module.css";
 import { getCartaModeloById, getUsuariosConCartaModelo } from "../../services/cartasModelo";
 import Notification from "../../components/Notification/Notification";
+import Button from "../../components/Button/Button";
 
 const tipoColores = {
   AGUA: "#3498db",
@@ -75,7 +76,6 @@ const CardDetail = () => {
       )}
 
       <div className={styles.top}>
-        {/* Imagen más grande */}
         <div
           className={styles.imageWrap}
           style={{
@@ -90,7 +90,6 @@ const CardDetail = () => {
           )}
         </div>
 
-        {/* Info a la derecha */}
         <div className={styles.info}>
           <h2 className={styles.name}>{nombre}</h2>
 
@@ -136,12 +135,15 @@ const CardDetail = () => {
               return (
                 <li key={u.id} className={styles.userItem}>
                   <div className={styles.userName}>{uname}</div>
-                  <Link
-                    to={`/usuario/${uname}`}
-                    state={{ from: location.pathname, fromLabel: 'vista de carta modelo' }}
+                  <Button
+                    variant="primary"
+                    size="md"
+                    onClick={() => navigate(`/usuario/${uname}`, {
+                      state: { from: location.pathname, fromLabel: 'vista de carta modelo' }
+                    })}
                   >
-                    <button className={styles.userButton}>Ver cartas</button>
-                  </Link>
+                    Ver cartas
+                  </Button>
                 </li>
               );
             })}

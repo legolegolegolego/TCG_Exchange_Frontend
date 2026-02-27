@@ -1,6 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './CardModel.module.css';
+import Button from "../Button/Button";
 
 const rarezaLabels = {
   COMUN: "Común",
@@ -9,7 +10,6 @@ const rarezaLabels = {
   RARA_HOLO: "Rara Holo",
 };
 
-// Colores por tipo
 const tipoColores = {
   AGUA: "#3498db",
   FUEGO: "#e74c3c",
@@ -25,7 +25,6 @@ const tipoColores = {
   ENTRENADOR: "#ffffff"
 };
 
-// Colores por rareza
 const rarezaColores = {
   COMUN: "#95a5a6",
   INFRECUENTE: "#3498db",
@@ -51,9 +50,7 @@ const CardModel = ({ carta }) => {
       onKeyDown={handleKeyDown}
       role={id ? "link" : undefined}
       tabIndex={id ? 0 : undefined}
-      style={{
-        "--glow": glowColor
-      }}
+      style={{ "--glow": glowColor }}
     >
       <div className={styles.imageContainer}>
         {imagenUrl ? (
@@ -90,13 +87,17 @@ const CardModel = ({ carta }) => {
         </div>
 
         {id && (
-          <Link
-            to={`/cartas/${id}`}
-            onClick={(e) => e.stopPropagation()}
-            className="btn btn-primary w-100 mt-1"
+          <Button
+            variant="primary"
+            size="md"
+            className="w-100 mt-1"
+            onClick={(e) => {
+              e.stopPropagation(); // evita que active el onClick del card
+              navigate(`/cartas/${id}`);
+            }}
           >
             Ver más
-          </Link>
+          </Button>
         )}
       </div>
     </div>
