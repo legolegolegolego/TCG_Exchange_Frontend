@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./BackTab.module.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const BackTab = () => {
   const navigate = useNavigate();
@@ -20,7 +21,11 @@ const BackTab = () => {
 
   return (
     <div className={styles.wrapper}>
-      <button className={styles.tab} onClick={handleClick} aria-label="Volver">
+      <button
+        className={`btn ${styles.tab} btn-dark`}
+        onClick={handleClick}
+        aria-label="Volver"
+      >
         {label}
       </button>
     </div>

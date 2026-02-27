@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { getCurrentUser } from "../../utils/token.js";
 import WishlistButton from "../WishlistButton/WishlistButton.jsx";
+import styles from "./Header.module.css";
 
 const Header = () => {
-  const navigate = useNavigate(); // Hook para navegar
+  const navigate = useNavigate();
   const { token, logout } = useAuth();
   const currentUser = getCurrentUser();
   const username = currentUser?.username;
@@ -37,84 +37,97 @@ const Header = () => {
   };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.left}>
-        <a href="/">
-          <img src={logo} alt="Logo App" className={styles.logo} />
-          <h1 className={styles.appName}>TCG Exchange</h1>
-        </a>
-      </div>
+    <header className={`container-fluid py-2 ${styles.header}`}>
+      <div className="d-flex flex-wrap align-items-center justify-content-between">
+        {/* Logo */}
+        <div className="d-flex align-items-center gap-2 flex-shrink-0">
+          <a href="/" className="d-flex align-items-center text-decoration-none">
+            <img src={logo} alt="Logo App" className={styles.logo} />
+            <span className={`h5 mb-0 fw-bold ${styles.appName}`}>TCG Exchange</span>
+          </a>
+        </div>
 
-      <nav className={styles.nav}>
-        <a
-          href="/"
-          className={styles.navLink}
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("/");
-          }}
+        {/* Navegación */}
+        <nav className="d-flex flex-wrap align-items-center justify-content-center gap-3 flex-grow-1 my-2 my-md-0">
+          <span
+            className={`fw-semibold ${styles.navTitle}`}
+            onClick={() => navigate("/")}
+            role="button"
+          >
+            Explorar Cartas
+          </span>
+
+          {username && (
+            <>
+              <span
+                className={`fw-semibold ${styles.navTitle}`}
+                onClick={() => navigate("/mis-intercambios")}
+                role="button"
+              >
+                Mis intercambios
+              </span>
+              <span
+                className={`fw-semibold ${styles.navTitle}`}
+                onClick={() => navigate("/mis-cartas")}
+                role="button"
+              >
+                Mis cartas
+              </span>
+            </>
+          )}
+        </nav>
+
+        {/* Botones de usuario */}
+        <div
+          className="d-flex align-items-center gap-2 flex-shrink-0 flex-wrap position-relative"
+          ref={wrapperRef}
         >
-          Explorar Cartas
-        </a>
+          {!token ? (
+            <>
+              <button className="btn btn-dark btn-sm" onClick={handleLoginClick}>
+                Iniciar Sesión
+              </button>
+              <button className="btn btn-outline-dark btn-sm" onClick={handleRegisterClick}>
+                Registrarse
+              </button>
+            </>
+          ) : (
+            <div className="d-flex align-items-center gap-2 flex-wrap position-relative">
+              <WishlistButton
+                onClick={() => navigate("/no-disponible")}
+                title="Favoritos"
+                ariaLabel="Favoritos"
+              />
 
-        {username && (
-          <>
-            <a
-              href={`/mis-intercambios`}
-              className={styles.navLink}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(`/mis-intercambios`);
-              }}
-            >
-              Mis intercambios
-            </a>
-
-            <a
-              href="/mis-cartas"
-              className={styles.navLink}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/mis-cartas");
-              }}
-            >
-              Mis cartas
-            </a>
-          </>
-        )}
-
-        <input
-          type="text"
-          placeholder="Buscar cartas..."
-          className={styles.searchInput}
-        />
-      </nav>
-
-      <div className={styles.right} ref={wrapperRef}>
-        {!token ? (
-          <>
-            <button className={styles.button} onClick={handleLoginClick}>Iniciar Sesión</button>
-            <button className={styles.buttonOutline} onClick={handleRegisterClick}>Registrarse</button>
-          </>
-        ) : (
-          <div className={styles.profileWrapper}>
-            <WishlistButton
-              onClick={() => navigate("/no-disponible")}
-              title="Favoritos"
-              ariaLabel="Favoritos"
-            />
-
-            <button className={styles.profileButton} onClick={() => setOpen((s) => !s)}>
-              Mi Perfil ▾
-            </button>
-            {open && (
-              <div className={styles.dropdown}>
-                <button className={styles.dropdownItem} onClick={handleEditProfile}>Editar Perfil</button>
-                <button className={styles.dropdownItem} onClick={handleLogout}>Cerrar sesión</button>
+              {/* Dropdown “Mi Perfil” */}
+              <div className="dropdown" style={{ position: "relative" }}>
+                <button
+                  className={`btn btn-dark btn-sm ${styles.profileButton}`}
+                  type="button"
+                  onClick={() => setOpen((s) => !s)}
+                  aria-expanded={open}
+                >
+                  Mi Perfil <span className={styles.dropdownArrow}>▾</span>
+                </button>
+                <ul
+                  className={`dropdown-menu ${open ? "show" : ""} ${styles.dropdownMenu}`}
+                  style={{ right: 0, left: "auto" }}
+                >
+                  <li>
+                    <button className="dropdown-item" onClick={handleEditProfile}>
+                      Editar Perfil
+                    </button>
+                  </li>
+                  <li>
+                    <button className="dropdown-item btn-danger" onClick={handleLogout}>
+                      Cerrar sesión
+                    </button>
+                  </li>
+                </ul>
               </div>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

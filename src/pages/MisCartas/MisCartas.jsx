@@ -1,20 +1,15 @@
-import { useEffect, useState } from "react"; 
-import styles from "./MisCartas.module.css";
-
-import {
-  getDisponiblesByUsername,
-  getNoDisponiblesByUsername,
-  deleteCartaFisica,
-  createCartaFisica,
-  updateCartaFisica
-} from "../../services/cartasFisicas";
-
+import { useEffect, useState } from "react";
+import { getDisponiblesByUsername, getNoDisponiblesByUsername, deleteCartaFisica, createCartaFisica, updateCartaFisica } from "../../services/cartasFisicas";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
 
 import MiCarta from "../../components/MiCarta/MiCarta";
 import EditarCrearCartaFisica from "../../components/EditarCrearCartaFisica/EditarCrearCartaFisica";
 import Notification from "../../components/Notification/Notification";
+import Button from "../../components/Button/Button"; 
+
+import styles from "./MisCartas.module.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const modeloCache = {};
 
@@ -40,19 +35,15 @@ const fetchCartaCompleta = async (cf) => {
 const MisCartas = () => {
   const [cartas, setCartas] = useState([]);
   const [filtro, setFiltro] = useState("disponibles");
-
   const [showModal, setShowModal] = useState(false);
   const [editingCarta, setEditingCarta] = useState(null);
-
   const [deleteTarget, setDeleteTarget] = useState(null);
-
   const [notification, setNotification] = useState(null);
 
   const user = getCurrentUser();
 
   const fetchCartas = async () => {
     if (!user) return;
-
     try {
       const [disp, noDisp] = await Promise.all([
         getDisponiblesByUsername(user.username),
@@ -61,27 +52,19 @@ const MisCartas = () => {
 
       const disponibles = disp.data.map(c => ({ ...c, disponible: true }));
       const noDisponibles = noDisp.data.map(c => ({ ...c, disponible: false }));
-
       const todas = [...disponibles, ...noDisponibles];
-
       const completas = await Promise.all(todas.map(c => fetchCartaCompleta(c)));
-
-      const finales = completas.map((c, i) => ({
-        ...c,
-        disponible: todas[i].disponible
-      }));
+      const finales = completas.map((c, i) => ({ ...c, disponible: todas[i].disponible }));
 
       setCartas(finales);
     } catch (err) {
       const msg = err.response?.data?.mensaje || "No se pudieron cargar tus cartas. Intenta de nuevo.";
       setNotification({ type: "error", message: msg });
-      console.error("Error cargando cartas:", err);
+      console.error(err);
     }
   };
 
-  useEffect(() => {
-    fetchCartas();
-  }, []);
+  useEffect(() => { fetchCartas(); }, []);
 
   const handleSave = async (data) => {
     try {
@@ -95,9 +78,8 @@ const MisCartas = () => {
     } catch (err) {
       const msg = err.response?.data?.mensaje || "Error al guardar la carta";
       setNotification({ type: "error", message: msg });
-      console.error("Error guardando carta:", err);
+      console.error(err);
     }
-
     setShowModal(false);
     setEditingCarta(null);
     fetchCartas();
@@ -112,7 +94,7 @@ const MisCartas = () => {
     } catch (err) {
       const msg = err.response?.data?.mensaje || "Error al eliminar la carta";
       setNotification({ type: "error", message: msg });
-      console.error("Error eliminando carta:", err);
+      console.error(err);
     }
   };
 
@@ -123,50 +105,46 @@ const MisCartas = () => {
   });
 
   return (
-    <div className={styles.container}>
-      <h2>Mis Cartas</h2>
+    <div className="container py-4">
+      <h2 className="mb-3">Mis Cartas</h2>
 
-      {/* TABS */}
-      <div className={styles.tabs}>
-        <button
-          className={filtro === "disponibles" ? styles.activeTab : ""}
+      {/* TABS con Button */}
+      <div className="d-flex gap-2 mb-3 flex-wrap">
+        <Button
+          variant={filtro === "disponibles" ? "primary" : "outline"}
           onClick={() => setFiltro("disponibles")}
         >
           Disponibles
-        </button>
-
-        <button
-          className={filtro === "todas" ? styles.activeTab : ""}
+        </Button>
+        <Button
+          variant={filtro === "todas" ? "primary" : "outline"}
           onClick={() => setFiltro("todas")}
         >
           Todas
-        </button>
-
-        <button
-          className={filtro === "no" ? styles.activeTab : ""}
+        </Button>
+        <Button
+          variant={filtro === "no" ? "primary" : "outline"}
           onClick={() => setFiltro("no")}
         >
           No disponibles
-        </button>
+        </Button>
       </div>
 
-      {/* CARTAS */}
-      <div className={styles.grid}>
+      {/* CARTAS GRID */}
+      <div className="row g-3">
         {filteredCartas.map(carta => (
-          <MiCarta
-            key={carta.id}
-            carta={carta}
-            onEdit={(c) => { setEditingCarta(c); setShowModal(true); }}
-            onDelete={(c) => setDeleteTarget(c)}
-          />
+          <div key={carta.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
+            <MiCarta
+              carta={carta}
+              onEdit={(c) => { setEditingCarta(c); setShowModal(true); }}
+              onDelete={(c) => setDeleteTarget(c)}
+            />
+          </div>
         ))}
       </div>
 
       {/* BOTÓN CREAR */}
-      <button
-        className={styles.addButton}
-        onClick={() => { setEditingCarta(null); setShowModal(true); }}
-      >
+      <button className={`btn btn-primary position-fixed ${styles.addButton}`} onClick={() => { setEditingCarta(null); setShowModal(true); }}>
         + Subir nueva carta
       </button>
 
@@ -182,34 +160,18 @@ const MisCartas = () => {
       {deleteTarget && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h3>¿Seguro que quieres eliminar esta carta?</h3>
-
-            <div className={styles.modalActions}>
-              <button
-                className={styles.cancelButton}
-                onClick={() => setDeleteTarget(null)}
-              >
-                Cancelar
-              </button>
-
-              <button
-                className={styles.confirmDeleteButton}
-                onClick={handleDelete}
-              >
-                Eliminar
-              </button>
+            <h5>¿Seguro que quieres eliminar esta carta?</h5>
+            <div className="d-flex justify-content-end gap-2 mt-3">
+              <button className={`btn btn-secondary ${styles.cancelButton}`} onClick={() => setDeleteTarget(null)}>Cancelar</button>
+              <button className={`btn btn-danger ${styles.confirmDeleteButton}`} onClick={handleDelete}>Eliminar</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* 🔔 Notification */}
+      {/* NOTIFICATION */}
       {notification && (
-        <Notification
-          type={notification.type}
-          message={notification.message}
-          onClose={() => setNotification(null)}
-        />
+        <Notification type={notification.type} message={notification.message} onClose={() => setNotification(null)} />
       )}
     </div>
   );

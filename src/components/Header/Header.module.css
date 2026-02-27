@@ -1,108 +1,70 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  flex-wrap: wrap;
-}
-
-.left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem; /* unifica fuente */
 }
 
 .logo {
   width: 50px;
   height: 50px;
+  object-fit: cover;
 }
 
 .appName {
-  font-size: 1.5rem;
-  font-weight: bold;
+  margin-left: 0.5rem;
+  font-size: 1rem;
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.navLink {
+/* Navegación como títulos de página sin subrayado */
+.navTitle {
+  cursor: pointer;
+  color: #333;
   text-decoration: none;
-  color: #333;
-  font-weight: 500;
+  font-size: 1rem;
+}
+.navTitle:hover {
+  color: #0d6efd;
 }
 
-.searchInput {
-  padding: 0.4rem 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.right {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.button {
-  padding: 0.5rem 1rem;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.buttonOutline {
-  padding: 0.5rem 1rem;
-  background-color: transparent;
-  color: #333;
-  border: 1px solid #333;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.profileWrapper {
-  position: relative;
-}
-
-.profileButton {
-  padding: 0.5rem 1rem;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.dropdown {
-  position: absolute;
-  right: 0;
-  margin-top: 8px;
-  background: white;
-  border: 1px solid #e6e6e6;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
+/* Dropdown personalizado */
+.dropdown-menu {
   min-width: 160px;
-  z-index: 40;
+  border-radius: 0.5rem;
+  margin-top: 0.2rem;
+  z-index: 1050;
+  max-width: 95vw; /* nunca se salga del viewport */
+  box-sizing: border-box;
+  font-size: 1rem; /* mismo tamaño que header */
 }
 
-.dropdownItem {
-  padding: 0.6rem 0.9rem;
+/* Botón Mi Perfil igual ancho que dropdown */
+.profileButton {
+  width: 100%;
+  max-width: 160px;
   text-align: left;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+  display: inline-flex;
+  justify-content: space-between; /* texto a la izquierda, flecha a la derecha */
+  align-items: center;
+  font-size: 1rem;
 }
 
-.dropdownItem:hover {
-  background: #f5f5f5;
+/* Flecha del botón */
+.dropdownArrow {
+  font-size: 0.8rem;
+  margin-left: 0.3rem;
+}
+
+/* Ajuste móvil */
+@media (max-width: 576px) {
+  .navTitle {
+    font-size: 0.95rem;
+  }
+  .profileButton {
+    font-size: 0.95rem;
+  }
+  .dropdownArrow {
+    font-size: 0.75rem;
+  }
 }

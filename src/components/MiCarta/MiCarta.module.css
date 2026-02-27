@@ -1,14 +1,12 @@
 .card {
-  border: 1px solid #ddd;
-  padding: 12px;
   border-radius: 8px;
-  text-align: center;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.imagen {
-  width: 100%;
-  height: 150px;
-  object-fit: contain;
+.card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .noDisponible {
@@ -16,9 +14,16 @@
   pointer-events: none;
 }
 
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 8px;
+/* Hover rojo en botón eliminar */
+.deleteButton:hover {
+  background-color: #dc3545 !important; /* rojo Bootstrap */
+  color: white !important;
+  border-color: #dc3545 !important;
+}
+
+/* Hover azul en botón editar */
+.editButton:hover {
+  background-color: #0d6efd !important; /* azul Bootstrap */
+  color: white !important;
+  border-color: #0d6efd !important;
 }
