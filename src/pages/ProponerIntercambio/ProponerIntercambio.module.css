@@ -1,30 +1,16 @@
-.container {
-  padding: 16px;
-}
-
-.cartas {
-  display: flex;
-  gap: 16px;
-  margin: 16px 0;
-}
-
-.lista {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
 .cartaSeleccionable {
   cursor: pointer;
-  transition: transform 0.2s;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: transform 0.2s, border 0.2s;
 }
 
 .cartaSeleccionable:hover {
   transform: scale(1.05);
+  border-color: #007bff;
 }
 
-.botones {
-  margin-top: 16px;
-  display: flex;
-  gap: 12px;
+.selected {
+  border-color: #0d6efd; /* Bootstrap primary */
+  box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
 }

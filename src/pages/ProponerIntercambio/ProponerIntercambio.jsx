@@ -4,7 +4,9 @@ import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
 import CartaIntercambio from "../../components/CartaIntercambio/CartaIntercambio";
 import Notification from "../../components/Notification/Notification";
+import Button from "../../components/Button/Button";
 import styles from "./ProponerIntercambio.module.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProponerIntercambio = () => {
   const { idCartaDestino } = useParams();
@@ -38,6 +40,7 @@ const ProponerIntercambio = () => {
           rareza: cm?.rareza,
           tipoPokemon: cm?.tipoPokemon,
           evolucion: cm?.evolucion,
+          estadoCarta: cf?.estadoCarta || "?",
           imagenUrl: cf?.imagenUrl || cm?.imagenUrl || "/placeholder.png",
         });
 
@@ -61,6 +64,7 @@ const ProponerIntercambio = () => {
               rareza: cmCarta?.rareza,
               tipoPokemon: cmCarta?.tipoPokemon,
               evolucion: cmCarta?.evolucion,
+              estadoCarta: c?.estadoCarta || "?",
               imagenUrl: c?.imagenUrl || cmCarta?.imagenUrl || "/placeholder.png",
             };
           })
@@ -111,33 +115,28 @@ const ProponerIntercambio = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h1>Proponer intercambio</h1>
-      <p>Selecciona una de tus cartas para intercambiar por {cartaDestino.nombre}</p>
+    <div className="container py-4">
+      <h1 className="mb-3">Proponer intercambio</h1>
+      <p>Selecciona una de tus cartas para intercambiar por <strong>{cartaDestino.nombre}</strong></p>
 
-      {notification && (
-        <Notification
-          type={notification.type}
-          message={notification.message}
-          onClose={() => setNotification(null)}
-        />
-      )}
+      {notification && <Notification type={notification.type} message={notification.message} onClose={() => setNotification(null)} />}
 
-      <div className={styles.cartas}>
+      {/* Cartas principales */}
+      <div className="d-flex flex-wrap justify-content-center gap-3 my-3">
         <CartaIntercambio carta={cartaDestino} title="Carta solicitada" />
         <CartaIntercambio
           carta={cartaSeleccionada}
-          title="Selecciona tu carta"
+          title="Tu selección"
           placeholderText="Selecciona una carta de tu colección"
         />
       </div>
 
-      <h3>Mis cartas disponibles:</h3>
-      <div className={styles.lista}>
+      <h3 className="mt-4">Mis cartas disponibles:</h3>
+      <div className="d-flex flex-wrap gap-3 mt-2">
         {misCartas.map((c) => (
           <div
             key={c.id}
-            className={styles.cartaSeleccionable}
+            className={`${styles.cartaSeleccionable} ${cartaSeleccionada?.id === c.id ? styles.selected : ""}`}
             onClick={() => !enviando && setCartaSeleccionada(c)}
           >
             <CartaIntercambio carta={c} title="" />
@@ -145,13 +144,12 @@ const ProponerIntercambio = () => {
         ))}
       </div>
 
-      <div className={styles.botones}>
-        <button onClick={() => navigate("/")} disabled={enviando}>
-          Volver a la página principal
-        </button>
-        <button onClick={handleEnviar} disabled={!cartaSeleccionada || enviando}>
+      {/* Botones */}
+      <div className="d-flex gap-2 justify-content-center mt-4 flex-wrap">
+        <Button variant="outline" onClick={() => navigate("/")}>Volver a la página principal</Button>
+        <Button variant="primary" disabled={!cartaSeleccionada || enviando} onClick={handleEnviar}>
           {enviando ? "Enviando..." : "Enviar propuesta"}
-        </button>
+        </Button>
       </div>
     </div>
   );

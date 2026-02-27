@@ -1,32 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./NotFound.module.css";
+import missingno from "../../assets/missingno.webp";
 
 const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
+    <div className={`container ${styles.wrapper} text-center d-flex flex-column justify-content-center align-items-center vh-100`}>
       <img
-        src="https://via.placeholder.com/400x300?text=MissingNo"
+        src={missingno}
         alt="MissingNo"
-        className={styles.image}
+        className={`img-fluid ${styles.image}`}
       />
 
-      <h1 className={styles.code}>404</h1>
-      <h2 className={styles.title}>Not Found</h2>
-      <p className={styles.message}>
-        La funcionalidad que buscas aun no esta disponible o no existe en este
-        momento.
+      <h1 className={`display-1 ${styles.code}`}>404</h1>
+      <h2 className={`h3 ${styles.title}`}>Not Found</h2>
+      <p className={`lead ${styles.message}`}>
+        La funcionalidad que buscas aún no está disponible o no existe en este momento.
       </p>
-
-      <button
-        className={styles.homeButton}
-        onClick={() => navigate("/")}
-        aria-label="Volver a la página principal"
-      >
-        <span className={styles.houseIcon}>🏠</span>
-        Volver a la página principal
-      </button>
     </div>
   );
 };

@@ -4,7 +4,9 @@ import api from "../../services/api";
 import { enriquecerIntercambios } from "../../utils/intercambioUtils";
 import IntercambioHorizontal from "../../components/IntercambioHorizontal/IntercambioHorizontal";
 import Notification from "../../components/Notification/Notification";
+import Button from "../../components/Button/Button"; 
 import styles from "./MisIntercambios.module.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const MisIntercambios = () => {
   const [intercambios, setIntercambios] = useState([]);
@@ -39,7 +41,7 @@ const MisIntercambios = () => {
   }, [estadoFiltro, username]);
 
   return (
-    <div className={styles.container}>
+    <div className="container py-4">
       {notification && (
         <Notification
           type={notification.type}
@@ -48,26 +50,28 @@ const MisIntercambios = () => {
         />
       )}
 
-      <h1 className={styles.titulo}>Mis intercambios</h1>
+      <h2 className="mb-3 text-center">Mis intercambios</h2>
 
-      <div className={styles.filtros}>
+      {/* FILTROS CON BUTTON COMPONENT */}
+      <div className="d-flex gap-2 flex-wrap justify-content-center mb-3">
         {["TODOS", "PENDIENTE", "ACEPTADO", "RECHAZADO"].map((estado) => (
-          <button
+          <Button
             key={estado}
-            className={`${styles.filtroBtn} ${estadoFiltro === estado ? styles.active : ""}`}
+            variant={estadoFiltro === estado ? "primary" : "outline"}
             onClick={() => setEstadoFiltro(estado)}
           >
             {estado}
-          </button>
+          </Button>
         ))}
       </div>
 
+      {/* LISTADO DE INTERCAMBIOS */}
       {loading ? (
-        <p className={styles.loading}>Cargando intercambios...</p>
+        <p className="text-center fst-italic text-secondary">Cargando intercambios...</p>
       ) : intercambios.length === 0 ? (
-        <p className={styles.vacio}>No hay intercambios para mostrar</p>
+        <p className="text-center fst-italic text-secondary">No hay intercambios para mostrar</p>
       ) : (
-        <div className={styles.lista}>
+        <div className="d-flex flex-column gap-3">
           {intercambios.map((i) => (
             <IntercambioHorizontal
               key={i.id}

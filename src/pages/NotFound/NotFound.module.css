@@ -1,49 +1,36 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1rem;
-  text-align: center;
+.wrapper {
+  padding: 2rem;
 }
 
 .image {
-  width: 320px;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 1.2rem;
-  image-rendering: pixelated;
+  width: 50%;       
+  max-width: 20rem; 
+  height: auto;     
+  margin-bottom: 1.5rem;
 }
 
 .code {
-  font-size: 3rem;
-  margin: 0.2rem 0;
+  color: #dc3545; 
+  font-weight: 700;
 }
 
 .title {
-  font-size: 1.4rem;
-  margin: 0.2rem 0 0.6rem 0;
-  color: #333;
+  color: #343a40; 
+  margin-bottom: 1rem;
 }
 
 .message {
-  max-width: 560px;
-  color: #666;
-  margin-bottom: 1rem;
+  color: #6c757d; 
+  max-width: 90%;  
+  margin: 0 auto 1rem;
 }
 
 .homeButton {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.6rem 1rem;
-  background: #333;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  gap: 0.5rem;
 }
 
 .houseIcon {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
 }

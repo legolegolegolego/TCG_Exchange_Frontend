@@ -1,11 +1,14 @@
 .header {
-  background-color: #ffffff;
+  background: linear-gradient(
+    90deg,
+    rgba(237, 208, 38, 0.85), /* amarillo */
+    rgba(156, 39, 176, 0.85)  /* lila */
+  );
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   padding-left: 1rem;
   padding-right: 1rem;
-  font-size: 1rem; /* unifica fuente */
+  font-size: 1rem;
 }
-
 .logo {
   width: 50px;
   height: 50px;
@@ -17,15 +20,19 @@
   font-size: 1rem;
 }
 
-/* Navegación como títulos de página sin subrayado */
+/* Navegación como títulos de página más visibles */
 .navTitle {
   cursor: pointer;
   color: #333;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.2rem;        /* más grande */
+  font-weight: 600;         /* más grueso */
+  transition: color 0.2s, transform 0.2s; /* transición suave */
 }
+
 .navTitle:hover {
-  color: #0d6efd;
+  color: #0d6efd;           /* color al pasar el cursor */
+  transform: scale(1.05);   /* pequeño efecto de aumento */
 }
 
 /* Dropdown personalizado */

@@ -1,34 +1,16 @@
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid #ccc;
-  padding: 12px;
-  border-radius: 6px;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.cartas {
-  display: flex;
-  gap: 20px;
+.container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.carta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.carta img {
-  width: 80px;
-  height: 110px;
-  object-fit: cover;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-}
-
-.detalle {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
+/* Ajustes menores para texto y padding */
+.container .card-body,
+.container p {
+  margin: 0;
+  padding: 0;
 }
