@@ -1,6 +1,6 @@
 import styles from "./RangeSlider.module.css";
 
-const RangeSlider = ({ min = 1, max = 95, step = 1, value = [min, max], onChange }) => {
+const RangeSlider = ({ min = minVal, max = maxVal, step = 1, value = [min, max], onChange }) => {
   const [minVal, maxVal] = value.map(v => Number(v));
 
   const handleMinChange = (e) => {

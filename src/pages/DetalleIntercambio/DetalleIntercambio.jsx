@@ -32,17 +32,14 @@ const DetalleIntercambio = () => {
   const [intercambio, setIntercambio] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState(location.state?.notification || null);
-
   const [showAceptarModal, setShowAceptarModal] = useState(false);
   const [showRechazarModal, setShowRechazarModal] = useState(false);
   const [actionError, setActionError] = useState("");
 
   const handleAceptar = async () => {
     setActionError("");
-
     try {
       await aceptarIntercambio(id);
-
       navigate(`/intercambio/${id}`, {
         state: {
           notification: {
@@ -51,7 +48,6 @@ const DetalleIntercambio = () => {
           }
         }
       });
-
     } catch (err) {
       setActionError(err.response?.data?.mensaje || "Error al aceptar intercambio");
     }
@@ -59,10 +55,8 @@ const DetalleIntercambio = () => {
 
   const handleRechazar = async () => {
     setActionError("");
-
     try {
       await rechazarIntercambio(id);
-
       navigate(`/intercambio/${id}`, {
         state: {
           notification: {
@@ -71,12 +65,10 @@ const DetalleIntercambio = () => {
           }
         }
       });
-
     } catch (err) {
       setActionError(err.response?.data?.mensaje || "Error al rechazar intercambio");
     }
   };
-
 
   useEffect(() => {
     const fetchIntercambioCompleto = async () => {
@@ -84,14 +76,13 @@ const DetalleIntercambio = () => {
       try {
         const res = await api.get(`/intercambios/${id}`);
         const data = res.data;
+        if (!data) throw { response: { data: { mensaje: "Intercambio no encontrado" } } };
 
         const modeloCache = {};
         const fetchCartaCompleta = async (idCartaFisica) => {
           if (!idCartaFisica) return null;
-
           const cfRes = await api.get(`/cartas-fisicas/${idCartaFisica}`);
           const cf = cfRes.data;
-
           let cm;
           if (modeloCache[cf.idCartaModelo]) cm = modeloCache[cf.idCartaModelo];
           else {
@@ -99,7 +90,6 @@ const DetalleIntercambio = () => {
             cm = cmRes.data;
             modeloCache[cf.idCartaModelo] = cm;
           }
-
           return {
             ...cf,
             nombre: cm?.nombre || "Desconocido",
@@ -121,21 +111,21 @@ const DetalleIntercambio = () => {
           cartaDestino,
         });
       } catch (err) {
-        console.error("Error cargando intercambio:", err);
+        const msg = err.response?.data?.mensaje || "Error al cargar el intercambio";
+        setNotification({ type: "error", message: msg });
+        navigate("/", { state: { notification: { type: "error", message: msg } } });
       } finally {
         setLoading(false);
       }
     };
-
-    fetchIntercambioCompleto();
-  }, [id]);
+    if (id) fetchIntercambioCompleto();
+  }, [id, navigate]);
 
   if (loading) return <p>Cargando intercambio...</p>;
-  if (!intercambio) return <p>Intercambio no encontrado</p>;
+  if (!intercambio) return null;
 
   const esDestino = currentUser?.username === intercambio.usernameDestino;
   const puedeActuar = esDestino && intercambio.estado === "PENDIENTE";
-
   const isOrigen = currentUser?.username === intercambio.usernameOrigen;
   const usernameOtro = isOrigen ? intercambio.usernameDestino : intercambio.usernameOrigen;
 
@@ -150,9 +140,7 @@ const DetalleIntercambio = () => {
       )}
 
       <h1>Detalle del intercambio</h1>
-      <p>
-        Propuesta {isOrigen ? "a" : "de"} {usernameOtro}
-      </p>
+      <p>Propuesta {isOrigen ? "a" : "de"} {usernameOtro}</p>
       <p>Estado: {intercambio.estado || "PENDIENTE"}</p>
 
       <div className={styles.cartas}>
@@ -165,45 +153,23 @@ const DetalleIntercambio = () => {
           title={isOrigen ? "Das" : "Recibes"}
         />
       </div>
+
       {puedeActuar && (
         <div className={styles.actions}>
-          <button
-            className={styles.acceptButton}
-            onClick={() => setShowAceptarModal(true)}
-          >
-            Aceptar intercambio
-          </button>
-
-          <button
-            className={styles.rejectButton}
-            onClick={() => setShowRechazarModal(true)}
-          >
-            Rechazar intercambio
-          </button>
+          <button className={styles.acceptButton} onClick={() => setShowAceptarModal(true)}>Aceptar intercambio</button>
+          <button className={styles.rejectButton} onClick={() => setShowRechazarModal(true)}>Rechazar intercambio</button>
         </div>
       )}
+
       {showAceptarModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
             <h3>¿Aceptar intercambio?</h3>
             <p>Esta acción confirmará el intercambio.</p>
-
             {actionError && <p className={styles.error}>{actionError}</p>}
-
             <div className={styles.modalActions}>
-              <button
-                className={styles.cancelButton}
-                onClick={() => setShowAceptarModal(false)}
-              >
-                Volver
-              </button>
-
-              <button
-                className={styles.confirmButton}
-                onClick={handleAceptar}
-              >
-                Sí, aceptar
-              </button>
+              <button className={styles.cancelButton} onClick={() => setShowAceptarModal(false)}>Volver</button>
+              <button className={styles.confirmButton} onClick={handleAceptar}>Sí, aceptar</button>
             </div>
           </div>
         </div>
@@ -214,23 +180,10 @@ const DetalleIntercambio = () => {
           <div className={styles.modal}>
             <h3>¿Rechazar intercambio?</h3>
             <p>Esta acción cancelará el intercambio.</p>
-
             {actionError && <p className={styles.error}>{actionError}</p>}
-
             <div className={styles.modalActions}>
-              <button
-                className={styles.cancelButton}
-                onClick={() => setShowRechazarModal(false)}
-              >
-                Volver
-              </button>
-
-              <button
-                className={styles.confirmDeleteButton}
-                onClick={handleRechazar}
-              >
-                Sí, rechazar
-              </button>
+              <button className={styles.cancelButton} onClick={() => setShowRechazarModal(false)}>Volver</button>
+              <button className={styles.confirmDeleteButton} onClick={handleRechazar}>Sí, rechazar</button>
             </div>
           </div>
         </div>

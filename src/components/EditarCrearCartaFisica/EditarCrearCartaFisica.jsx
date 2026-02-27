@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "./CartaModal.module.css";
+import styles from "./EditarCrearCartaFisica.module.css";
 import { getCartasModelo } from "../../services/cartasModelo";
 
-const CartaModal = ({ isOpen, onClose, onSave, initialData }) => {
+const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
   const [modelos, setModelos] = useState([]);
   const [form, setForm] = useState({
     idCartaModelo: "",
@@ -103,4 +103,4 @@ const CartaModal = ({ isOpen, onClose, onSave, initialData }) => {
   );
 };
 
-export default CartaModal;
+export default EditarCrearCartaFisica;

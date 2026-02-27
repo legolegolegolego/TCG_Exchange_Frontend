@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
 import CartaIntercambio from "../../components/CartaIntercambio/CartaIntercambio";
@@ -17,8 +17,6 @@ const ProponerIntercambio = () => {
   const [cartaSeleccionada, setCartaSeleccionada] = useState(null);
   const [loading, setLoading] = useState(true);
   const [enviando, setEnviando] = useState(false);
-
-  // Estado para notificación de error
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
@@ -27,7 +25,6 @@ const ProponerIntercambio = () => {
     const fetchDatos = async () => {
       setLoading(true);
       try {
-        // Carta destino (física + modelo)
         const cfRes = await api.get(`/cartas-fisicas/${idCartaDestino}`);
         const cf = cfRes.data;
         const cmRes = await api.get(`/cartas-modelo/${cf.idCartaModelo}`);
@@ -44,7 +41,6 @@ const ProponerIntercambio = () => {
           imagenUrl: cf?.imagenUrl || cm?.imagenUrl || "/placeholder.png",
         });
 
-        // Mis cartas disponibles
         const misCartasRes = await api.get(`/cartas-fisicas/usuario/${username}`);
         const disponibles = misCartasRes.data || [];
         const modeloCache = {};
@@ -72,8 +68,8 @@ const ProponerIntercambio = () => {
 
         setMisCartas(misCartasCompletas);
       } catch (err) {
-        console.error("Error cargando datos:", err);
-        setNotification({ type: "error", message: "No se pudo cargar la carta de destino o tus cartas." });
+        const msg = err.response?.data?.mensaje || "No se pudo cargar la carta de destino o tus cartas.";
+        setNotification({ type: "error", message: msg });
       } finally {
         setLoading(false);
       }
@@ -96,16 +92,12 @@ const ProponerIntercambio = () => {
 
       const intercambioCreado = res.data;
 
-      // Redirigir a detalle del intercambio con notificación de éxito
       navigate(`/intercambio/${intercambioCreado.id}`, {
         state: {
           notification: { type: "success", message: "Propuesta enviada correctamente" },
         },
       });
     } catch (err) {
-      console.error("Error enviando propuesta:", err);
-
-      // Captura mensaje del backend si existe
       const msg = err.response?.data?.mensaje || "No se pudo enviar la propuesta. Intenta de nuevo.";
       setNotification({ type: "error", message: msg });
       setEnviando(false);
@@ -113,7 +105,10 @@ const ProponerIntercambio = () => {
   };
 
   if (loading) return <p>Cargando datos...</p>;
-  if (!cartaDestino) return <p>No se pudo cargar la carta de destino.</p>;
+  if (!cartaDestino) {
+    navigate("/", { state: { notification: { type: "error", message: "La carta solicitada no existe." } } });
+    return null;
+  }
 
   return (
     <div className={styles.container}>
