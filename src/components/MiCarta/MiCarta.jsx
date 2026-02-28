@@ -1,7 +1,7 @@
 import Button from "../Button/Button";
 import styles from "./MiCarta.module.css";
 
-const MiCarta = ({ carta, onEdit, onDelete }) => {
+const MiCarta = ({ carta, onEdit, onDelete, isAdmin }) => {
   const { nombre, numero, estadoCarta, imagenUrl, disponible } = carta;
 
   // Mapear estado a color Bootstrap
@@ -13,9 +13,8 @@ const MiCarta = ({ carta, onEdit, onDelete }) => {
 
   return (
     <div
-      className={`card h-100 shadow-sm ${styles.card} ${
-        !disponible ? styles.noDisponible : ""
-      }`}
+      className={`card h-100 shadow-sm ${styles.card} ${!disponible ? styles.noDisponible : ""
+        }`}
     >
       {/* Imagen */}
       <div
@@ -51,14 +50,14 @@ const MiCarta = ({ carta, onEdit, onDelete }) => {
 
         {disponible && (
           <div className="d-flex justify-content-center gap-2 mt-auto">
-            <Button
+            {!isAdmin && <Button
               variant="outline-secondary"
               size="sm"
               onClick={() => onEdit(carta)}
               className={styles.editButton}
             >
               Editar
-            </Button>
+            </Button>}
             <Button
               variant="outline-secondary"
               size="sm"

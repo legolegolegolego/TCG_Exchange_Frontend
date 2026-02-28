@@ -6,10 +6,11 @@ import api from "../../services/api";
 import MiCarta from "../../components/MiCarta/MiCarta";
 import EditarCrearCartaFisica from "../../components/EditarCrearCartaFisica/EditarCrearCartaFisica";
 import Notification from "../../components/Notification/Notification";
-import Button from "../../components/Button/Button"; 
+import Button from "../../components/Button/Button";
 
 import styles from "./MisCartas.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useParams } from "react-router-dom";
 
 const modeloCache = {};
 
@@ -41,13 +42,16 @@ const MisCartas = () => {
   const [notification, setNotification] = useState(null);
 
   const user = getCurrentUser();
+  const { username } = useParams();
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN")
 
   const fetchCartas = async () => {
     if (!user) return;
+    if (user.username !== username && !isAdmin) return;
     try {
       const [disp, noDisp] = await Promise.all([
-        getDisponiblesByUsername(user.username),
-        getNoDisponiblesByUsername(user.username)
+        getDisponiblesByUsername(username),
+        getNoDisponiblesByUsername(username)
       ]);
 
       const disponibles = disp.data.map(c => ({ ...c, disponible: true }));
@@ -136,6 +140,7 @@ const MisCartas = () => {
           <div key={carta.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
             <MiCarta
               carta={carta}
+              isAdmin={isAdmin}
               onEdit={(c) => { setEditingCarta(c); setShowModal(true); }}
               onDelete={(c) => setDeleteTarget(c)}
             />
@@ -144,9 +149,17 @@ const MisCartas = () => {
       </div>
 
       {/* BOTÓN CREAR */}
-      <button className={`btn btn-primary position-fixed ${styles.addButton}`} onClick={() => { setEditingCarta(null); setShowModal(true); }}>
-        + Subir nueva carta
-      </button>
+      {!isAdmin && (
+        <button
+          className={`btn btn-primary position-fixed ${styles.addButton}`}
+          onClick={() => {
+            setEditingCarta(null);
+            setShowModal(true);
+          }}
+        >
+          + Subir nueva carta
+        </button>
+      )}
 
       {/* MODAL CREAR/EDITAR */}
       <EditarCrearCartaFisica

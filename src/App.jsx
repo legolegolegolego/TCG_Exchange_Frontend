@@ -68,9 +68,9 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/mis-cartas"
+          path="/cartas/:username"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute matchUsernameOrAdmin={true}>
               <MisCartas />
             </ProtectedRoute>
           }

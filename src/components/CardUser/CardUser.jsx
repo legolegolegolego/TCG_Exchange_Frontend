@@ -21,7 +21,7 @@ const CardUser = ({ user, onDelete }) => {
     const [deleteErr, setDeleteErr] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
-    const goToUser = () => navigate(`/usuario/${encodeURIComponent(username)}`);
+    const goToUser = () => navigate(`/cartas/${encodeURIComponent(username)}`);
     const goToIntercambios = () => navigate("/mis-intercambios");
 
     useEffect(() => {
