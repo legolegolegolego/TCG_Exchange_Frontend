@@ -1,2 +1,0 @@
-componente que formará una página con un buscador para introducir nombre de usuario y utilizarlo
-en paginas intercambios y cartas-fisicas.

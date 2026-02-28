@@ -1,0 +1,72 @@
+.cardUser {
+	border-radius: 0.75rem;
+	box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Efecto hover ligero */
+.cardUser:hover {
+	transform: translateY(-0.1rem);
+	box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Botones deshabilitados más visibles */
+.cardUser button:disabled {
+	background-color: #e0e0e0 !important; /* gris claro */
+	border-color: #b0b0b0 !important;
+	color: #6c757d !important;
+	opacity: 1 !important; /* evitar que se vea demasiado transparente */
+	cursor: not-allowed !important;
+	pointer-events: all; /* mantener tooltip accesible si hay title */
+}
+
+/* Opcional: hover en botones habilitados */
+.cardUser button:not(:disabled):hover {
+	filter: brightness(0.9);
+}
+
+.modalOverlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+.modal {
+	background: white;
+	padding: 1.5rem;
+	border-radius: 0.75rem;
+	width: 90%;
+	max-width: 22rem;
+}
+
+.modalActions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.5rem;
+	margin-top: 1rem;
+}
+
+.cancelButton {
+	background: #6c757d;
+	color: white;
+	border: none;
+	padding: 0.4rem 0.75rem;
+	border-radius: 0.3rem;
+}
+
+.confirmDeleteButton {
+	background: #dc3545;
+	color: white;
+	border: none;
+	padding: 0.4rem 0.75rem;
+	border-radius: 0.3rem;
+}
+
+.error {
+	color: red;
+	font-size: 0.85rem;
+}

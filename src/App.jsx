@@ -14,6 +14,7 @@ import MisIntercambios from "./pages/MisIntercambios/MisIntercambios.jsx";
 import DetalleIntercambio from "./pages/DetalleIntercambio/DetalleIntercambio.jsx";
 import ProponerIntercambio from "./pages/ProponerIntercambio/ProponerIntercambio.jsx";
 import MisCartas from "./pages/MisCartas/MisCartas.jsx";
+import Usuarios from "./pages/Usuarios/Usuarios.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -92,6 +93,16 @@ const AppContent = () => {
         <Route path="/no-disponible" element={<NotFound />} />
         {/* Ruta para URLs no existentes */}
         <Route path="*" element={<Navigate to="/no-disponible" replace />} />
+
+        {/* solo ADMIN: */}
+        <Route
+          path="/usuarios"
+          element={
+            <ProtectedRoute>
+              <Usuarios />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </>

@@ -58,19 +58,28 @@ const Header = () => {
 
           {username && (
             <>
-              <span
+              {/* Si USER */}
+              <span 
                 className={`fw-semibold ${styles.navTitle}`}
-                onClick={() => navigate(isAdmin ? "/intercambios" : "/mis-intercambios")}
+                onClick={() => navigate("/mis-intercambios")}
                 role="button"
               >
-                {isAdmin ? "Intercambios" : "Mis Intercambios"}
+              {!isAdmin && "Mis Intercambios"}
               </span>
               <span
                 className={`fw-semibold ${styles.navTitle}`}
-                onClick={() => navigate(isAdmin ? "/cartas-fisicas" : "/mis-cartas")}
+                onClick={() => navigate("/mis-cartas")}
                 role="button"
               >
-                {isAdmin ? "Cartas Físicas" : "Mis Cartas"}
+                {!isAdmin && "Mis Cartas"}
+              </span>
+              {/* Si ADMIN */}
+              <span
+                className={`fw-semibold ${styles.navTitle}`}
+                onClick={() => navigate("/usuarios")}
+                role="button"
+              >
+                {isAdmin && "Usuarios"}
               </span>
             </>
           )}
@@ -92,11 +101,12 @@ const Header = () => {
             </>
           ) : (
             <div className="d-flex align-items-center gap-2 flex-wrap position-relative">
+              {!isAdmin && 
               <WishlistButton
                 onClick={() => navigate("/no-disponible")}
                 title="Favoritos"
                 ariaLabel="Favoritos"
-              />
+              />}
 
               {/* Dropdown “Mi Perfil” */}
               <div className="dropdown" style={{ position: "relative" }}>
