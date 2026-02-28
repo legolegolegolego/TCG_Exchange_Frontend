@@ -1,0 +1,4 @@
+la pagina constará de un buscador donde introducir nombre de usuario y saldrán los intercambios que tiene asociados,
+usando componente intercambiohorizontal y modelo de pagina mis intercambios para hacer lo mismo de enlistar intercambios,
+y se cambie recibes -> recibe y das -> da, de manera que habiendo buscado el usuario "luis" muestre sus intercambios con esta semántica,
+dando a entender lo que recibe y lo que da..

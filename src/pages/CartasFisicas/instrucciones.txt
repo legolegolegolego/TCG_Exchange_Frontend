@@ -1,0 +1,1 @@
+la pagina constará de un buscador donde introducir nombre de usuario y redigirá a UsuarioCartas.

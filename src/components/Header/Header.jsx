@@ -2,15 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { getCurrentUser } from "../../utils/token.js";
 import WishlistButton from "../WishlistButton/WishlistButton.jsx";
 import styles from "./Header.module.css";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { token, logout } = useAuth();
-  const currentUser = getCurrentUser();
-  const username = currentUser?.username;
+  const { token, logout, user } = useAuth();
+  const username = user?.username;
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN")
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
 
@@ -54,24 +53,24 @@ const Header = () => {
             onClick={() => navigate("/")}
             role="button"
           >
-            Explorar Cartas
+            {isAdmin ? "Cartas Modelo" : "Explorar Cartas"}
           </span>
 
           {username && (
             <>
               <span
                 className={`fw-semibold ${styles.navTitle}`}
-                onClick={() => navigate("/mis-intercambios")}
+                onClick={() => navigate(isAdmin ? "/intercambios" : "/mis-intercambios")}
                 role="button"
               >
-                Mis intercambios
+                {isAdmin ? "Intercambios" : "Mis Intercambios"}
               </span>
               <span
                 className={`fw-semibold ${styles.navTitle}`}
-                onClick={() => navigate("/mis-cartas")}
+                onClick={() => navigate(isAdmin ? "/cartas-fisicas" : "/mis-cartas")}
                 role="button"
               >
-                Mis cartas
+                {isAdmin ? "Cartas Físicas" : "Mis Cartas"}
               </span>
             </>
           )}
