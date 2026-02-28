@@ -98,7 +98,7 @@ const AppContent = () => {
         <Route
           path="/usuarios"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute requireAdmin={true}>
               <Usuarios />
             </ProtectedRoute>
           }

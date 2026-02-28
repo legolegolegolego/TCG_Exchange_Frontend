@@ -135,7 +135,14 @@ const Usuarios = () => {
                             </p>
                         ) : (
                             paginatedUsers.map((user) => (
-                                <CardUser key={user.id} user={user} />
+                                <CardUser key={user.id}
+                                    user={user}
+                                    onDelete={(deletedId) =>
+                                        setUsuarios((prev) =>
+                                            prev.filter((u) => u.id !== deletedId)
+                                        )
+                                    }
+                                />
                             ))
                         )}
                     </div>
