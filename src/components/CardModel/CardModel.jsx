@@ -36,9 +36,9 @@ const CardModel = ({ carta }) => {
   const navigate = useNavigate();
   const { id, numero, nombre, rareza, tipoPokemon, tipoCarta, imagenUrl } = carta || {};
 
-  const handleClick = () => { if (id) navigate(`/cartas/${id}`); };
+  const handleClick = () => { if (id) navigate(`/cartas-modelo/${id}`); };
   const handleKeyDown = (e) => {
-    if ((e.key === "Enter" || e.key === " ") && id) navigate(`/cartas/${id}`);
+    if ((e.key === "Enter" || e.key === " ") && id) navigate(`/cartas-modelo/${id}`);
   };
 
   const glowColor = tipoColores[tipoPokemon] || "#999";
@@ -93,7 +93,7 @@ const CardModel = ({ carta }) => {
             className="w-100 mt-1"
             onClick={(e) => {
               e.stopPropagation(); // evita que active el onClick del card
-              navigate(`/cartas/${id}`);
+              navigate(`/cartas-modelo/${id}`);
             }}
           >
             Ver más

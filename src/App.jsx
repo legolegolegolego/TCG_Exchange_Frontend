@@ -84,7 +84,7 @@ const AppContent = () => {
           }
         />
         <Route
-          path="/cartas/:id"
+          path="/cartas-modelo/:id"
           element={
             <CardDetail />
           }
