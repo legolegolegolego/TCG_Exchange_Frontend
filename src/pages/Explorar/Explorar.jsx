@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getCartasModelo } from "../../services/cartasModelo";
+import { getCurrentUser } from "../../utils/token";
 import CardModel from "../../components/CardModel/CardModel";
 import RangeSlider from "../../components/RangeSlider/RangeSlider";
 import Notification from "../../components/Notification/Notification";
+import EditarCrearCartaModelo from "../../components/EditarCrearCartaModelo/EditarCrearCartaModelo";
+import styles from "./Explorar.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SORT_OPTIONS = [
@@ -34,6 +37,13 @@ const Explorar = () => {
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [notification, setNotification] = useState(location.state?.notification || null);
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalErrors, setModalErrors] = useState(null);
+  const [editingCarta, setEditingCarta] = useState(null);
+
+  const user = getCurrentUser();
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN")
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -68,7 +78,7 @@ const Explorar = () => {
         const resMin = await getCartasModelo({ page: 0, size: 1, sort: "numero,asc" });
         const minNum = resMin?.data?.content?.[0]?.numero;
         const minVal = Number(minNum) || 1;
-        const maxVal = Number(maxNum) || 1000;
+        const maxVal = Number(maxNum) || 95;
         setNumberBounds({ min: minVal, max: maxVal });
         setFilters(prev => ({ ...prev, numeroMin: minVal, numeroMax: maxVal }));
       } catch (err) {
@@ -88,6 +98,26 @@ const Explorar = () => {
   const handleClear = () => {
     setFilters({ numeroMin: "", numeroMax: "", nombre: "", tipoCarta: "", rareza: "", tipoPokemon: "", evolucion: "" });
     setPage(0);
+  };
+
+  // Guardar carta modelo desde modal
+  const handleSave = async (data) => {
+    try {
+      if (editingCarta?.id) {
+        await updateCartaModelo(editingCarta.id, data);
+        setNotification({ type: "success", message: "Carta modelo editada correctamente" });
+      } else {
+        await createCartaModelo(data);
+        setNotification({ type: "success", message: "Carta modelo creada correctamente" });
+      }
+      setShowModal(false);
+      setEditingCarta(null);
+      fetchCards();
+    } catch (err) {
+      const msg = err.response?.data?.mensaje || "Error al guardar la carta modelo";
+      setNotification({ type: "error", message: msg });
+      console.error(err);
+    }
   };
 
   return (
@@ -188,6 +218,18 @@ const Explorar = () => {
               <button className="btn btn-outline-primary btn-sm" onClick={() => setPage(p => Math.min((totalPages || 1) - 1, p + 1))} disabled={page >= (totalPages || 1) - 1}>Siguiente</button>
             </div>
           </div>
+          {/* BOTÓN CREAR */}
+          {isAdmin && (
+            <button
+              className={`btn btn-primary position-fixed ${styles.addButton}`}
+              onClick={() => {
+                setEditingCarta(null);
+                setShowModal(true);
+              }}
+            >
+              + Crear nueva carta modelo
+            </button>
+          )}
 
           <div className="row g-3">
             {cards.length === 0 && !loading && <p>No se encontraron cartas.</p>}
@@ -199,6 +241,24 @@ const Explorar = () => {
           </div>
         </main>
       </div>
+
+      {/* MODAL CREAR/EDITAR CARTA MODELO */}
+      <EditarCrearCartaModelo
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSave={(data) => {
+          setShowModal(false);
+          fetchCards();
+          setNotification({ type: "success", message: editingCarta ? "Carta modelo editada correctamente" : "Carta modelo creada correctamente" });
+          setEditingCarta(null);
+          setModalErrors(null);
+        }}
+        onError={(err) => {
+          setModalErrors(err.fieldErrors || {});
+          setNotification({ type: "error", message: err.message || "Error al guardar la carta modelo" });
+        }}
+        initialData={editingCarta}
+      />
     </div>
   );
 };

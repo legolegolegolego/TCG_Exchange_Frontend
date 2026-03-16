@@ -9,7 +9,7 @@ const Login = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
+    const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [notification, setNotification] = useState(null);
@@ -27,7 +27,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const token = await loginUser(username, password);
+            const token = await loginUser(identifier, password);
             login(token);
 
             navigate("/"); // Navega inmediatamente a la principal
@@ -51,9 +51,9 @@ const Login = () => {
 
                 <input
                     type="text"
-                    placeholder="Nombre de usuario"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Nombre de usuario o correo electrónico"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
                     className={styles.input}
                 />
 

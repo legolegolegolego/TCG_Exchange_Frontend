@@ -26,3 +26,11 @@ export const changePassword = async (id, passwordDto) => {
 export const deleteUser = async (id) => {
 	return await api.delete(`/usuarios/${id}`);
 };
+
+export default {
+	getAllUsers,
+	getByUsername,
+	changeUsername,
+	changePassword,
+	deleteUser,
+};

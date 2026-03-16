@@ -1,0 +1,11 @@
+.modalOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cancelButton {
+  min-width: 100px;
+}
+
+.confirmDeleteButton {
+  min-width: 100px;
+}
