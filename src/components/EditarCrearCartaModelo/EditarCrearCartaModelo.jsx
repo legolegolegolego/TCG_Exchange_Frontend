@@ -49,8 +49,10 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
             // Si no es Pokemon, pone los campos null para evitar problemas de validación de enum en el backend
             const dataToSend = {
                 ...form,
-                tipoPokemon: form.tipoCarta === "POKEMON" ? form.tipoPokemon : null,
-                evolucion: form.tipoCarta === "POKEMON" ? form.evolucion : null
+                tipoCarta: form.tipoCarta || null,
+                rareza: form.rareza || null,
+                tipoPokemon: form.tipoCarta === "POKEMON" ? (form.tipoPokemon || null) : null,
+                evolucion: form.tipoCarta === "POKEMON" ? (form.evolucion || null) : null
             };
 
             if (initialData?.id) {
