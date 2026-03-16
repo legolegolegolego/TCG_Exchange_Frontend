@@ -45,11 +45,15 @@ const EditarPerfil = () => {
 
             await changeUsername(userId, username);
 
-            // Usamos notification en vez de <p>
-            setNotification({
+            // Guardamos la notificación en sessionStorage
+            sessionStorage.setItem("notification", JSON.stringify({
                 type: "success",
                 message: "Nombre de usuario actualizado correctamente."
-            });
+            }));
+
+            logout();
+
+            navigate("/login", { replace: true });
         } catch (err) {
             setUserErr(err.response?.data?.mensaje || err.message || "Error al actualizar usuario");
         }
@@ -64,14 +68,19 @@ const EditarPerfil = () => {
 
             await changePassword(userId, { passwordActual, passwordNueva, passwordNueva2 });
 
-            setNotification({
+            sessionStorage.setItem("notification", JSON.stringify({
                 type: "success",
                 message: "Contraseña actualizada correctamente."
-            });
+            }));
 
             setPasswordActual("");
             setPasswordNueva("");
             setPasswordNueva2("");
+
+            logout();
+
+            navigate("/login", { replace: true });
+
         } catch (err) {
             setPassErr(err.response?.data?.mensaje || err.message || "Error al actualizar contraseña");
         }
