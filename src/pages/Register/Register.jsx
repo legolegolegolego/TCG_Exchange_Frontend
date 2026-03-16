@@ -8,6 +8,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
     const [error, setError] = useState("");
@@ -17,12 +18,12 @@ const Register = () => {
         e.preventDefault();
 
         try {
-            await registerUser(username, password, password2);
+            await registerUser(username, email, password, password2);
 
             // Guardar notificación para login
             sessionStorage.setItem("notification", JSON.stringify({
                 type: "success",
-                message: "Registrado correctamente"
+                message: "Registrado correctamente, te hemos enviado un correo de verificación"
             }));
 
             navigate("/login"); // Navega inmediatamente a login
@@ -49,6 +50,14 @@ const Register = () => {
                     placeholder="Nombre de usuario"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    className={styles.input}
+                />
+
+                <input
+                    type="email"
+                    placeholder="Correo electrónico"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className={styles.input}
                 />
 
