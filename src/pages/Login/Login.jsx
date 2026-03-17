@@ -14,7 +14,7 @@ const Login = () => {
     const [error, setError] = useState("");
     const [notification, setNotification] = useState(null);
 
-    // Mostrar notificación de logout / cuenta eliminada
+    // Mostrar notificaciones de páginas hijas
     useEffect(() => {
         const stored = sessionStorage.getItem("notification");
         if (stored) {
@@ -68,6 +68,9 @@ const Login = () => {
                 <button type="submit" className={styles.button}>Iniciar sesión</button>
 
                 <hr />
+                <p>
+                    ¿Has olvidado tu contraseña? <a href="/forgot-password">Recuérdala</a>
+                </p>
                 <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
 
                 {error && <p className={styles.error}>{error}</p>}

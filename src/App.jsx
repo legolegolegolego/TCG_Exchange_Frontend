@@ -15,6 +15,8 @@ import DetalleIntercambio from "./pages/DetalleIntercambio/DetalleIntercambio.js
 import ProponerIntercambio from "./pages/ProponerIntercambio/ProponerIntercambio.jsx";
 import MisCartas from "./pages/MisCartas/MisCartas.jsx";
 import Usuarios from "./pages/Usuarios/Usuarios.jsx";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -34,8 +36,22 @@ const AppContent = () => {
       {location.pathname !== "/" && <BackTab />}
 
       <Routes>
+        {/* Rutas públicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
+        <Route path="/usuario/:username" element={<UsuarioCartas />} />
+        <Route
+          path="/cartas-modelo/:id"
+          element={
+            <CardDetail />
+          }
+        />
+        <Route path="/no-disponible" element={<NotFound />} />
+        {/* Ruta para URLs no existentes */}
+        <Route path="*" element={<Navigate to="/no-disponible" replace />} />
 
         <Route
           path="/"
@@ -43,6 +59,8 @@ const AppContent = () => {
             <Explorar />
           }
         />
+
+        {/* Rutas protegidas */}
         <Route
           path="/mis-intercambios"
           element={
@@ -83,16 +101,6 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/cartas-modelo/:id"
-          element={
-            <CardDetail />
-          }
-        />
-        <Route path="/usuario/:username" element={<UsuarioCartas />} />
-        <Route path="/no-disponible" element={<NotFound />} />
-        {/* Ruta para URLs no existentes */}
-        <Route path="*" element={<Navigate to="/no-disponible" replace />} />
 
         {/* solo ADMIN: */}
         <Route
