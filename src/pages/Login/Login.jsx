@@ -12,6 +12,7 @@ const Login = () => {
     const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [errorLink, setErrorLink] = useState(null);
     const [notification, setNotification] = useState(null);
 
     // Mostrar notificaciones de páginas hijas
@@ -25,14 +26,28 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
+        setErrorLink(null);
 
         try {
             const token = await loginUser(identifier, password);
             login(token);
-
             navigate("/"); // Navega inmediatamente a la principal
         } catch (err) {
-            setError(err.response?.data?.mensaje || "Error inesperado");
+            const mensaje = err.response?.data?.mensaje || "Error inesperado";
+
+            // Si el error es por email no verificado, añadimos el enlace en el mensaje
+            if (mensaje.includes("Email no verificado")) {
+                setError(mensaje);
+                setErrorLink(
+                    <a href="/resend-verification" className={styles.link}>
+                        Reenviar correo de verificación
+                    </a>
+                );
+            } else {
+                setError(mensaje);
+                setErrorLink(null);
+            }
         }
     };
 
@@ -74,6 +89,7 @@ const Login = () => {
                 <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
 
                 {error && <p className={styles.error}>{error}</p>}
+                {errorLink && <p className={styles.error}>{errorLink}</p>}
             </form>
         </>
     );

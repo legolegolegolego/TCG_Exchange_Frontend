@@ -17,6 +17,7 @@ import MisCartas from "./pages/MisCartas/MisCartas.jsx";
 import Usuarios from "./pages/Usuarios/Usuarios.jsx";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import ResendVerification from "./pages/ResendVerification/ResendVerification.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -41,6 +42,7 @@ const AppContent = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/resend-verification" element={<ResendVerification />} />
 
         <Route path="/usuario/:username" element={<UsuarioCartas />} />
         <Route

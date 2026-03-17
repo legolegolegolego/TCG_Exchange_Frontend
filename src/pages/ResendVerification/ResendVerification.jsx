@@ -1,40 +1,26 @@
 import { useState } from "react";
-import { forgotPassword } from "../../services/auth";
+import { resendVerification } from "../../services/auth";
 import Notification from "../../components/Notification/Notification.jsx";
-import styles from "./ForgotPassword.module.css";
+import styles from "./ResendVerification.module.css";
 
-const ForgotPassword = () => {
+const ResendVerification = () => {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState(null);
     const [error, setError] = useState("");
-    const [errorLink, setErrorLink] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-        setErrorLink(null);
 
         try {
-            await forgotPassword(email);
+            await resendVerification(email);
 
             setMessage({
                 type: "success",
-                message: "Se ha enviado un email para restablecer la contraseña",
+                message: "Se ha enviado un email de verificación. Revisa tu bandeja de entrada.",
             });
         } catch (err) {
-            const mensaje = err.response?.data?.mensaje || "Error al enviar el email";
-
-            if (mensaje.includes("Debes verificar tu email antes de recuperar la contraseña.")) {
-                setError(mensaje);
-                setErrorLink(
-                    <a href="/resend-verification" className={styles.link}>
-                        Reenviar correo de verificación
-                    </a>
-                );
-            } else {
-                setError(mensaje);
-                setErrorLink(null);
-            }
+            setError(err.response?.data?.mensaje || "Error al enviar el email de verificación");
         }
     };
 
@@ -49,7 +35,7 @@ const ForgotPassword = () => {
             )}
 
             <form onSubmit={handleSubmit} className={styles.formContainer}>
-                <h2 className={styles.title}>Recuperar contraseña</h2>
+                <h2 className={styles.title}>Reenviar correo de verificación</h2>
 
                 <input
                     type="email"
@@ -57,17 +43,17 @@ const ForgotPassword = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={styles.input}
+                    required
                 />
 
                 <button type="submit" className={styles.button}>
-                    Enviar email
+                    Enviar correo
                 </button>
 
                 {error && <p className={styles.error}>{error}</p>}
-                {errorLink && <p className={styles.error}>{errorLink}</p>}
             </form>
         </>
     );
 };
 
-export default ForgotPassword;
+export default ResendVerification;
