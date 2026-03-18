@@ -8,16 +8,14 @@ const BackTab = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    if (location.state && location.state.from) {
-      navigate(location.state.from);
+    if (location.key !== "default") {
+      navigate(-1);
     } else {
       navigate("/");
     }
   };
 
-  const label = location.state && location.state.fromLabel
-    ? `← Volver a ${location.state.fromLabel}`
-    : "← Volver a la página principal";
+  const label = "← Volver a la página anterior";
 
   return (
     <div className={styles.wrapper}>
