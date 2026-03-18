@@ -22,7 +22,7 @@ const CardUser = ({ user, onDelete }) => {
     const [deleting, setDeleting] = useState(false);
 
     const goToUser = () => navigate(`/cartas/${encodeURIComponent(username)}`);
-    const goToIntercambios = () => navigate("/mis-intercambios");
+    const goToIntercambios = () => navigate(`/intercambios/${encodeURIComponent(username)}`);
 
     useEffect(() => {
         const checkData = async () => {

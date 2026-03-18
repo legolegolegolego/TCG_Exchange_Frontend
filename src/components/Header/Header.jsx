@@ -61,7 +61,7 @@ const Header = () => {
               {/* Si USER */}
               <span 
                 className={`fw-semibold ${styles.navTitle}`}
-                onClick={() => navigate("/mis-intercambios")}
+                onClick={() => navigate("/intercambios/" + username)}
                 role="button"
               >
               {!isAdmin && "Mis Intercambios"}

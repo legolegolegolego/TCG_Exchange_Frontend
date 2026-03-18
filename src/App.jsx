@@ -64,9 +64,9 @@ const AppContent = () => {
 
         {/* Rutas protegidas */}
         <Route
-          path="/mis-intercambios"
+          path="/intercambios/:username"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute matchUsernameOrAdmin={true}>
               <MisIntercambios />
             </ProtectedRoute>
           }

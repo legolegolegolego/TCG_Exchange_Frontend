@@ -7,6 +7,7 @@ import Notification from "../../components/Notification/Notification";
 import Button from "../../components/Button/Button"; 
 import styles from "./MisIntercambios.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useParams } from "react-router-dom";
 
 const MisIntercambios = () => {
   const [intercambios, setIntercambios] = useState([]);
@@ -14,13 +15,16 @@ const MisIntercambios = () => {
   const [estadoFiltro, setEstadoFiltro] = useState("TODOS");
   const [notification, setNotification] = useState(null);
 
-  const currentUser = useMemo(() => getCurrentUser(), []);
-  const username = currentUser?.username;
+  const user = getCurrentUser();
+  const { username } = useParams();
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN")
 
   useEffect(() => {
-    if (!username) return;
-
+    
     const fetchIntercambiosCompletos = async () => {
+      if (!user) return;
+      if (user.username !== username && !isAdmin) return;
+
       setLoading(true);
       try {
         const estadoQuery = estadoFiltro !== "TODOS" ? `?estado=${estadoFiltro}` : "";
@@ -38,7 +42,7 @@ const MisIntercambios = () => {
     };
 
     fetchIntercambiosCompletos();
-  }, [estadoFiltro, username]);
+  }, [estadoFiltro]);
 
   return (
     <div className="container py-4">

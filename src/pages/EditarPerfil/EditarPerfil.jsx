@@ -8,7 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 
 const EditarPerfil = () => {
-    const [activeTab, setActiveTab] = useState("credenciales"); // Tab activa: credenciales o direccion
+    const [activeTab, setActiveTab] = useState("credenciales"); // Tab activa: credenciales, direccion, eliminar
     const location = useLocation();
 
     // --- Datos de usuario ---
