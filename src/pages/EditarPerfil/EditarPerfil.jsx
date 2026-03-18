@@ -4,11 +4,12 @@ import { getDireccionByUsername, updateDireccion, createDireccion } from "../../
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useState, useEffect } from "react";
 import { getCurrentUser } from "../../utils/token.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 
 const EditarPerfil = () => {
     const [activeTab, setActiveTab] = useState("credenciales"); // Tab activa: credenciales o direccion
+    const location = useLocation();
 
     // --- Datos de usuario ---
     const [username, setUsername] = useState("");
@@ -38,10 +39,23 @@ const EditarPerfil = () => {
     const [pais, setPais] = useState("");
 
     useEffect(() => {
+        if (location.state?.tab) {
+            setActiveTab(location.state.tab);
+        }
+    }, [location.state]);
+
+    useEffect(() => {
         const user = getCurrentUser();
+        const stored = sessionStorage.getItem("notification");
+
         if (!user) {
             setUserErr("Usuario no autenticado.");
             return;
+        }
+
+        if (stored) {
+            setNotification(JSON.parse(stored));
+            sessionStorage.removeItem("notification");
         }
 
         if (user.username) setUsername(user.username);

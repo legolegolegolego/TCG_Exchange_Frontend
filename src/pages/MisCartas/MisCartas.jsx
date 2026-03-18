@@ -10,7 +10,7 @@ import Button from "../../components/Button/Button";
 
 import styles from "./MisCartas.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const modeloCache = {};
 
@@ -40,6 +40,8 @@ const MisCartas = () => {
   const [editingCarta, setEditingCarta] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [notification, setNotification] = useState(null);
+  const navigate = useNavigate();
+
 
   const user = getCurrentUser();
   const { username } = useParams();
@@ -81,7 +83,17 @@ const MisCartas = () => {
       }
     } catch (err) {
       const msg = err.response?.data?.mensaje || "Error al guardar la carta";
+
       setNotification({ type: "error", message: msg });
+
+      if (msg.includes("Debes registrar una dirección antes de crear cartas para intercambio")) {
+        sessionStorage.setItem("notification", JSON.stringify({
+          type: "error",
+          message: msg
+        }));
+        navigate("/editar-perfil", { state: { tab: "direccion" } });
+        return;
+      }
       console.error(err);
     }
     setShowModal(false);
