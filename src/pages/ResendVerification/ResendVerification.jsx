@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { resendVerification } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./ResendVerification.module.css";
 
@@ -7,6 +8,7 @@ const ResendVerification = () => {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState(null);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,11 +16,13 @@ const ResendVerification = () => {
 
         try {
             await resendVerification(email);
-
-            setMessage({
+            
+            sessionStorage.setItem("notification", JSON.stringify({
                 type: "success",
                 message: "Se ha enviado un email de verificación. Revisa tu bandeja de entrada.",
-            });
+            }));
+            
+            navigate("/")
         } catch (err) {
             setError(err.response?.data?.mensaje || "Error al enviar el email de verificación");
         }

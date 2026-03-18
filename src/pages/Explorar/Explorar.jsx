@@ -47,6 +47,13 @@ const Explorar = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
+
+    // Mostrar notificaciones de páginas hijas
+        const stored = sessionStorage.getItem("notification");
+        if (stored) {
+            setNotification(JSON.parse(stored));
+            sessionStorage.removeItem("notification");
+        }
   }, []);
 
   const fetchCards = async () => {

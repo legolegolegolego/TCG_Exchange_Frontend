@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { loginUser } from "../../services/auth.js";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./Login.module.css";
 
@@ -14,9 +14,23 @@ const Login = () => {
     const [error, setError] = useState("");
     const [errorLink, setErrorLink] = useState(null);
     const [notification, setNotification] = useState(null);
+    const location = useLocation();
 
-    // Mostrar notificaciones de páginas hijas
     useEffect(() => {
+        
+        // Revisar si viene ?verified=true en la URL
+        const params = new URLSearchParams(location.search);
+        if (params.get("verified") === "true") {
+            setNotification({
+                type: "success",
+                message: "Email verificado"
+            });
+            
+            // Limpiar query param de la URL para no mostrarlo otra vez
+            navigate("/login", { replace: true });
+        }
+        
+        // Mostrar notificaciones de páginas hijas
         const stored = sessionStorage.getItem("notification");
         if (stored) {
             setNotification(JSON.parse(stored));

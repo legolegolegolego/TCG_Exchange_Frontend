@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { forgotPassword } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./ForgotPassword.module.css";
 
@@ -8,6 +9,7 @@ const ForgotPassword = () => {
     const [message, setMessage] = useState(null);
     const [error, setError] = useState("");
     const [errorLink, setErrorLink] = useState(null);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,10 +19,13 @@ const ForgotPassword = () => {
         try {
             await forgotPassword(email);
 
-            setMessage({
+            sessionStorage.setItem("notification", JSON.stringify({
                 type: "success",
                 message: "Se ha enviado un email para restablecer la contraseña",
-            });
+            }));
+
+            navigate("/")
+
         } catch (err) {
             const mensaje = err.response?.data?.mensaje || "Error al enviar el email";
 
