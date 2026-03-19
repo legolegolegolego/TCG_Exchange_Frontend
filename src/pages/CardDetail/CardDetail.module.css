@@ -64,16 +64,21 @@
   margin-top: 3rem;
 }
 
+.usersSection h3 {
+  margin-bottom: 2rem;
+}
+
 .userList {
   list-style: none;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 0.8rem;
 }
 
 .userItem {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
 }
@@ -82,6 +87,7 @@
   font-weight: 600;
   color: #333;
   font-size: 0.95rem;
+  min-width: 120px;
 }
 
 .userButton {
@@ -160,11 +166,47 @@
   filter: brightness(0.9);
 }
 
+.layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* columna izquierda */
+.left {
+  flex: 2;
+  min-width: 0;
+}
+
+/* columna derecha */
+.right {
+  flex: 1;
+  min-width: 250px;
+}
+
+.usersSection {
+  margin-top: 0;
+}
+
 /* MEDIA QUERIES PARA MÓVIL */
 @media (max-width: 768px) {
   .top {
     flex-direction: column;
     align-items: center;
+  }
+
+  .layout {
+    flex-direction: column;
+  }
+
+  .adminActions {
+    justify-content: center;
+  }
+
+  .left,
+  .right {
+    width: 100%;
   }
 
   .imageWrap {
@@ -184,5 +226,24 @@
 
   .name {
     font-size: 1.4rem;
+  }
+
+  .usersSection {
+    margin-top: 1.5rem; 
+  }
+
+  .userList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    gap: 0.5rem;
+    padding: 0;
+  }
+
+  .userItem {
+    width: 100%; /* para que los botones no se desborden */
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
   }
 }

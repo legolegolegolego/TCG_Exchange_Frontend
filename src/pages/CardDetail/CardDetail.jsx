@@ -97,7 +97,8 @@ const CardDetail = () => {
   const rarezaColor = rarezaColores[rareza] || "#777";
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container}> {/* Contenedor principal */}
+
       {notification && (
         <Notification
           type={notification.type}
@@ -106,109 +107,120 @@ const CardDetail = () => {
         />
       )}
 
-      <div className={styles.top}>
-        <div
-          className={styles.imageWrap}
-          style={{
-            borderColor: glowColor,
-            boxShadow: `0 0 18px ${glowColor}`
-          }}
-        >
-          {imagenUrl ? (
-            <img src={imagenUrl} alt={nombre} />
-          ) : (
-            <div className={styles.noImage}>No image</div>
-          )}
-        </div>
+      <div className={styles.layout}> {/* Layout: izquierda + derecha */}
 
-        <div className={styles.info}>
-          <h2 className={styles.name}>{nombre}</h2>
+        {/* IZQUIERDA */}
+        <div className={styles.left}>
+          <div className={styles.top}>
+            <div
+              className={styles.imageWrap}
+              style={{
+                borderColor: glowColor,
+                boxShadow: `0 0 18px ${glowColor}`
+              }}
+            >
+              {imagenUrl ? (
+                <img src={imagenUrl} alt={nombre} />
+              ) : (
+                <div className={styles.noImage}>No image</div>
+              )}
+            </div>
 
-          {tipoPokemon && tipoPokemon !== "ENTRENADOR" && (
-            <div className={styles.row}>
-              <strong>Tipo Pokémon:</strong>{" "}
-              <span style={{ color: glowColor, fontWeight: 600 }}>{tipoPokemon}</span>
+            <div className={styles.info}>
+              <h2 className={styles.name}>{nombre}</h2>
+
+              {tipoPokemon && tipoPokemon !== "ENTRENADOR" && (
+                <div className={styles.row}>
+                  <strong>Tipo Pokémon:</strong>{" "}
+                  <span style={{ color: glowColor, fontWeight: 600 }}>{tipoPokemon}</span>
+                </div>
+              )}
+
+              <div className={styles.row}><strong>Número:</strong> #{numero ?? '-'}</div>
+              <div className={styles.row}><strong>Tipo carta:</strong> {tipoCarta || '-'}</div>
+
+              {rareza && (
+                <div className={styles.row}>
+                  <strong>Rareza:</strong>{" "}
+                  <span style={{
+                    color: "#fff",
+                    backgroundColor: rarezaColor,
+                    padding: "2px 6px",
+                    borderRadius: "6px",
+                    fontWeight: 600
+                  }}>
+                    {rareza}
+                  </span>
+                </div>
+              )}
+
+              {tipoPokemon && tipoPokemon !== "ENTRENADOR" && (
+                <div className={styles.row}><strong>Evolución:</strong> {evolucion || '-'}</div>
+              )}
+            </div>
+          </div>
+
+          {isAdmin && (
+            <div className={styles.adminActions}>
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => {
+                  setEditingCarta(carta);
+                  setShowModal(true);
+                }}
+              >
+                Editar
+              </Button>
+
+              <button
+                className="btn btn-sm btn-outline-danger"
+                onClick={() => {
+                  setDeleteError(null);
+                  setShowDeleteModal(true);
+                }}
+              >
+                Eliminar
+              </button>
             </div>
           )}
+        </div> {/* FIN left */}
 
-          <div className={styles.row}><strong>Número:</strong> #{numero ?? '-'}</div>
-          <div className={styles.row}><strong>Tipo carta:</strong> {tipoCarta || '-'}</div>
+        {/* DERECHA */}
+        <div className={styles.right}>
+          <div className={styles.usersSection}>
+            <h3>Usuarios que tienen la carta</h3>
 
-          {rareza && (
-            <div className={styles.row}>
-              <strong>Rareza:</strong>{" "}
-              <span style={{
-                color: "#fff",
-                backgroundColor: rarezaColor,
-                padding: "2px 6px",
-                borderRadius: "6px",
-                fontWeight: 600
-              }}>
-                {rareza}
-              </span>
-            </div>
-          )}
+            {usuarios.length === 0 ? (
+              <div className={styles.noUsers}>Nadie tiene esta carta.</div>
+            ) : (
+              <ul className={styles.userList}>
+                {usuarios.map((u) => {
+                  const uname = u.username || u.nombre || u.email || u.id;
+                  return (
+                    <li key={u.id} className={styles.userItem}>
+                      <div className={styles.userName}>{uname}</div>
+                      <Button
+                        className={styles.userButton}
+                        variant="primary"
+                        size="md"
+                        onClick={() => navigate(`/usuario/${uname}`, {
+                          state: { from: location.pathname, fromLabel: 'vista de carta modelo' }
+                        })}
+                      >
+                        Ver cartas
+                      </Button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+        </div> {/* FIN right */}
 
-          {tipoPokemon && tipoPokemon !== "ENTRENADOR" && (
-            <div className={styles.row}><strong>Evolución:</strong> {evolucion || '-'}</div>
-          )}
-        </div>
-      </div>
+      </div> {/* FIN layout */}
 
-      {isAdmin && (
-        <div className={styles.adminActions}>
-          <Button
-            variant="primary"
-            size="md"
-            onClick={() => {
-              setEditingCarta(carta);
-              setShowModal(true);
-            }}
-          >
-            Editar
-          </Button>
-
-          <button
-            className="btn btn-sm btn-outline-danger"
-            variant="danger"
-            size="md"
-            onClick={() => {
-              setDeleteError(null);
-              setShowDeleteModal(true);
-            }}
-          >
-            Eliminar
-          </button>
-        </div>
-      )}
-
-      <div className={styles.usersSection}>
-        <h3>Usuarios que tienen la carta</h3>
-        {usuarios.length === 0 ? (
-          <div className={styles.noUsers}>Nadie tiene esta carta.</div>
-        ) : (
-          <ul className={styles.userList}>
-            {usuarios.map((u) => {
-              const uname = u.username || u.nombre || u.email || u.id;
-              return (
-                <li key={u.id} className={styles.userItem}>
-                  <div className={styles.userName}>{uname}</div>
-                  <Button
-                    variant="primary"
-                    size="md"
-                    onClick={() => navigate(`/usuario/${uname}`, {
-                      state: { from: location.pathname, fromLabel: 'vista de carta modelo' }
-                    })}
-                  >
-                    Ver cartas
-                  </Button>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-
+      {/* Modal de editar/crear carta */}
       <EditarCrearCartaModelo
         isOpen={showModal}
         onClose={() => setShowModal(false)}
@@ -224,15 +236,14 @@ const CardDetail = () => {
         initialData={editingCarta}
       />
 
+      {/* Modal de eliminar carta */}
       {showDeleteModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
             <h5>¿Eliminar carta?</h5>
             <p>No se podrá recuperar.</p>
 
-            {deleteError && (
-              <p className={styles.error}>{deleteError}</p>
-            )}
+            {deleteError && <p className={styles.error}>{deleteError}</p>}
 
             <div className={styles.modalActions}>
               <button
@@ -253,8 +264,9 @@ const CardDetail = () => {
           </div>
         </div>
       )}
-    </div>
+
+    </div> /* FIN container */
   );
-};
+}
 
 export default CardDetail;
