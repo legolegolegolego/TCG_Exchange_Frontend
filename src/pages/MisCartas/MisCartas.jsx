@@ -81,6 +81,9 @@ const MisCartas = () => {
         await createCartaFisica(data);
         setNotification({ type: "success", message: "Carta creada correctamente" });
       }
+      setShowModal(false);
+      setEditingCarta(null);
+      fetchCartas();
     } catch (err) {
       const msg = err.response?.data?.mensaje || "Error al guardar la carta";
 
@@ -96,9 +99,7 @@ const MisCartas = () => {
       }
       console.error(err);
     }
-    setShowModal(false);
-    setEditingCarta(null);
-    fetchCartas();
+
   };
 
   const handleDelete = async () => {

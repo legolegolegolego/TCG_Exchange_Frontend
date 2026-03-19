@@ -9,17 +9,13 @@ import EditarCrearCartaModelo from "../../components/EditarCrearCartaModelo/Edit
 import { deleteCartaModelo } from "../../services/cartasModelo";
 
 const tipoColores = {
-  AGUA: "#3498db",
-  FUEGO: "#e74c3c",
   PLANTA: "#2ecc71",
+  FUEGO: "#e74c3c",
+  AGUA: "#3498db",
   ELECTRICO: "#f1c40f",
   PSIQUICO: "#8e44ad",
   LUCHA: "#d35400",
   INCOLORO: "#bdc3c7",
-  OSCURO: "#2c3e50",
-  METAL: "#95a5a6",
-  HADA: "#ff9ff3",
-  DRAGON: "#6c5ce7",
   ENTRENADOR: "#ffffff"
 };
 
@@ -196,7 +192,7 @@ const CardDetail = () => {
             ) : (
               <ul className={styles.userList}>
                 {usuarios.map((u) => {
-                  const uname = u.username || u.nombre || u.email || u.id;
+                  const uname = u.username
                   return (
                     <li key={u.id} className={styles.userItem}>
                       <div className={styles.userName}>{uname}</div>
