@@ -6,15 +6,19 @@
 
 .top {
   display: flex;
-  flex-wrap: wrap; /* permite que se ajusten en móvil */
+  flex-wrap: wrap;
+  /* permite que se ajusten en móvil */
   gap: 2rem;
   margin-bottom: 3rem;
 }
 
 .imageWrap {
-  flex: 0 0 30%; /* ocupa 30% del ancho en pantallas grandes */
-  max-width: 300px; /* límite para escritorio */
-  aspect-ratio: 3 / 4; /* mantiene proporción 3:4 */
+  flex: 0 0 30%;
+  /* ocupa 30% del ancho en pantallas grandes */
+  max-width: 300px;
+  /* límite para escritorio */
+  aspect-ratio: 3 / 4;
+  /* mantiene proporción 3:4 */
   border: 2px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
@@ -37,7 +41,8 @@
 }
 
 .info {
-  flex: 1 1 60%; /* ocupa el resto del espacio */
+  flex: 1 1 60%;
+  /* ocupa el resto del espacio */
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -97,6 +102,62 @@
 .noUsers {
   font-size: 0.9rem;
   color: #777;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  width: 90%;
+  max-width: 22rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.cancelButton {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.3rem;
+}
+
+.confirmDeleteButton {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.3rem;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+}
+
+.adminActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.adminActions button:not(:disabled):hover {
+  filter: brightness(0.9);
 }
 
 /* MEDIA QUERIES PARA MÓVIL */

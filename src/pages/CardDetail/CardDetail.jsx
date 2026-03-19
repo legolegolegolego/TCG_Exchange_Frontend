@@ -4,6 +4,9 @@ import styles from "./CardDetail.module.css";
 import { getCartaModeloById, getUsuariosConCartaModelo } from "../../services/cartasModelo";
 import Notification from "../../components/Notification/Notification";
 import Button from "../../components/Button/Button";
+import { getCurrentUser } from "../../utils/token";
+import EditarCrearCartaModelo from "../../components/EditarCrearCartaModelo/EditarCrearCartaModelo";
+import { deleteCartaModelo } from "../../services/cartasModelo";
 
 const tipoColores = {
   AGUA: "#3498db",
@@ -35,6 +38,34 @@ const CardDetail = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [editingCarta, setEditingCarta] = useState(null);
+  const user = getCurrentUser();
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState(null);
+
+  const handleDelete = async () => {
+    try {
+      setDeleting(true);
+      await deleteCartaModelo(carta.id);
+
+      navigate("/", {
+        state: {
+          notification: {
+            type: "success",
+            message: "Carta eliminada correctamente"
+          }
+        }
+      });
+    } catch (err) {
+      const msg = err.response?.data?.mensaje || "Error al eliminar";
+      setDeleteError(msg);
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -124,6 +155,33 @@ const CardDetail = () => {
         </div>
       </div>
 
+      {isAdmin && (
+        <div className={styles.adminActions}>
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => {
+              setEditingCarta(carta);
+              setShowModal(true);
+            }}
+          >
+            Editar
+          </Button>
+
+          <button
+            className="btn btn-sm btn-outline-danger"
+            variant="danger"
+            size="md"
+            onClick={() => {
+              setDeleteError(null);
+              setShowDeleteModal(true);
+            }}
+          >
+            Eliminar
+          </button>
+        </div>
+      )}
+
       <div className={styles.usersSection}>
         <h3>Usuarios que tienen la carta</h3>
         {usuarios.length === 0 ? (
@@ -150,6 +208,51 @@ const CardDetail = () => {
           </ul>
         )}
       </div>
+
+      <EditarCrearCartaModelo
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onSave={(data) => {
+          setShowModal(false);
+          setCarta(prev => ({ ...prev, ...data }));
+          setNotification({ type: "success", message: "Carta editada correctamente" });
+          setEditingCarta(null);
+        }}
+        onError={(err) => {
+          setNotification({ type: "error", message: err.message });
+        }}
+        initialData={editingCarta}
+      />
+
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h5>¿Eliminar carta?</h5>
+            <p>No se podrá recuperar.</p>
+
+            {deleteError && (
+              <p className={styles.error}>{deleteError}</p>
+            )}
+
+            <div className={styles.modalActions}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setShowDeleteModal(false)}
+              >
+                Cancelar
+              </button>
+
+              <button
+                className={styles.confirmDeleteButton}
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {deleting ? "Eliminando..." : "Eliminar"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

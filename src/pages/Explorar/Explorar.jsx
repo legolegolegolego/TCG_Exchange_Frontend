@@ -39,7 +39,6 @@ const Explorar = () => {
   const [notification, setNotification] = useState(location.state?.notification || null);
 
   const [showModal, setShowModal] = useState(false);
-  const [modalErrors, setModalErrors] = useState(null);
   const [editingCarta, setEditingCarta] = useState(null);
 
   const user = getCurrentUser();
@@ -105,26 +104,6 @@ const Explorar = () => {
   const handleClear = () => {
     setFilters({ numeroMin: "", numeroMax: "", nombre: "", tipoCarta: "", rareza: "", tipoPokemon: "", evolucion: "" });
     setPage(0);
-  };
-
-  // Guardar carta modelo desde modal
-  const handleSave = async (data) => {
-    try {
-      if (editingCarta?.id) {
-        await updateCartaModelo(editingCarta.id, data);
-        setNotification({ type: "success", message: "Carta modelo editada correctamente" });
-      } else {
-        await createCartaModelo(data);
-        setNotification({ type: "success", message: "Carta modelo creada correctamente" });
-      }
-      setShowModal(false);
-      setEditingCarta(null);
-      fetchCards();
-    } catch (err) {
-      const msg = err.response?.data?.mensaje || "Error al guardar la carta modelo";
-      setNotification({ type: "error", message: msg });
-      console.error(err);
-    }
   };
 
   return (
