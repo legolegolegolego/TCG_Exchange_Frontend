@@ -53,6 +53,7 @@ const DetalleIntercambio = () => {
   const [notification, setNotification] = useState(location.state?.notification || null);
   const [showAceptarModal, setShowAceptarModal] = useState(false);
   const [showRechazarModal, setShowRechazarModal] = useState(false);
+  const [showDireccionModal, setShowDireccionModal] = useState(false);
   const [actionError, setActionError] = useState("");
 
   // Función para cargar intercambio desde API
@@ -112,6 +113,7 @@ const DetalleIntercambio = () => {
   const usernameOtro = isOrigen ? intercambio.usernameDestino : intercambio.usernameOrigen;
   const esDestino = currentUser?.username === intercambio.usernameDestino;
   const puedeActuar = esDestino && intercambio.estado === "PENDIENTE";
+  const direccionOtroUsuario = isOrigen ? intercambio.direccionDestino : intercambio.direccionOrigen;
 
   const { bg: bgEstadoIntercambio, text: textEstadoIntercambio } =
     estadoIntercambioColores[intercambio.estado] || { bg: "secondary", text: "white" };
@@ -166,6 +168,14 @@ const DetalleIntercambio = () => {
           {intercambio.estado}
         </span>
       </div>
+
+      {intercambio.estado === "ACEPTADO" && (
+        <div className="text-center mt-2">
+          <Button variant="info" onClick={() => setShowDireccionModal(true)}>
+            Ver dirección de envío
+          </Button>
+        </div>
+      )}
 
       {puedeActuar && (
         <div className={styles.actions}>
@@ -223,7 +233,25 @@ const DetalleIntercambio = () => {
           </div>
         </div>
       )}
-    </div>
+
+      {showDireccionModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h5>Dirección de envío</h5>
+            <p>
+              {direccionOtroUsuario.split(", ").map((parte, i) => (
+                <span key={i}>
+                  {parte}<br />
+                </span>
+              ))}
+            </p>
+            <div className="d-flex justify-content-end mt-3">
+              <Button variant="primary" onClick={() => setShowDireccionModal(false)}>Cerrar</Button>
+            </div>
+          </div>
+        </div>
+      )}
+      </div>
   );
 };
 
