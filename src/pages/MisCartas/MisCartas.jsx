@@ -35,7 +35,7 @@ const fetchCartaCompleta = async (cf) => {
 
 const MisCartas = () => {
   const [cartas, setCartas] = useState([]);
-  const [filtro, setFiltro] = useState("disponibles");
+  const [filtro, setFiltro] = useState("todas");
   const [showModal, setShowModal] = useState(false);
   const [editingCarta, setEditingCarta] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
@@ -131,24 +131,24 @@ const MisCartas = () => {
       )}
 
       {/* TABS con Button */}
-      <div className="d-flex gap-2 mb-3 flex-wrap">
-        <Button
-          variant={filtro === "disponibles" ? "primary" : "outline"}
-          onClick={() => setFiltro("disponibles")}
-        >
-          Disponibles
-        </Button>
+      <div className="d-flex gap-2 mb-3 flex-wrap justify-content-center">
         <Button
           variant={filtro === "todas" ? "primary" : "outline"}
           onClick={() => setFiltro("todas")}
         >
-          Todas
+          TODAS
+        </Button>
+        <Button
+          variant={filtro === "disponibles" ? "primary" : "outline"}
+          onClick={() => setFiltro("disponibles")}
+        >
+          DISPONIBLES
         </Button>
         <Button
           variant={filtro === "no" ? "primary" : "outline"}
           onClick={() => setFiltro("no")}
         >
-          No disponibles
+          NO DISPONIBLES
         </Button>
       </div>
 
