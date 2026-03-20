@@ -123,7 +123,12 @@ const MisCartas = () => {
 
   return (
     <div className="container py-4">
-      <h2 className="mb-3">Mis Cartas</h2>
+      
+      {isAdmin ? (
+        <h2 className="mb-3 text-center">Cartas de {username}</h2>
+      ) : (
+        <h2 className="mb-3 text-center">Mis cartas</h2>
+      )}
 
       {/* TABS con Button */}
       <div className="d-flex gap-2 mb-3 flex-wrap">

@@ -4,7 +4,7 @@ import api from "../../services/api";
 import { enriquecerIntercambios } from "../../utils/intercambioUtils";
 import IntercambioHorizontal from "../../components/IntercambioHorizontal/IntercambioHorizontal";
 import Notification from "../../components/Notification/Notification";
-import Button from "../../components/Button/Button"; 
+import Button from "../../components/Button/Button";
 import styles from "./MisIntercambios.module.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from "react-router-dom";
@@ -20,7 +20,7 @@ const MisIntercambios = () => {
   const isAdmin = user?.roles?.includes("ROLE_ADMIN")
 
   useEffect(() => {
-    
+
     const fetchIntercambiosCompletos = async () => {
       if (!user) return;
       if (user.username !== username && !isAdmin) return;
@@ -54,7 +54,11 @@ const MisIntercambios = () => {
         />
       )}
 
-      <h2 className="mb-3 text-center">Mis intercambios</h2>
+      {isAdmin ? (
+        <h2 className="mb-3 text-center">Intercambios de {username}</h2>
+      ) : (
+        <h2 className="mb-3 text-center">Mis intercambios</h2>
+      )}
 
       {/* FILTROS CON BUTTON COMPONENT */}
       <div className="d-flex gap-2 flex-wrap justify-content-center mb-3">
