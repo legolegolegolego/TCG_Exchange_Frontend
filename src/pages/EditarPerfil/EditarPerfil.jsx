@@ -32,6 +32,7 @@ const EditarPerfil = () => {
     const [notification, setNotification] = useState(null);
 
     // --- Datos de dirección ---
+    const [nombre, setNombre] = useState("");
     const [calleYNumero, setCalleYNumero] = useState("");
     const [pisoYPuerta, setPisoYPuerta] = useState("");
     const [codigoPostal, setCodigoPostal] = useState("");
@@ -66,6 +67,7 @@ const EditarPerfil = () => {
             .then(res => {
                 const d = res.data;
                 if (d) {
+                    setNombre(d.nombre || "");
                     setCalleYNumero(d.calleYNumero || "");
                     setPisoYPuerta(d.pisoYPuerta || "");
                     setCodigoPostal(d.codigoPostal || "");
@@ -155,6 +157,7 @@ const EditarPerfil = () => {
         e.preventDefault();
         try {
             const direccionDTO = {
+                nombre,
                 calleYNumero,
                 pisoYPuerta: pisoYPuerta || null,
                 codigoPostal,
@@ -167,11 +170,6 @@ const EditarPerfil = () => {
                 // Si falla por no existir, creamos
                 await createDireccion(direccionDTO);
             });
-
-            sessionStorage.setItem("notification", JSON.stringify({
-                type: "success",
-                message: "Dirección actualizada correctamente."
-            }));
 
             setNotification({
                 type: "success",
@@ -270,6 +268,15 @@ const EditarPerfil = () => {
                     <section className={styles.section}>
                         <h2>Actualizar Dirección</h2>
                         <form onSubmit={handleDireccionSubmit}>
+                            <div className={styles.field}>
+                                <label>Nombre completo</label>
+                                <input
+                                    className={styles.input}
+                                    value={nombre}
+                                    onChange={(e) => setNombre(e.target.value)}
+                                    required
+                                />
+                            </div>
                             <div className={styles.field}>
                                 <label>Calle y número</label>
                                 <input
