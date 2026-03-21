@@ -1,16 +1,92 @@
-# React + Vite
+# TCG Exchange Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción
+Este repositorio contiene el **frontend** de la aplicación TCG Exchange.
 
-Currently, two official plugins are available:
+Proporciona la interfaz de usuario para interactuar con el sistema, permitiendo gestionar cuentas, visualizar cartas y realizar intercambios de forma intuitiva.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+👉 Para la documentación completa del sistema (modelo de datos, lógica de negocio, seguridad, endpoints, etc.), consultar el backend:  
+https://github.com/legolegolegolego/TCG_Exchange
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Responsabilidades del Frontend
 
-## Expanding the ESLint configuration
+El frontend se encarga de:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Renderizar la interfaz de usuario.
+- Gestionar la navegación entre vistas.
+- Manejar el estado del cliente.
+- Consumir la API REST del backend.
+- Gestionar la autenticación en cliente mediante JWT.
+- Mostrar estados de carga y errores.
+
+---
+
+## Funcionalidades
+
+- Registro e inicio de sesión.
+- Verificación de email.
+- Recuperación de contraseña.
+- Visualización del catálogo de cartas.
+- Gestión de cartas físicas.
+- Visualización de perfiles de usuario.
+- Creación de intercambios.
+- Gestión de intercambios (aceptar/rechazar).
+- Edición de perfil y dirección.
+
+---
+
+## Arquitectura
+
+Estructura basada en componentes:
+
+```
+src/
+├── assets/         # Recursos estáticos
+├── components/     # Componentes reutilizables
+├── context/        # Estado global de autenticación
+├── pages/          # Vistas principales
+├── services/       # Llamadas a la API
+└── utils/          # Utilidades
+```
+
+---
+
+## Autenticación en cliente
+
+- Uso de JWT proporcionado por el backend.
+- Almacenamiento del token en cliente.
+- Inclusión en peticiones HTTP.
+- Authorization: Bearer <token\>.
+- Protección de rutas privadas desde el frontend.
+
+---
+
+## Comunicación con la API
+
+- Interacción mediante peticiones HTTP al backend.
+- URL base configurable mediante variables de entorno.
+- Manejo de errores basado en códigos HTTP.
+
+---
+
+## Tecnologías utilizadas
+
+- **React (JavaScript)**
+- **Bootstrap**
+- **Axios / Fetch API**
+
+---
+
+## Notas
+
+- Toda la lógica de negocio reside en el backend.
+- El frontend actúa exclusivamente como cliente.
+- La seguridad crítica se gestiona en el servidor.
+
+---
+
+## Licencia
+
+Proyecto académico con fines educativos.
