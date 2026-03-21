@@ -28,7 +28,10 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
   const { bg, text } = estadoColores[estadoIntercambio] || { bg: "secondary", text: "white" };
 
   return (
-    <div className={`card shadow-sm ${styles.container}`}>
+    <div className={`card shadow-sm ${styles.container}`}
+      onClick={() => navigate(`/intercambio/${intercambio.id}`)}
+      style={{cursor: "pointer"}}
+      >
       <div className="row g-3 align-items-center p-3">
         {/* Cartas */}
         <div className="col-12 col-md-6 d-flex justify-content-center gap-3 flex-wrap">
@@ -51,7 +54,10 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
           <Button
             variant="primary"
             size="md"
-            onClick={() => navigate(`/intercambio/${intercambio.id}`)}
+            onClick={(e) => {
+              e.stopPropagation(); // Evita doble trigger con contenedor
+              navigate(`/intercambio/${intercambio.id}`);
+            }}
           >
             Ver detalle
           </Button>
