@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDisponiblesByUsername } from "../../services/cartasFisicas";
+import { getCurrentUser } from "../../utils/token";
 import CardFisica from "../../components/CardFisica/CardFisica";
 import Notification from "../../components/Notification/Notification";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,11 +16,14 @@ const UsuarioCartas = () => {
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
+    const currentUser = getCurrentUser();
+
+    // Si el username de la URL coincide con el usuario logueado, redirige
+    if (currentUser?.username === username) {
+      navigate(`/cartas/${username}`);
+      return; // evita continuar con la carga de cartas
+    }
     const load = async () => {
-      if (!username) {
-        navigate("/");
-        return;
-      }
       setLoading(true);
       try {
         const res = await getDisponiblesByUsername(username);

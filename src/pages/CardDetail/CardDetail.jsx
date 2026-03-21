@@ -92,6 +92,8 @@ const CardDetail = () => {
   const glowColor = tipoColores[tipoPokemon] || "#999";
   const rarezaColor = rarezaColores[rareza] || "#777";
 
+  const usuariosFiltrados = usuarios.filter(u => u.username !== user.username);
+
   return (
     <div className={styles.container}> {/* Contenedor principal */}
 
@@ -187,28 +189,29 @@ const CardDetail = () => {
           <div className={styles.usersSection}>
             <h3>Usuarios que tienen la carta</h3>
 
-            {usuarios.length === 0 ? (
+            {usuariosFiltrados.length === 0 ? (
               <div className={styles.noUsers}>Nadie tiene esta carta.</div>
             ) : (
               <ul className={styles.userList}>
-                {usuarios.map((u) => {
-                  const uname = u.username
-                  return (
-                    <li key={u.id} className={styles.userItem}>
-                      <div className={styles.userName}>{uname}</div>
-                      <Button
-                        className={styles.userButton}
-                        variant="primary"
-                        size="md"
-                        onClick={() => navigate(`/usuario/${uname}`, {
-                          state: { from: location.pathname, fromLabel: 'vista de carta modelo' }
-                        })}
-                      >
-                        Ver cartas
-                      </Button>
-                    </li>
-                  );
-                })}
+                {usuariosFiltrados
+                  .map((u) => {
+                    const uname = u.username
+                    return (
+                      <li key={u.id} className={styles.userItem}>
+                        <div className={styles.userName}>{uname}</div>
+                        <Button
+                          className={styles.userButton}
+                          variant="primary"
+                          size="md"
+                          onClick={() => navigate(`/usuario/${uname}`, {
+                            state: { from: location.pathname, fromLabel: 'vista de carta modelo' }
+                          })}
+                        >
+                          Ver cartas
+                        </Button>
+                      </li>
+                    );
+                  })}
               </ul>
             )}
           </div>
