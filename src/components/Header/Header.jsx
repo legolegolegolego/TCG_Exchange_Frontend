@@ -59,12 +59,12 @@ const Header = () => {
           {username && (
             <>
               {/* Si USER */}
-              <span 
+              <span
                 className={`fw-semibold ${styles.navTitle}`}
                 onClick={() => navigate("/intercambios/" + username)}
                 role="button"
               >
-              {!isAdmin && "Mis Intercambios"}
+                {!isAdmin && "Mis Intercambios"}
               </span>
               <span
                 className={`fw-semibold ${styles.navTitle}`}
@@ -83,6 +83,13 @@ const Header = () => {
               </span>
             </>
           )}
+          <span
+            className={`fw-semibold ${styles.navTitle} ${styles.navHelp}`}
+            onClick={() => navigate("/soporte")}
+            role="button"
+          >
+            Ayuda
+          </span>
         </nav>
 
         {/* Botones de usuario */}
@@ -101,12 +108,12 @@ const Header = () => {
             </>
           ) : (
             <div className="d-flex align-items-center gap-2 flex-wrap position-relative">
-              {!isAdmin && 
-              <WishlistButton
-                onClick={() => navigate("/no-disponible")}
-                title="Favoritos"
-                ariaLabel="Favoritos"
-              />}
+              {!isAdmin &&
+                <WishlistButton
+                  onClick={() => navigate("/no-disponible")}
+                  title="Favoritos"
+                  ariaLabel="Favoritos"
+                />}
 
               {/* Dropdown “Mi Perfil” */}
               <div className="dropdown" style={{ position: "relative" }}>

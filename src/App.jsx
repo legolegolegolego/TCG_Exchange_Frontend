@@ -18,7 +18,9 @@ import Usuarios from "./pages/Usuarios/Usuarios.jsx";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import ResendVerification from "./pages/ResendVerification/ResendVerification.jsx";
+import Soporte from "./pages/Soporte/Soporte.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
   return (
@@ -43,6 +45,7 @@ const AppContent = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/resend-verification" element={<ResendVerification />} />
+        <Route path="/soporte" element={<Soporte />} />
 
         <Route path="/usuario/:username" element={<UsuarioCartas />} />
         <Route

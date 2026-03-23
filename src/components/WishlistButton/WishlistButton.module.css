@@ -7,15 +7,22 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: 6px;
-  color: #e11a4a;
+  color: #fff; 
   cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
 
 .button:hover {
-  background: #fff0f2;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffd700; 
 }
 
 .icon {
   width: 18px;
   height: 18px;
+  transition: transform 0.2s; 
+}
+
+.button:hover .icon {
+  transform: scale(1.1); 
 }

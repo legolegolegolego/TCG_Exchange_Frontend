@@ -1,14 +1,13 @@
 .header {
-  background: linear-gradient(
-    90deg,
-    rgba(237, 208, 38, 0.85), /* amarillo */
-    rgba(156, 39, 176, 0.85)  /* lila */
-  );
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(90deg,
+      rgba(237, 208, 38, 0.85),
+      rgba(156, 39, 176, 0.85));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1rem;
 }
+
 .logo {
   width: 50px;
   height: 50px;
@@ -17,22 +16,45 @@
 
 .appName {
   margin-left: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 /* Navegación como títulos de página más visibles */
 .navTitle {
   cursor: pointer;
-  color: #333;
+  color: #000000;
   text-decoration: none;
-  font-size: 1.2rem;        /* más grande */
-  font-weight: 600;         /* más grueso */
-  transition: color 0.2s, transform 0.2s; /* transición suave */
+  font-size: 1.1rem;
+  /* un poco más grande */
+  font-weight: 600;
+  /* más grueso */
+  transition: color 0.2s, transform 0.2s;
+  /* transición suave */
 }
 
 .navTitle:hover {
-  color: #0d6efd;           /* color al pasar el cursor */
-  transform: scale(1.05);   /* pequeño efecto de aumento */
+  color: #0d6efd;
+  /* color al pasar el cursor */
+  transform: scale(1.05);
+  /* pequeño efecto de aumento */
+}
+
+/* Foco de teclado */
+.navTitle:focus {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+/* Variante más suave para Ayuda */
+.navHelp {
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 400;
+}
+
+.navHelp:hover {
+  color: #0d6efd;
+  transform: scale(1.03);
+  /* un pelín menos que el resto */
 }
 
 /* Dropdown personalizado */
@@ -41,9 +63,11 @@
   border-radius: 0.5rem;
   margin-top: 0.2rem;
   z-index: 1050;
-  max-width: 95vw; /* nunca se salga del viewport */
+  max-width: 95vw;
+  /* nunca se salga del viewport */
   box-sizing: border-box;
-  font-size: 1rem; /* mismo tamaño que header */
+  font-size: 1rem;
+  /* mismo tamaño que header */
 }
 
 /* Botón Mi Perfil igual ancho que dropdown */
@@ -52,7 +76,8 @@
   max-width: 160px;
   text-align: left;
   display: inline-flex;
-  justify-content: space-between; /* texto a la izquierda, flecha a la derecha */
+  justify-content: space-between;
+  /* texto a la izquierda, flecha a la derecha */
   align-items: center;
   font-size: 1rem;
 }
@@ -68,9 +93,11 @@
   .navTitle {
     font-size: 0.95rem;
   }
+
   .profileButton {
     font-size: 0.95rem;
   }
+
   .dropdownArrow {
     font-size: 0.75rem;
   }
