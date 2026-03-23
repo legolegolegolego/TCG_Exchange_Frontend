@@ -50,7 +50,7 @@ const Header = () => {
         <nav className="d-flex flex-wrap align-items-center justify-content-center gap-3 flex-grow-1 my-2 my-md-0">
           <span
             className={`fw-semibold ${styles.navTitle}`}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/explorar")}
             role="button"
           >
             {isAdmin ? "Cartas Modelo" : "Explorar Cartas"}

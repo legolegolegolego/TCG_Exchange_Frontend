@@ -19,6 +19,7 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import ResendVerification from "./pages/ResendVerification/ResendVerification.jsx";
 import Soporte from "./pages/Soporte/Soporte.jsx";
+import Home from "./pages/Home/Home.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -60,6 +61,12 @@ const AppContent = () => {
 
         <Route
           path="/"
+          element={
+            <Home />
+          }
+        />
+        <Route
+          path="/explorar"
           element={
             <Explorar />
           }

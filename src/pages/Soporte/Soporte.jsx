@@ -23,8 +23,8 @@ function Soporte() {
           </h2>
           <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
             <div className="accordion-body">
-              Puedes explorar cartas, publicar tus propias cartas para intercambio,
-              ver perfiles de otros usuarios y proponer intercambios.
+              Puedes explorar las cartas oficiales, publicar tus propias cartas para intercambio,
+              ver cartas de otros usuarios y proponer intercambios.
             </div>
           </div>
         </div>
