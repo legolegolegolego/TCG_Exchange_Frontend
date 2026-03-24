@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 2rem;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--tertiary) 100%);
   color: white;
   margin-bottom: 2rem;
   gap: 2rem;
@@ -23,13 +23,13 @@
 }
 
 .buttons button:first-child {
-  background-color: white;
-  color: #2575fc;
+  background-color: var(--white);
+  color: var(--black);
 }
 
 .buttons button:last-child {
-  background-color: #ffdd59;
-  color: #333;
+  background-color: var(--primary);
+  color: var(--black);
 }
 
 .image img {

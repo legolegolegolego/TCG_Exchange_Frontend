@@ -3,7 +3,7 @@ import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className={`${styles.footer} bg-light py-3`}>
+    <footer className={`${styles.footer} py-4`}>
       <div className="container text-center">
         <div className={`d-flex flex-column align-items-center ${styles.top}`}>
           <img src={logo} alt="Logo App" className={styles.logo} />

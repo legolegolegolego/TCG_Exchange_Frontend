@@ -1,7 +1,5 @@
 .header {
-  background: linear-gradient(90deg,
-      rgba(237, 208, 38, 0.85),
-      rgba(156, 39, 176, 0.85));
+  background: var(--white);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding-left: 1rem;
   padding-right: 1rem;
@@ -14,15 +12,27 @@
   object-fit: cover;
 }
 
+.logo:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+
 .appName {
   margin-left: 0.5rem;
   font-size: 1.5rem;
+  color: var(--black);
+}
+
+.appName:hover {
+  color: var(--tertiary);
+  transform: scale(1.01);
+  transition: color 0.2s, transform 0.2s;
 }
 
 /* Navegación como títulos de página más visibles */
 .navTitle {
   cursor: pointer;
-  color: #000000;
+  color: var(--black);
   text-decoration: none;
   font-size: 1.1rem;
   /* un poco más grande */
@@ -33,7 +43,7 @@
 }
 
 .navTitle:hover {
-  color: #0d6efd;
+  color: var(--tertiary);
   /* color al pasar el cursor */
   transform: scale(1.05);
   /* pequeño efecto de aumento */
@@ -41,7 +51,7 @@
 
 /* Foco de teclado */
 .navTitle:focus {
-  outline: 2px solid #0d6efd;
+  outline: 2px solid var(--secondary);
   outline-offset: 2px;
 }
 
@@ -52,7 +62,7 @@
 }
 
 .navHelp:hover {
-  color: #0d6efd;
+  color: var(--secondary);
   transform: scale(1.03);
   /* un pelín menos que el resto */
 }
