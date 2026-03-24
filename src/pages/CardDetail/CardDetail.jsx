@@ -92,7 +92,10 @@ const CardDetail = () => {
   const glowColor = tipoColores[tipoPokemon] || "#999";
   const rarezaColor = rarezaColores[rareza] || "#777";
 
-  const usuariosFiltrados = usuarios.filter(u => u.username !== user.username);
+  // Filtrar usuarios para no mostrar al actual (si hay sesión)
+  const usuariosFiltrados = user
+  ? usuarios.filter(u => u.username !== user.username)
+  : usuarios;
 
   return (
     <div className={styles.container}> {/* Contenedor principal */}
