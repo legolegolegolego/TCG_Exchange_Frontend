@@ -10,19 +10,21 @@ const Home = () => {
   const isAdmin = user?.roles?.includes("ROLE_ADMIN")
 
   useEffect(() => {
-
     if (isAdmin) {
       navigate("/explorar");
-    } else {
-      return (
-        <div>
+    }
+  }, [isAdmin, navigate]);
+
+  return (
+    <div>
+      {!isAdmin && (
+        <>
           <Banner />
           <Explorar />
-        </div>
-      );
-
-    }
-  });
+        </>
+      )}
+    </div>
+  );
 
 
 };
