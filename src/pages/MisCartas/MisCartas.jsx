@@ -133,19 +133,19 @@ const MisCartas = () => {
       {/* TABS con Button */}
       <div className="d-flex gap-2 mb-3 flex-wrap justify-content-center">
         <Button
-          variant={filtro === "todas" ? "primary" : "outline"}
+          variant={filtro === "todas" ? "primary" : "outline-primary"}
           onClick={() => setFiltro("todas")}
         >
           TODAS
         </Button>
         <Button
-          variant={filtro === "disponibles" ? "primary" : "outline"}
+          variant={filtro === "disponibles" ? "primary" : "outline-primary"}
           onClick={() => setFiltro("disponibles")}
         >
           DISPONIBLES
         </Button>
         <Button
-          variant={filtro === "no" ? "primary" : "outline"}
+          variant={filtro === "no" ? "primary" : "outline-primary"}
           onClick={() => setFiltro("no")}
         >
           NO DISPONIBLES
@@ -168,15 +168,16 @@ const MisCartas = () => {
 
       {/* BOTÓN CREAR */}
       {!isAdmin && (
-        <button
-          className={`btn btn-primary position-fixed ${styles.addButton}`}
+        <Button
+          className={`position-fixed ${styles.addButton}`}
+          size="lg"
           onClick={() => {
             setEditingCarta(null);
             setShowModal(true);
           }}
         >
           + Subir nueva carta
-        </button>
+        </Button>
       )}
 
       {/* MODAL CREAR/EDITAR */}
@@ -193,8 +194,8 @@ const MisCartas = () => {
           <div className={styles.modal}>
             <h5>¿Seguro que quieres eliminar esta carta?</h5>
             <div className="d-flex justify-content-end gap-2 mt-3">
-              <button className={`btn btn-secondary ${styles.cancelButton}`} onClick={() => setDeleteTarget(null)}>Cancelar</button>
-              <button className={`btn btn-danger ${styles.confirmDeleteButton}`} onClick={handleDelete}>Eliminar</button>
+              <Button variant="cancel" onClick={() => setDeleteTarget(null)}>Cancelar</Button>
+              <Button variant="danger" onClick={handleDelete}>Eliminar</Button>
             </div>
           </div>
         </div>

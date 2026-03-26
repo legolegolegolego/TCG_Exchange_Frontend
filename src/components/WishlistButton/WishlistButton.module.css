@@ -1,28 +1,9 @@
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  border-color: var(--tertiary);
-  color: var(--tertiary); 
-  cursor: pointer;
-}
-
-.button:hover {
-  border-color: var(--tertiary);
-  color: var(--tertiary); 
-}
-
 .icon {
   width: 18px;
   height: 18px;
   transition: transform 0.2s; 
 }
 
-.button:hover .icon {
+Button:hover .icon {
   transform: scale(1.1); 
 }

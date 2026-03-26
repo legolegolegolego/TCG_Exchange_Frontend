@@ -146,7 +146,7 @@ const ProponerIntercambio = () => {
 
       {/* Botones */}
       <div className="d-flex gap-2 justify-content-center mt-4 flex-wrap">
-        <Button variant="outline" onClick={() => navigate("/")}>Volver a la página principal</Button>
+        <Button variant="cancel" onClick={() => navigate("/")}>Volver a la página principal</Button>
         <Button variant="primary" disabled={!cartaSeleccionada || enviando} onClick={handleEnviar}>
           {enviando ? "Enviando..." : "Enviar propuesta"}
         </Button>

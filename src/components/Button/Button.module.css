@@ -1,31 +1,74 @@
 .button {
   padding: 0.3rem 0.7rem;
-  font-size: 0.85rem;
+  font-size: 1em;
+  font-weight: 500;
   border: none;
   border-radius: 0.4rem;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.button:hover{
+  filter: brightness(1.1);
 }
 
 .button-primary {
-  background-color: #3498db;
-  color: #fff;
+  background-color: var(--secondary);
+  color: var(--white);
 }
 
-.button-primary:hover {
-  background-color: #2980b9;
+.button-outline-primary {
+  background-color: transparent;
+  color: var(--secondary);
+  border: 2px solid var(--secondary);
+}
+
+.button-outline-primary:hover {
+  background-color: var(--secondary);
+  color: var(--white);
 }
 
 .button-secondary {
-  background-color: #6c757d;
-  color: #fff;
+  background-color: var(--primary);
+  color: var(--black);
 }
 
-.button-secondary:hover {
-  background-color: #5a6268;
+.button-white {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.button-black {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.button-danger {
+  background-color: var(--tertiary);
+  color: var(--white);
+}
+
+.button-outline-danger {
+  background-color: transparent;
+  color: var(--tertiary);
+  border: 2px solid var(--tertiary);
+}
+
+.button-outline-danger:hover {
+  background-color: var(--tertiary);
+  color: var(--white);
+}
+
+.button-cancel {
+  background-color: var(--graydark);
+  color: var(--black);
+}
+
+.button-cancel:hover {
+  filter: brightness(0.9);
 }
 
 .button-sm {
@@ -41,4 +84,28 @@
 .button-lg {
   padding: 0.6rem 1rem;
   font-size: 1rem;
+}
+
+.button-dropdown-item {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: var(--black);
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.button-dropdown-item:hover {
+  background-color: var(--graydark);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

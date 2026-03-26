@@ -7,6 +7,7 @@ import RangeSlider from "../../components/RangeSlider/RangeSlider";
 import Notification from "../../components/Notification/Notification";
 import EditarCrearCartaModelo from "../../components/EditarCrearCartaModelo/EditarCrearCartaModelo";
 import styles from "./Explorar.module.css";
+import Button from "../../components/Button/Button";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SORT_OPTIONS = [
@@ -184,7 +185,9 @@ const Explorar = () => {
             </select>
           </div>
 
-          <button className="btn btn-secondary w-100 mt-2" onClick={handleClear}>Limpiar</button>
+          <Button variant="cancel" fullWidth onClick={handleClear}>
+            Limpiar
+          </Button>
         </aside>
 
         {/* Main */}
@@ -200,8 +203,12 @@ const Explorar = () => {
             </div>
             <div>
               <small className="me-2">{loading ? "Cargando..." : `Página ${page + 1} de ${totalPages || 1}`}</small>
-              <button className="btn btn-outline-primary btn-sm me-1" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page <= 0}>Anterior</button>
-              <button className="btn btn-outline-primary btn-sm" onClick={() => setPage(p => Math.min((totalPages || 1) - 1, p + 1))} disabled={page >= (totalPages || 1) - 1}>Siguiente</button>
+              <Button variant="outline-primary" size="sm" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page <= 0}>
+                Anterior
+              </Button>
+              <Button variant="outline-primary" size="sm" onClick={() => setPage(p => Math.min((totalPages || 1) - 1, p + 1))} disabled={page >= (totalPages || 1) - 1}>
+                Siguiente
+              </Button>
             </div>
           </div>
           {/* BOTÓN CREAR */}

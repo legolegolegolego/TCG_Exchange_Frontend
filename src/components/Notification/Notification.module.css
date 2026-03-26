@@ -33,15 +33,15 @@
 
 /* Colores por tipo */
 .success {
-  background-color: #4caf50;
+  background-color: var(--secondary);
 }
 
 .error {
-  background-color: #f44336;
+  background-color: var(--tertiary);
 }
 
 .info {
-  background-color: #2196f3;
+  background-color: var(--graydark);
 }
 
 .icon {

@@ -3,6 +3,7 @@ import { registerUser } from "../../services/auth.js";
 import { useNavigate } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./Register.module.css";
+import Button from "../../components/Button/Button.jsx";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -77,7 +78,7 @@ const Register = () => {
                     className={styles.input}
                 />
 
-                <button type="submit" className={styles.button}>Registrarse</button>
+                <Button type="submit" variant="primary" size="lg">Registrarse</Button>
 
                 <hr />
                 <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>

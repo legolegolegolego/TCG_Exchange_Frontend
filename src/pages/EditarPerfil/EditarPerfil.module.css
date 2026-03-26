@@ -76,12 +76,12 @@
 }
 
 .success {
-  color: green;
+  color: var(--secondary);
   margin-top: 8px
 }
 
 .error {
-  color: red;
+  color: var(--tertiary);
   margin-top: 8px
 }
 

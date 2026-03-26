@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./EditarCrearCartaFisica.module.css";
 import { getCartasModelo } from "../../services/cartasModelo";
+import Button from "../Button/Button";
 
 const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
   const [modelos, setModelos] = useState([]);
@@ -109,12 +110,12 @@ const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
           </div>
 
           <div className="modal-footer">
-            <button className={`btn btn-danger ${styles.cancelButton}`} onClick={onClose}>
+            <Button variant="cancel" onClick={onClose}>
               Cancelar
-            </button>
-            <button className={`btn btn-secondary ${styles.confirmDeleteButton}`} onClick={handleSubmit}>
+            </Button>
+            <Button variant="primary" onClick={handleSubmit}>
               Guardar
-            </button>
+            </Button>
           </div>
         </div>
       </div>

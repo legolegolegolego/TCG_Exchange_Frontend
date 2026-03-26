@@ -51,18 +51,16 @@ const MiCarta = ({ carta, onEdit, onDelete, isAdmin }) => {
         {disponible && (
           <div className="d-flex justify-content-center gap-2 mt-auto">
             {!isAdmin && <Button
-              variant="outline-secondary"
+              variant="outline-primary"
               size="sm"
               onClick={() => onEdit(carta)}
-              className={styles.editButton}
             >
               Editar
             </Button>}
             <Button
-              variant="outline-secondary"
+              variant="outline-danger"
               size="sm"
               onClick={() => onDelete(carta)}
-              className={styles.deleteButton}
             >
               Eliminar
             </Button>

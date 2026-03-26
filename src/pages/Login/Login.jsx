@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { useNavigate, useLocation } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./Login.module.css";
+import Button from "../../components/Button/Button.jsx";
 
 const Login = () => {
     const { login } = useAuth();
@@ -94,7 +95,7 @@ const Login = () => {
                     className={styles.input}
                 />
 
-                <button type="submit" className={styles.button}>Iniciar sesión</button>
+                <Button type="submit" variant="primary" size="lg">Iniciar sesión</Button>
 
                 <hr />
                 <p>

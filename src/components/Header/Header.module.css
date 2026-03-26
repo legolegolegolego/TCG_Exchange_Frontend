@@ -80,21 +80,9 @@
   /* mismo tamaño que header */
 }
 
-/* Botón Mi Perfil igual ancho que dropdown */
-.profileButton {
-  width: 100%;
-  max-width: 160px;
-  text-align: left;
-  display: inline-flex;
-  justify-content: space-between;
-  /* texto a la izquierda, flecha a la derecha */
-  align-items: center;
-  font-size: 1rem;
-}
-
 /* Flecha del botón */
 .dropdownArrow {
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-left: 0.3rem;
 }
 

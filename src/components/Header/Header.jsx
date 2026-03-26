@@ -4,6 +4,7 @@ import logo from "../../assets/logo.png";
 import { useAuth } from "../../context/AuthContext.jsx";
 import WishlistButton from "../WishlistButton/WishlistButton.jsx";
 import styles from "./Header.module.css";
+import Button from "../Button/Button.jsx";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -99,40 +100,39 @@ const Header = () => {
         >
           {!token ? (
             <>
-              <button className="btn btn-dark btn-sm" onClick={handleLoginClick}>
+              <Button variant="primary" size="md" onClick={handleLoginClick}>
                 Iniciar Sesión
-              </button>
-              <button className="btn btn-outline-dark btn-sm" onClick={handleRegisterClick}>
+              </Button>
+              <Button variant="outline-primary" onClick={handleRegisterClick}>
                 Registrarse
-              </button>
+              </Button>
             </>
           ) : (
             <div className="d-flex align-items-center gap-2 flex-wrap position-relative">
               {!isAdmin &&
                 <WishlistButton
                   onClick={() => navigate("/no-disponible")}
-                  title="Favoritos"
-                  ariaLabel="Favoritos"
+                  title="Lista de Deseos"
+                  ariaLabel="Lista de Deseos"
                 />}
 
               {/* Dropdown “Mi Perfil” */}
               <div className="dropdown" style={{ position: "relative" }}>
-                <button
-                  className={`btn btn-dark btn-sm ${styles.profileButton}`}
-                  type="button"
+                <Button
+                  variant="black"
+                  size="md"
                   onClick={() => setOpen((s) => !s)}
-                  aria-expanded={open}
                 >
                   Mi Perfil <span className={styles.dropdownArrow}>▾</span>
-                </button>
+                </Button>
                 <ul
                   className={`dropdown-menu ${open ? "show" : ""} ${styles.dropdownMenu}`}
                   style={{ right: 0, left: "auto" }}
                 >
                   <li>
-                    <button className="dropdown-item" onClick={handleEditProfile}>
+                    <Button variant="dropdown-item" onClick={handleEditProfile}>
                       Editar Perfil
-                    </button>
+                    </Button>
                   </li>
                   <li>
                     <button className="dropdown-item btn-danger" onClick={handleLogout}>

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Banner.module.css";
 import { getCurrentUser } from "../../utils/token";
 import logo from "../../assets/logo.png";
+import Button from "../Button/Button";
 
 const Banner = () => {
   const navigate = useNavigate();
@@ -16,8 +17,18 @@ const Banner = () => {
           coleccionistas de todo el mundo.
         </p>
         <div className={styles.buttons}>
-          <button onClick={() => navigate("/explorar")}>Explorar Base Set</button>
-          <button onClick={() => navigate("/cartas/" + username)}>Añadir Tus Cartas</button>
+          <Button
+            onClick={() => navigate("/explorar")}
+            variant="white"
+            size="lg">
+            Explorar Base Set
+          </Button>
+          <Button
+            onClick={() => navigate("/cartas/" + username)}
+            variant="secondary"
+            size="lg">
+            Añadir Tus Cartas
+          </Button>
         </div>
       </div>
       <div className={styles.image}>

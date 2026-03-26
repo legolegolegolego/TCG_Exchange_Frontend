@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { getCurrentUser } from "../../utils/token.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
+import Button from "../../components/Button/Button.jsx";
 
 const EditarPerfil = () => {
     const [activeTab, setActiveTab] = useState("credenciales"); // Tab activa: credenciales, direccion, eliminar
@@ -221,7 +222,9 @@ const EditarPerfil = () => {
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
                                 </div>
-                                <button className={styles.button} type="submit">Actualizar nombre de usuario</button>
+                                <Button
+                                    variant="primary"
+                                    type="submit">Actualizar nombre de usuario</Button>
                                 {userErr && <p className={styles.error}>{userErr}</p>}
                             </form>
                         </section>
@@ -257,7 +260,9 @@ const EditarPerfil = () => {
                                         onChange={(e) => setPasswordNueva2(e.target.value)}
                                     />
                                 </div>
-                                <button className={styles.button} type="submit">Actualizar contraseña</button>
+                                <Button variant="primary" type="submit">
+                                    Actualizar contraseña
+                                </Button>
                                 {passErr && <p className={styles.error}>{passErr}</p>}
                             </form>
                         </section>
@@ -321,7 +326,7 @@ const EditarPerfil = () => {
                                     required
                                 />
                             </div>
-                            <button className={styles.button} type="submit">Actualizar dirección</button>
+                            <Button variant="primary" type="submit" size="md">Actualizar dirección</Button>
                         </form>
                     </section>
                 )}
@@ -329,12 +334,12 @@ const EditarPerfil = () => {
                 {activeTab === "eliminar" && (
                     <section className={styles.section}>
                         <h2>Eliminar cuenta</h2>
-                        <button
-                            className={styles.deleteButton}
+                        <Button
+                            variant="danger"
                             onClick={() => setShowDeleteModal(true)}
                         >
                             Eliminar cuenta
-                        </button>
+                        </Button>
                     </section>
                 )}
 
@@ -348,19 +353,19 @@ const EditarPerfil = () => {
                             {deleteErr && <p className={styles.error}>{deleteErr}</p>}
 
                             <div className={styles.modalActions}>
-                                <button
-                                    className={styles.cancelButton}
+                                <Button
+                                    variant="cancel"
                                     onClick={() => setShowDeleteModal(false)}
                                 >
                                     Cancelar
-                                </button>
+                                </Button>
 
-                                <button
-                                    className={styles.confirmDeleteButton}
+                                <Button
+                                    variant="danger"
                                     onClick={handleDeleteAccount}
                                 >
                                     Eliminar cuenta
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </div>
