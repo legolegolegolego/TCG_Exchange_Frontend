@@ -88,7 +88,7 @@ const CardModel = ({ carta }) => {
 
         {id && (
           <Button
-            variant="primary"
+            variant="cancel"
             size="md"
             className="w-100 mt-1"
             onClick={(e) => {

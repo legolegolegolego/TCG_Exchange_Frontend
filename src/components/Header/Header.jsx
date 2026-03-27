@@ -60,28 +60,35 @@ const Header = () => {
           {username && (
             <>
               {/* Si USER */}
-              <span
-                className={`fw-semibold ${styles.navTitle}`}
-                onClick={() => navigate("/intercambios/" + username)}
-                role="button"
-              >
-                {!isAdmin && "Mis Intercambios"}
-              </span>
-              <span
-                className={`fw-semibold ${styles.navTitle}`}
-                onClick={() => navigate("/cartas/" + username)}
-                role="button"
-              >
-                {!isAdmin && "Mis Cartas"}
-              </span>
+
+              {!isAdmin && (
+                <span
+                  className={`fw-semibold ${styles.navTitle}`}
+                  onClick={() => navigate("/intercambios/" + username)}
+                  role="button"
+                >
+                  Mis Intercambios
+                </span>
+              )}
+              {!isAdmin && (
+                <span
+                  className={`fw-semibold ${styles.navTitle}`}
+                  onClick={() => navigate("/cartas/" + username)}
+                  role="button"
+                >
+                  Mis Cartas
+                </span>
+              )}
               {/* Si ADMIN */}
-              <span
-                className={`fw-semibold ${styles.navTitle}`}
-                onClick={() => navigate("/usuarios")}
-                role="button"
-              >
-                {isAdmin && "Usuarios"}
-              </span>
+              {isAdmin && (
+                <span
+                  className={`fw-semibold ${styles.navTitle}`}
+                  onClick={() => navigate("/usuarios")}
+                  role="button"
+                >
+                  Usuarios
+                </span>
+              )}
             </>
           )}
           <span

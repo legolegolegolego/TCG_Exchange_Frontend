@@ -49,11 +49,11 @@ const Explorar = () => {
     window.history.replaceState({}, document.title);
 
     // Mostrar notificaciones de páginas hijas
-        const stored = sessionStorage.getItem("notification");
-        if (stored) {
-            setNotification(JSON.parse(stored));
-            sessionStorage.removeItem("notification");
-        }
+    const stored = sessionStorage.getItem("notification");
+    if (stored) {
+      setNotification(JSON.parse(stored));
+      sessionStorage.removeItem("notification");
+    }
   }, []);
 
   const fetchCards = async () => {
@@ -213,15 +213,17 @@ const Explorar = () => {
           </div>
           {/* BOTÓN CREAR */}
           {isAdmin && (
-            <button
-              className={`btn btn-primary position-fixed ${styles.addButton}`}
+            <Button
+              variant="primary"
+              size="lg"
+              className={`position-fixed ${styles.addButton}`}
               onClick={() => {
                 setEditingCarta(null);
                 setShowModal(true);
               }}
             >
               + Crear nueva carta modelo
-            </button>
+            </Button>
           )}
 
           <div className="row g-3">

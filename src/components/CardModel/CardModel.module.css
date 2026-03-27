@@ -27,6 +27,7 @@
 /* HOVER GENERAL */
 .clickable {
   transition: transform 180ms ease, box-shadow 180ms ease;
+  cursor: pointer;
 }
 
 /* HOVER COLOR */

@@ -52,7 +52,7 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
           </p>
 
           <Button
-            variant="primary"
+            variant="cancel"
             size="md"
             onClick={(e) => {
               e.stopPropagation(); // Evita doble trigger con contenedor

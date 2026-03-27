@@ -22,6 +22,7 @@ import Soporte from "./pages/Soporte/Soporte.jsx";
 import Home from "./pages/Home/Home.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard.jsx";
 
 function App() {
   return (
@@ -123,6 +124,15 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
       <Footer />
     </>

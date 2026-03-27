@@ -1,0 +1,53 @@
+.dashboardContainer {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto; 
+}
+
+.title {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.summaryRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cardSummary {
+  flex: 1 1 250px;
+  max-width: 300px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer; 
+}
+
+.cardSummary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.recentActivityRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.recentActivityColumn {
+  flex: 1 1 300px;
+}
+
+.list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}

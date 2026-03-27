@@ -4,6 +4,7 @@ import { getDisponiblesByUsername, getNoDisponiblesByUsername } from "../../serv
 import { getIntercambiosByUsuario } from "../../services/intercambios";
 import { deleteUser } from "../../services/usuarios";
 import styles from "./CardUser.module.css";
+import Button from "../Button/Button";
 
 const CardUser = ({ user, onDelete }) => {
     const navigate = useNavigate();
@@ -95,8 +96,9 @@ const CardUser = ({ user, onDelete }) => {
                         {/* Botones */}
                         <div className="col-12 col-sm-4 d-flex justify-content-sm-end gap-2 mt-2 mt-sm-0 flex-wrap">
 
-                            <button
-                                className="btn btn-sm btn-outline-primary"
+                            <Button
+                                variant="outline-primary"
+                                size="sm"
                                 onClick={goToUser}
                                 disabled={loadingChecks || !hasCartas}
                                 title={
@@ -108,10 +110,11 @@ const CardUser = ({ user, onDelete }) => {
                                 }
                             >
                                 Cartas
-                            </button>
+                            </Button>
 
-                            <button
-                                className="btn btn-sm btn-outline-secondary"
+                            <Button
+                                variant="outline-primary"
+                                size="sm"
                                 onClick={goToIntercambios}
                                 disabled={loadingChecks || !hasIntercambios}
                                 title={
@@ -123,16 +126,17 @@ const CardUser = ({ user, onDelete }) => {
                                 }
                             >
                                 Intercambios
-                            </button>
+                            </Button>
 
-                            <button
-                                className="btn btn-sm btn-outline-danger"
+                            <Button
+                                variant="outline-danger"
+                                size="sm"
                                 onClick={() => setShowDeleteModal(true)}
                                 disabled={desactivado}
                                 title={desactivado ? "Usuario ya desactivado" : ""}
                             >
                                 Eliminar
-                            </button>
+                            </Button>
 
                         </div>
                     </div>
@@ -149,20 +153,20 @@ const CardUser = ({ user, onDelete }) => {
                         {deleteErr && <p className={styles.error}>{deleteErr}</p>}
 
                         <div className={styles.modalActions}>
-                            <button
+                            <Button
                                 className={styles.cancelButton}
                                 onClick={() => setShowDeleteModal(false)}
                             >
                                 Cancelar
-                            </button>
+                            </Button>
 
-                            <button
+                            <Button
                                 className={styles.confirmDeleteButton}
                                 onClick={handleDelete}
                                 disabled={deleting}
                             >
                                 {deleting ? "Eliminando..." : "Eliminar"}
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>

@@ -169,8 +169,9 @@ const MisCartas = () => {
       {/* BOTÓN CREAR */}
       {!isAdmin && (
         <Button
-          className={`position-fixed ${styles.addButton}`}
-          size="lg"
+        variant="primary"
+        size="lg"
+        className={`position-fixed ${styles.addButton}`}
           onClick={() => {
             setEditingCarta(null);
             setShowModal(true);
