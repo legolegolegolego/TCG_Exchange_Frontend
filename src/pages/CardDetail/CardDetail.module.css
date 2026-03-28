@@ -90,21 +90,6 @@
   min-width: 120px;
 }
 
-.userButton {
-  padding: 0.3rem 0.7rem;
-  font-size: 0.85rem;
-  border: none;
-  background-color: #3498db;
-  color: #fff;
-  border-radius: 0.4rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.userButton:hover {
-  background-color: #2980b9;
-}
-
 .noUsers {
   font-size: 0.9rem;
   color: #777;
@@ -133,22 +118,6 @@
   justify-content: flex-end;
   gap: 0.5rem;
   margin-top: 1rem;
-}
-
-.cancelButton {
-  background: #6c757d;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.75rem;
-  border-radius: 0.3rem;
-}
-
-.confirmDeleteButton {
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.75rem;
-  border-radius: 0.3rem;
 }
 
 .error {

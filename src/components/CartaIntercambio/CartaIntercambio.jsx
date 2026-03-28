@@ -49,7 +49,9 @@ const CartaIntercambio = ({ carta, title, placeholderText }) => {
           </div>
         </div>
       ) : (
-        <div className={styles.placeholder}>{placeholderText || "Selecciona una carta"}</div>
+        <div className={styles.placeholderFull}>
+          {placeholderText || "Selecciona una carta"}
+        </div>
       )}
     </div>
   );

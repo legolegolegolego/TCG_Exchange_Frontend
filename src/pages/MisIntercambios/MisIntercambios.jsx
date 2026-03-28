@@ -65,7 +65,7 @@ const MisIntercambios = () => {
         {["TODOS", "PENDIENTE", "ACEPTADO", "RECHAZADO"].map((estado) => (
           <Button
             key={estado}
-            variant={estadoFiltro === estado ? "primary" : "outline"}
+            variant={estadoFiltro === estado ? "primary" : "outline-primary"}
             onClick={() => setEstadoFiltro(estado)}
           >
             {estado}

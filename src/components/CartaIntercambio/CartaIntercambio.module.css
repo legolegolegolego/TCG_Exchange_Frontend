@@ -1,17 +1,25 @@
 .container {
   width: 180px;
+  min-height: 320px;
   border-radius: 8px;
   text-align: center;
   background: #fff;
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .imageContainer {
   width: 100%;
   aspect-ratio: 3 / 4;
+  min-height: 240px;
   overflow: hidden;
   background: #f9f9f9;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .imagen {
@@ -30,6 +38,20 @@
   background: #f0f0f0;
   color: #666;
   border-radius: 4px;
+}
+
+.placeholderFull {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #666;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  flex: 1;
 }
 
 h4 {

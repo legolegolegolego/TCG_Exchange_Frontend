@@ -33,11 +33,12 @@
 }
 
 .estadoBadge {
-  font-size: 0.75rem;
-  margin-top: 2px;
+  font-size: 0.8rem;
+  margin-top: 4px;
   display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 10px;
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 0.8em;
 }
 
 .titleBadge {
@@ -46,3 +47,10 @@
   border-radius: 12px;
   font-weight: 600;
 }
+
+.titleText {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #222;
+}
+

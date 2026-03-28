@@ -94,8 +94,8 @@ const CardDetail = () => {
 
   // Filtrar usuarios para no mostrar al actual (si hay sesión)
   const usuariosFiltrados = user
-  ? usuarios.filter(u => u.username !== user.username)
-  : usuarios;
+    ? usuarios.filter(u => u.username !== user.username)
+    : usuarios;
 
   return (
     <div className={styles.container}> {/* Contenedor principal */}
@@ -164,7 +164,7 @@ const CardDetail = () => {
           {isAdmin && (
             <div className={styles.adminActions}>
               <Button
-                variant="primary"
+                variant="outline-primary"
                 size="md"
                 onClick={() => {
                   setEditingCarta(carta);
@@ -174,15 +174,15 @@ const CardDetail = () => {
                 Editar
               </Button>
 
-              <button
-                className="btn btn-sm btn-outline-danger"
+              <Button
+                variant="outline-danger"
                 onClick={() => {
                   setDeleteError(null);
                   setShowDeleteModal(true);
                 }}
               >
                 Eliminar
-              </button>
+              </Button>
             </div>
           )}
         </div> {/* FIN left */}
@@ -203,9 +203,8 @@ const CardDetail = () => {
                       <li key={u.id} className={styles.userItem}>
                         <div className={styles.userName}>{uname}</div>
                         <Button
-                          className={styles.userButton}
                           variant="primary"
-                          size="md"
+                          size="sm"
                           onClick={() => navigate(`/usuario/${uname}`, {
                             state: { from: location.pathname, fromLabel: 'vista de carta modelo' }
                           })}
@@ -248,20 +247,20 @@ const CardDetail = () => {
             {deleteError && <p className={styles.error}>{deleteError}</p>}
 
             <div className={styles.modalActions}>
-              <button
-                className={styles.cancelButton}
+              <Button
+                variant="cancel"
                 onClick={() => setShowDeleteModal(false)}
               >
                 Cancelar
-              </button>
+              </Button>
 
-              <button
-                className={styles.confirmDeleteButton}
+              <Button
+                variant="danger"
                 onClick={handleDelete}
                 disabled={deleting}
               >
                 {deleting ? "Eliminando..." : "Eliminar"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

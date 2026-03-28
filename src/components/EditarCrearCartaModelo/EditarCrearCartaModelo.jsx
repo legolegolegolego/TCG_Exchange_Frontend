@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./EditarCrearCartaModelo.module.css";
 import { createCartaModelo, updateCartaModelo } from "../../services/cartasModelo";
+import Button from "../Button/Button";
 
 const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData }) => {
     const [form, setForm] = useState({
@@ -83,7 +84,6 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                 <div className="modal-content p-3 p-md-4">
                     <div className="modal-header">
                         <h5 className="modal-title">{initialData ? "Editar Carta Modelo" : "Nueva Carta Modelo"}</h5>
-                        <button type="button" className="btn-close" onClick={onClose}></button>
                     </div>
                     <div className="modal-body">
                         <p>Modifica la información de tu carta modelo.</p>
@@ -210,12 +210,12 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                     </div>
 
                     <div className="modal-footer">
-                        <button className={`btn btn-danger ${styles.cancelButton}`} onClick={onClose}>
+                        <Button variant="cancel" onClick={onClose}>
                             Cancelar
-                        </button>
-                        <button className={`btn btn-secondary ${styles.confirmDeleteButton}`} onClick={handleSubmit}>
+                        </Button>
+                        <Button variant="primary" onClick={handleSubmit}>
                             Guardar
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>

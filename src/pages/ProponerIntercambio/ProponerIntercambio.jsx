@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
-import CartaIntercambio from "../../components/CartaIntercambio/CartaIntercambio";
+import CartaUnificada from "../../components/CartaUnificada/CartaUnificada";
 import Notification from "../../components/Notification/Notification";
 import Button from "../../components/Button/Button";
 import styles from "./ProponerIntercambio.module.css";
@@ -27,6 +27,7 @@ const ProponerIntercambio = () => {
     const fetchDatos = async () => {
       setLoading(true);
       try {
+        // Carta destino
         const cfRes = await api.get(`/cartas-fisicas/${idCartaDestino}`);
         const cf = cfRes.data;
         const cmRes = await api.get(`/cartas-modelo/${cf.idCartaModelo}`);
@@ -44,6 +45,7 @@ const ProponerIntercambio = () => {
           imagenUrl: cf?.imagenUrl || cm?.imagenUrl || "/placeholder.png",
         });
 
+        // Mis cartas
         const misCartasRes = await api.get(`/cartas-fisicas/usuario/${username}`);
         const disponibles = misCartasRes.data || [];
         const modeloCache = {};
@@ -115,39 +117,63 @@ const ProponerIntercambio = () => {
   }
 
   return (
-    <div className="container py-4">
-      <h1 className="mb-3">Proponer intercambio</h1>
-      <p>Selecciona una de tus cartas para intercambiar por <strong>{cartaDestino.nombre}</strong></p>
+    <div className="container py-4 d-flex flex-column align-items-center">
+      <h1 className="mb-3 text-center">Proponer intercambio</h1>
+      <p className="text-center">
+        Selecciona una de tus cartas para intercambiar por <strong>{cartaDestino.nombre}</strong>
+      </p>
 
-      {notification && <Notification type={notification.type} message={notification.message} onClose={() => setNotification(null)} />}
+      {notification && (
+        <Notification
+          type={notification.type}
+          message={notification.message}
+          onClose={() => setNotification(null)}
+        />
+      )}
 
       {/* Cartas principales */}
-      <div className="d-flex flex-wrap justify-content-center gap-3 my-3">
-        <CartaIntercambio carta={cartaDestino} title="Carta solicitada" />
-        <CartaIntercambio
-          carta={cartaSeleccionada}
-          title="Tu selección"
-          placeholderText="Selecciona una carta de tu colección"
-        />
+      <div className="d-flex flex-wrap justify-content-center gap-4 my-3 align-items-start">
+
+        <div className="d-flex flex-column align-items-center">
+          <span className="fw-semibold mb-2">Carta solicitada</span>
+          <CartaUnificada carta={cartaDestino} />
+        </div>
+
+        <div className="d-flex flex-column align-items-center">
+          <span className="fw-semibold mb-2">Tu selección</span>
+          <CartaUnificada
+            carta={cartaSeleccionada}
+            placeholderText="Selecciona una carta de tu colección"
+          />
+        </div>
+
       </div>
 
-      <h3 className="mt-4">Mis cartas disponibles:</h3>
-      <div className="d-flex flex-wrap gap-3 mt-2">
+      {/* Mis cartas disponibles */}
+      <h3 className="mt-4 text-center w-100">Mis cartas disponibles:</h3>
+      <div className="d-flex flex-wrap gap-3 mt-2 justify-content-center w-100">
         {misCartas.map((c) => (
-          <div
+          <CartaUnificada
             key={c.id}
-            className={`${styles.cartaSeleccionable} ${cartaSeleccionada?.id === c.id ? styles.selected : ""}`}
+            carta={c}
+            showActionBtn={false}
+            isSelectable
+            isSelected={cartaSeleccionada?.id === c.id}
             onClick={() => !enviando && setCartaSeleccionada(c)}
-          >
-            <CartaIntercambio carta={c} title="" />
-          </div>
+          />
         ))}
       </div>
 
       {/* Botones */}
-      <div className="d-flex gap-2 justify-content-center mt-4 flex-wrap">
-        <Button variant="cancel" onClick={() => navigate("/")}>Volver a la página principal</Button>
-        <Button variant="primary" disabled={!cartaSeleccionada || enviando} onClick={handleEnviar}>
+      <div className="d-flex gap-2 justify-content-center mt-4 flex-wrap w-100">
+        <Button variant="cancel" onClick={() => navigate("/")}>
+          Volver a la página principal
+        </Button>
+        <Button
+          variant="primary"
+          disabled={!cartaSeleccionada || enviando}
+          onClick={handleEnviar}
+        >
           {enviando ? "Enviando..." : "Enviar propuesta"}
         </Button>
       </div>

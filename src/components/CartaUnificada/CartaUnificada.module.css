@@ -1,0 +1,77 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 12rem;
+  max-width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: var(--graylight);
+}
+
+/* Hover solo si es seleccionable */
+.selectable:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0 0 0 0.2rem var(--secondary);
+}
+
+/* Estado seleccionado */
+.selected {
+  box-shadow: 0 0 0 0.25rem var(--secondary);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.imageWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.estadoBadge {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.3);
+}
+
+.placeholder,
+.loading {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: #666;
+  background-color: var(--graylight);
+  border-radius: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .cardContainer {
+    width: 14rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cardContainer {
+    width: 16rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .estadoBadge {
+    font-size: 0.85rem;
+  }
+}
