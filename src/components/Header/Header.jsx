@@ -137,9 +137,9 @@ const Header = () => {
                   style={{ right: 0, left: "auto" }}
                 >
                   <li>
-                    <Button variant="dropdown-item" onClick={handleEditProfile}>
+                    <button className="dropdown-item" onClick={handleEditProfile}>
                       Editar Perfil
-                    </Button>
+                    </button>
                   </li>
                   <li>
                     <button className="dropdown-item btn-danger" onClick={handleLogout}>

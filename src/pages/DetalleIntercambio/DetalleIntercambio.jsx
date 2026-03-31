@@ -171,7 +171,7 @@ const DetalleIntercambio = () => {
 
       {intercambio.estado === "ACEPTADO" && (
         <div className="text-center mt-2">
-          <Button variant="info" onClick={() => setShowDireccionModal(true)}>
+          <Button variant="cancel" onClick={() => setShowDireccionModal(true)}>
             Ver dirección de envío
           </Button>
         </div>

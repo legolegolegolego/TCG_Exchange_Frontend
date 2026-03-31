@@ -14,10 +14,11 @@ const Button = ({
   ${styles[`button-${variant}`]} 
   ${styles[`button-${size}`]} 
   ${fullWidth ? styles.fullWidth : ""}
+  ${disabled ? styles.disabled : ""}
   ${className}`;
 
   return (
-    <button className={buttonClass} onClick={onClick} {...props}>
+    <button className={buttonClass} onClick={onClick} disabled={disabled} {...props}>
       {children}
     </button>
   );
