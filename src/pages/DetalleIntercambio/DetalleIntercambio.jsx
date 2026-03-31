@@ -235,23 +235,46 @@ const DetalleIntercambio = () => {
       )}
 
       {showDireccionModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modal}>
-            <h5>Dirección de envío</h5>
-            <p>
-              {direccionOtroUsuario.split(", ").map((parte, i) => (
-                <span key={i}>
-                  {parte}<br />
-                </span>
-              ))}
-            </p>
-            <div className="d-flex justify-content-end mt-3">
-              <Button variant="primary" onClick={() => setShowDireccionModal(false)}>Cerrar</Button>
+        <div className={`${styles.modalOverlay} modal fade show d-block`} tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content p-3 p-md-4">
+
+              {/* HEADER */}
+              <div className="modal-header pe-1">
+                <h5 className="modal-title">Dirección de envío</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowDireccionModal(false)}
+                ></button>
+              </div>
+
+              {/* BODY */}
+              <div className="modal-body">
+                <p>
+                  {direccionOtroUsuario.split(", ").map((parte, i) => (
+                    <span key={i}>
+                      {parte}<br />
+                    </span>
+                  ))}
+                </p>
+              </div>
+
+              {/* FOOTER */}
+              <div className="modal-footer">
+                <Button
+                  variant="cancel"
+                  onClick={() => setShowDireccionModal(false)}
+                >
+                  Cerrar
+                </Button>
+              </div>
+
             </div>
           </div>
         </div>
       )}
-      </div>
+    </div>
   );
 };
 

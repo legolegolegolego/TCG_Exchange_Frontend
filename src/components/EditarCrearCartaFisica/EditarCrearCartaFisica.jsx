@@ -59,7 +59,7 @@ const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
     <div className={`${styles.modalOverlay} modal fade show d-block`} tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content p-3 p-md-4">
-          <div className="modal-header">
+          <div className="modal-header pe-1">
             <h5 className="modal-title">{initialData ? "Editar Carta" : "Nueva Carta"}</h5>
             <button type="button" className="btn-close" onClick={onClose}></button>
           </div>

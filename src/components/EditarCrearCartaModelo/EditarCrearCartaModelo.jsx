@@ -61,7 +61,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
             } else {
                 await createCartaModelo(dataToSend);
             }
-            
+
             onSave(dataToSend);
         } catch (error) {
             const backendErrors = error.response?.data?.errors || {};
@@ -82,8 +82,10 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
         <div className={`${styles.modalOverlay} modal fade show d-block`} tabIndex="-1">
             <div className="modal-dialog modal-dialog-centered modal-lg">
                 <div className="modal-content p-3 p-md-4">
-                    <div className="modal-header">
+                    <div className="modal-header pe-1">
                         <h5 className="modal-title">{initialData ? "Editar Carta Modelo" : "Nueva Carta Modelo"}</h5>
+                        <button type="button" className="btn-close" onClick={onClose}></button>
+
                     </div>
                     <div className="modal-body">
                         <p>Modifica la información de tu carta modelo.</p>
