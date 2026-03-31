@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDisponiblesByUsername } from "../../services/cartasFisicas";
 import { getCurrentUser } from "../../utils/token";
-import CardFisica from "../../components/CardFisica/CardFisica";
+import CartaUnificada from "../../components/CartaUnificada/CartaUnificada";
 import Notification from "../../components/Notification/Notification";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './UsuarioCartas.module.css';
@@ -45,7 +45,7 @@ const UsuarioCartas = () => {
   if (!isValid) return null;
 
   return (
-    <div className="container usuario-cartas-container">
+    <div className="container py-4 usuario-cartas-container">
       {notification && (
         <Notification
           type={notification.type}
@@ -54,8 +54,9 @@ const UsuarioCartas = () => {
         />
       )}
 
-      <h2 className="username text-center text-md-start">{username}</h2>
-      <h3 className="sectionTitle text-center text-md-start">Cartas disponibles para intercambio</h3>
+      <h1 className="mb-4 text-center">
+        Cartas disponibles para intercambio de: {username}
+      </h1>
 
       {loading ? (
         <div className="loading text-center">Cargando...</div>
@@ -66,8 +67,22 @@ const UsuarioCartas = () => {
           ) : (
             <div className="row g-3">
               {cartas.map((c) => (
-                <div key={c.id} className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center">
-                  <CardFisica carta={c} />
+                <div
+                  key={c.id}
+                  className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center"
+                >
+                  <CartaUnificada
+                    carta={c}
+                    isSelectable={true}
+                    onClick={() => navigate(`/proponer-intercambio/${c.id}`)}
+                    actions={[
+                      {
+                        label: "Proponer intercambio",
+                        variant: "primary",
+                        onClick: () => navigate(`/proponer-intercambio/${c.id}`),
+                      },
+                    ]}
+                  />
                 </div>
               ))}
             </div>

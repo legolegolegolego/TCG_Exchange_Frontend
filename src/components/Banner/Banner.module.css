@@ -9,6 +9,10 @@
   gap: 2rem;
 }
 
+.text h1, .text p {
+  color: var(--white);
+}
+
 .text {
   max-width: 50%;
 }
@@ -38,7 +42,6 @@
   border-radius: 12px;
 }
 
-/* 📱 TABLET */
 @media (max-width: 768px) {
   .banner {
     flex-direction: column;

@@ -23,7 +23,6 @@
 }
 
 /* Sobreescritura de clases bootstrap */
-
 .bg-success{
   background-color: var(--secondary) !important;
   color: var(--white) !important;
@@ -51,9 +50,56 @@ a:hover {
   color: var(--primary);
 }
 
-h1 {
-  font-size: 3em;
-  line-height: 1.1;
+/* Encabezados principales y jerarquía */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--black);
+}
+
+/* Escala responsiva de encabezados */
+h1 { font-size: 2.5rem; }   
+h2 { font-size: 2rem; }     
+h3 { font-size: 1.5rem; }   
+h4 { font-size: 1.25rem; }  
+h5 { font-size: 1rem; }     
+h6 { font-size: 0.875rem; } 
+
+/* Texto normal y párrafos */
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  color: var(--black);
+}
+
+/* Texto pequeño, badges, y aclaraciones */
+small, .text-small {
+  font-size: 0.875rem;  
+  line-height: 1.4;
+  color: var(--black);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Margen vertical consistente */
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-5 { margin-bottom: 1.25rem; }
+
+/* Badges personalizados */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
 }
 
 .error {
@@ -68,4 +114,14 @@ h1 {
   a:hover {
     color: var(--secondary);
   }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1.125rem; }
+  h5 { font-size: 1rem; }
+  h6 { font-size: 0.875rem; }
+  p  { font-size: 0.9375rem; }
 }

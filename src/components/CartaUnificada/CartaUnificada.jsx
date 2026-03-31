@@ -16,12 +16,10 @@ const formatEstado = (estado) => {
 const CartaUnificada = ({
   carta,
   placeholderText,
-  showActionBtn,
-  actionBtnText,
-  actionBtnHandler,
   isSelectable = false,
   isSelected = false,
   onClick,
+  actions = [],
 }) => {
   const [cartaEnriquecida, setCartaEnriquecida] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,7 +56,11 @@ const CartaUnificada = ({
   }, [carta]);
 
   if (loading)
-    return <div className={`card ${styles.cardContainer}`}>Cargando...</div>;
+    return (
+      <div className={`card ${styles.cardContainer} ${styles.loading}`}>
+        Cargando...
+      </div>
+    );
 
   if (!cartaEnriquecida)
     return (
@@ -72,10 +74,9 @@ const CartaUnificada = ({
 
   return (
     <div
-      className={`${styles.cardContainer} ${isSelectable ? styles.selectable : ""} ${
-        isSelected ? styles.selected : ""
-      }`}
-      onClick={onClick}
+      className={`${styles.cardContainer} ${isSelectable ? styles.selectable : ""} ${isSelected ? styles.selected : ""
+        }`}
+      onClick={isSelectable ? onClick : undefined}
     >
       <div className={styles.imageWrapper}>
         <img src={imagenUrl} alt={nombre} className={styles.image} />
@@ -88,15 +89,26 @@ const CartaUnificada = ({
       <p className="fw-semibold mt-2 mb-0 text-center">
         {nombre} #{numero}
       </p>
-      {showActionBtn && actionBtnHandler && (
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={actionBtnHandler}
-          className="mt-2 w-100"
+      {actions?.length > 0 && (
+        <div
+          className={`${styles.actions} ${actions.length === 1 ? styles.singleAction : ""
+            }`}
         >
-          {actionBtnText || "Acción"}
-        </Button>
+          {actions.map((action, index) => (
+            <Button
+              key={index}
+              variant={action.variant || "primary"}
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                action.onClick();
+              }}
+              className={styles.actionButton}
+            >
+              {action.label}
+            </Button>
+          ))}
+        </div>
       )}
     </div>
   );

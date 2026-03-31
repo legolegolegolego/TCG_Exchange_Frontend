@@ -2,14 +2,11 @@ import { useEffect, useState } from "react";
 import { getDisponiblesByUsername, getNoDisponiblesByUsername, deleteCartaFisica, createCartaFisica, updateCartaFisica } from "../../services/cartasFisicas";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
-
-import MiCarta from "../../components/MiCarta/MiCarta";
+import CartaUnificada from "../../components/CartaUnificada/CartaUnificada";
 import EditarCrearCartaFisica from "../../components/EditarCrearCartaFisica/EditarCrearCartaFisica";
 import Notification from "../../components/Notification/Notification";
 import Button from "../../components/Button/Button";
-
 import styles from "./MisCartas.module.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams, useNavigate } from "react-router-dom";
 
 const modeloCache = {};
@@ -123,15 +120,15 @@ const MisCartas = () => {
 
   return (
     <div className="container py-4">
-      
+
       {isAdmin ? (
-        <h2 className="mb-3 text-center">Cartas de {username}</h2>
+        <h1 className="mb-4 text-center">Cartas de {username}</h1>
       ) : (
-        <h2 className="mb-3 text-center">Mis cartas</h2>
+        <h1 className="mb-4 text-center">Mis cartas</h1>
       )}
 
       {/* TABS con Button */}
-      <div className="d-flex gap-2 mb-3 flex-wrap justify-content-center">
+      <div className="d-flex gap-2 mb-4 flex-wrap justify-content-center">
         <Button
           variant={filtro === "todas" ? "primary" : "outline-primary"}
           onClick={() => setFiltro("todas")}
@@ -156,11 +153,36 @@ const MisCartas = () => {
       <div className="row g-3">
         {filteredCartas.map(carta => (
           <div key={carta.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
-            <MiCarta
+            <CartaUnificada
               carta={carta}
-              isAdmin={isAdmin}
-              onEdit={(c) => { setEditingCarta(c); setShowModal(true); }}
-              onDelete={(c) => setDeleteTarget(c)}
+              isSelectable={!isAdmin}
+              onClick={() => {
+                // Click en carta = editar
+                if (!isAdmin) {
+                  setEditingCarta(carta);
+                  setShowModal(true);
+                }
+              }}
+              actions={[
+                // EDITAR
+                ...(!isAdmin
+                  ? [{
+                    label: "Editar",
+                    variant: "outline-primary",
+                    onClick: () => {
+                      setEditingCarta(carta);
+                      setShowModal(true);
+                    }
+                  }]
+                  : []),
+
+                // ELIMINAR
+                {
+                  label: "Eliminar",
+                  variant: "outline-danger",
+                  onClick: () => setDeleteTarget(carta)
+                }
+              ]}
             />
           </div>
         ))}
@@ -169,9 +191,9 @@ const MisCartas = () => {
       {/* BOTÓN CREAR */}
       {!isAdmin && (
         <Button
-        variant="primary"
-        size="lg"
-        className={`position-fixed ${styles.addButton}`}
+          variant="primary"
+          size="lg"
+          className={`position-fixed ${styles.addButton}`}
           onClick={() => {
             setEditingCarta(null);
             setShowModal(true);

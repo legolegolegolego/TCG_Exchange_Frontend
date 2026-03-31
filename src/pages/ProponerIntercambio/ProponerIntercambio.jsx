@@ -118,7 +118,7 @@ const ProponerIntercambio = () => {
 
   return (
     <div className="container py-4 d-flex flex-column align-items-center">
-      <h1 className="mb-3 text-center">Proponer intercambio</h1>
+      <h1 className="mb-4 text-center">Proponer intercambio</h1>
       <p className="text-center">
         Selecciona una de tus cartas para intercambiar por <strong>{cartaDestino.nombre}</strong>
       </p>
@@ -150,17 +150,17 @@ const ProponerIntercambio = () => {
       </div>
 
       {/* Mis cartas disponibles */}
-      <h3 className="mt-4 text-center w-100">Mis cartas disponibles:</h3>
-      <div className="d-flex flex-wrap gap-3 mt-2 justify-content-center w-100">
+      <h2 className="mt-4 text-center w-100">Mis cartas disponibles:</h2>
+      <div className="row g-3 mt-2">
         {misCartas.map((c) => (
-          <CartaUnificada
-            key={c.id}
-            carta={c}
-            showActionBtn={false}
-            isSelectable
-            isSelected={cartaSeleccionada?.id === c.id}
-            onClick={() => !enviando && setCartaSeleccionada(c)}
-          />
+          <div key={c.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
+            <CartaUnificada
+              carta={c}
+              isSelectable
+              isSelected={cartaSeleccionada?.id === c.id}
+              onClick={enviando ? undefined : () => setCartaSeleccionada(c)}
+            />
+          </div>
         ))}
       </div>
 

@@ -10,16 +10,57 @@
   background-color: var(--graylight);
 }
 
-/* Hover solo si es seleccionable */
 .selectable:hover {
   cursor: pointer;
   transform: scale(1.05);
   box-shadow: 0 0 0 0.2rem var(--secondary);
 }
 
-/* Estado seleccionado */
 .selected {
   box-shadow: 0 0 0 0.25rem var(--secondary);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.4rem;
+  width: 100%;
+  margin-top: 0.4rem;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 0 0.3rem;
+}
+
+/* 2 botones → uno a cada lado */
+.actions:not(.singleAction) {
+  justify-content: space-between;
+}
+
+/* 1 botón → centrado */
+.singleAction {
+  justify-content: center;
+}
+
+/* Botones ocupan mitad si hay varios */
+.actionButton {
+  flex: 1;
+  min-width: 0;
+  border-radius: 0.5rem;
+  /* esquinas internas */
+  margin: 0 0.1rem;
+}
+
+/* Si solo hay uno, que no ocupe todo */
+.singleAction .actionButton {
+  flex: unset;
+  min-width: 60%;
 }
 
 .imageWrapper {
@@ -62,16 +103,14 @@
   .cardContainer {
     width: 14rem;
   }
+
+  .estadoBadge {
+    font-size: 0.85rem;
+  }
 }
 
 @media (min-width: 1200px) {
   .cardContainer {
     width: 16rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .estadoBadge {
-    font-size: 0.85rem;
   }
 }

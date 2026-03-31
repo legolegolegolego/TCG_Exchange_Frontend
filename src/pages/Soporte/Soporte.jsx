@@ -17,7 +17,7 @@ function Soporte() {
             sin compra ni venta, centrada en el coleccionismo y la colaboración.
           </p>
 
-          <h3 className="mt-5 mb-3">Preguntas frecuentes</h3>
+          <h3 className="mt-5 mb-4">Preguntas frecuentes</h3>
 
           <div className="accordion" id="faqAccordion">
 
@@ -164,7 +164,7 @@ function Soporte() {
           usuarios, cartas e intercambios para garantizar el correcto funcionamiento del sistema.
         </p>
 
-        <h3 className="mt-5 mb-3">Gestión para administradores</h3>
+        <h3 className="mt-5 mb-4">Gestión para administradores</h3>
 
         <div className="accordion" id="faqAccordionAdmin">
 

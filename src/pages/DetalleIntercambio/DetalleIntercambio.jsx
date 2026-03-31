@@ -147,8 +147,8 @@ const DetalleIntercambio = () => {
         />
       )}
 
-      <h1 className="text-center mb-3">Detalle del intercambio</h1>
-      <p className="text-center mb-3">
+      <h1 className="text-center mb-4">Detalle del intercambio</h1>
+      <p className="text-center mb-4">
         Propuesta {isOrigen ? "a" : "de"} <strong>{usernameOtro}</strong>
       </p>
 

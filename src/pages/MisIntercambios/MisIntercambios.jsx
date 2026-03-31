@@ -55,13 +55,13 @@ const MisIntercambios = () => {
       )}
 
       {isAdmin ? (
-        <h2 className="mb-3 text-center">Intercambios de {username}</h2>
+        <h1 className="mb-4 text-center">Intercambios de {username}</h1>
       ) : (
-        <h2 className="mb-3 text-center">Mis intercambios</h2>
+        <h1 className="mb-4 text-center">Mis intercambios</h1>
       )}
 
       {/* FILTROS CON BUTTON COMPONENT */}
-      <div className="d-flex gap-2 flex-wrap justify-content-center mb-3">
+      <div className="d-flex gap-2 flex-wrap justify-content-center mb-4">
         {["TODOS", "PENDIENTE", "ACEPTADO", "RECHAZADO"].map((estado) => (
           <Button
             key={estado}
