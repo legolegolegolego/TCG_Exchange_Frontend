@@ -20,6 +20,7 @@ const CartaUnificada = ({
   isSelected = false,
   onClick,
   actions = [],
+  disabled = false,
 }) => {
   const [cartaEnriquecida, setCartaEnriquecida] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -74,9 +75,12 @@ const CartaUnificada = ({
 
   return (
     <div
-      className={`${styles.cardContainer} ${isSelectable ? styles.selectable : ""} ${isSelected ? styles.selected : ""
-        }`}
-      onClick={isSelectable ? onClick : undefined}
+      className={`${styles.cardContainer} 
+      ${isSelectable ? styles.selectable : ""} 
+      ${isSelected ? styles.selected : ""}
+      ${disabled ? styles.disabled : ""}`}
+      onClick={isSelectable && !disabled ? onClick : undefined}
+      title={disabled ? "No disponible" : undefined}
     >
       <div className={styles.imageWrapper}>
         <img src={imagenUrl} alt={nombre} className={styles.image} />
@@ -99,6 +103,7 @@ const CartaUnificada = ({
               key={index}
               variant={action.variant || "primary"}
               size="sm"
+              disabled={disabled}
               onClick={(e) => {
                 e.stopPropagation();
                 action.onClick();

@@ -155,7 +155,8 @@ const MisCartas = () => {
           <div key={carta.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
             <CartaUnificada
               carta={carta}
-              isSelectable={!isAdmin}
+              isSelectable={!isAdmin && carta.disponible}
+              disabled={!carta.disponible}
               onClick={() => {
                 // Click en carta = editar
                 if (!isAdmin) {
@@ -163,7 +164,7 @@ const MisCartas = () => {
                   setShowModal(true);
                 }
               }}
-              actions={[
+              actions={carta.disponible ? [
                 // EDITAR
                 ...(!isAdmin
                   ? [{
@@ -182,7 +183,7 @@ const MisCartas = () => {
                   variant: "outline-danger",
                   onClick: () => setDeleteTarget(carta)
                 }
-              ]}
+              ] : []}
             />
           </div>
         ))}
