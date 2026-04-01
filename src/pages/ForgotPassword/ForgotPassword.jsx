@@ -3,6 +3,7 @@ import { forgotPassword } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./ForgotPassword.module.css";
+import Button from "../../components/Button/Button.jsx";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
@@ -64,9 +65,9 @@ const ForgotPassword = () => {
                     className={styles.input}
                 />
 
-                <button type="submit" className={styles.button}>
+                <Button type="submit"variant="primary" size="lg">
                     Enviar email
-                </button>
+                </Button>
 
                 {error && <p className={styles.error}>{error}</p>}
                 {errorLink && <p className={styles.error}>{errorLink}</p>}

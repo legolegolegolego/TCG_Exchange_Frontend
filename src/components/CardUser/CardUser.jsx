@@ -94,7 +94,7 @@ const CardUser = ({ user, onDelete }) => {
                         </div>
 
                         {/* Botones */}
-                        <div className="col-12 col-sm-4 d-flex justify-content-sm-end gap-2 mt-2 mt-sm-0 flex-wrap">
+                        <div className="col-12 col-sm-4 d-flex align-items-center justify-content-sm-end gap-2 flex-wrap h-100">
 
                             <Button
                                 variant="outline-primary"

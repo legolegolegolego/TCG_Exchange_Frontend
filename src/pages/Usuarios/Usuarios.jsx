@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CardUser from "../../components/CardUser/CardUser";
 import { getAllUsers } from "../../services/usuarios";
 import styles from "./Usuarios.module.css";
+import Button from "../../components/Button/Button";
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -11,7 +12,7 @@ const Usuarios = () => {
 
     // PAGINACIÓN
     const [page, setPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 2;
 
     // ORDENACIÓN POR DEFECTO
     const [sortField, setSortField] = useState("id");
@@ -89,26 +90,29 @@ const Usuarios = () => {
                         <div className="d-flex align-items-center gap-2 flex-wrap">
                             <span>Ordenar por:</span>
 
-                            <button
-                                className="btn btn-sm btn-outline-primary"
+                            <Button
+                                variant={sortField === "id" ? "primary" : "outline-primary"}
                                 onClick={() => handleSortChange("id")}
+                                size="md"
                             >
                                 ID {sortField === "id" && (sortOrder === "asc" ? "↑" : "↓")}
-                            </button>
+                            </Button>
 
-                            <button
-                                className="btn btn-sm btn-outline-primary"
+                            <Button
+                                variant={sortField === "username" ? "primary" : "outline-primary"}
                                 onClick={() => handleSortChange("username")}
+                                size="md"
                             >
                                 Username {sortField === "username" && (sortOrder === "asc" ? "↑" : "↓")}
-                            </button>
+                            </Button>
 
-                            <button
-                                className="btn btn-sm btn-outline-primary"
+                            <Button
+                                variant={sortField === "roles" ? "primary" : "outline-primary"}
                                 onClick={() => handleSortChange("roles")}
+                                size="md"
                             >
                                 Roles {sortField === "roles" && (sortOrder === "asc" ? "↑" : "↓")}
-                            </button>
+                            </Button>
                         </div>
 
                         {/* DERECHA: Buscador */}
@@ -149,23 +153,26 @@ const Usuarios = () => {
 
                     {/* Paginación */}
                     <div className="d-flex justify-content-between align-items-center mt-3">
-                        <button
-                            className="btn btn-sm btn-outline-secondary"
+                        <Button
+                            variant="outline-primary"
                             onClick={handlePrev}
                             disabled={page === 1}
+                            size="sm"
                         >
                             Anterior
-                        </button>
-                        <span>
+                        </Button>
+                        <small className="me-2">
                             Página {page} de {totalPages}
-                        </span>
-                        <button
-                            className="btn btn-sm btn-outline-secondary"
+                        </small>
+                        <Button
+                            variant="outline-primary"
                             onClick={handleNext}
                             disabled={page === totalPages}
+                            size="sm"
+
                         >
                             Siguiente
-                        </button>
+                        </Button>
 
                     </div>
                 </>

@@ -56,13 +56,13 @@
 .actions {
   margin-top: 20px;
   display: flex;
-  justify-content: center; /* centra los botones horizontalmente */
+  justify-content: center; 
   gap: 10px; /* espacio entre botones */
   flex-wrap: wrap; /* si hay pantallas pequeñas, que no se rompan */
 }
 
 .actions button {
-  min-width: 150px; /* ancho mínimo */
+  min-width: 150px; 
 }
 
 .modalOverlay {

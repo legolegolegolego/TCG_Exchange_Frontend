@@ -103,7 +103,7 @@ small, .text-small {
 }
 
 .error {
-  color: var(--tertiary);
+  color: var(--tertiary) !important;
 }
 
 @media (prefers-color-scheme: light) {

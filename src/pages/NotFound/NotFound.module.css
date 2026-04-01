@@ -6,23 +6,12 @@
   width: 50%;       
   max-width: 20rem; 
   height: auto;     
-  margin-bottom: 1.5rem;
-}
-
-.code {
-  color: #dc3545; 
-  font-weight: 700;
-}
-
-.title {
-  color: #343a40; 
   margin-bottom: 1rem;
 }
 
-.message {
-  color: #6c757d; 
-  max-width: 90%;  
-  margin: 0 auto 1rem;
+.code {
+  color: var(--tertiary); 
+  font-weight: 700;
 }
 
 .homeButton {

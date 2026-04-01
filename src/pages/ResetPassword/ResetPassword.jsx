@@ -4,6 +4,7 @@ import { resetPassword } from "../../services/auth";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./ResetPassword.module.css";
 import { Eye, EyeOff } from "lucide-react";
+import Button from "../../components/Button/Button.jsx";
 
 const ResetPassword = () => {
     const [searchParams] = useSearchParams();
@@ -69,13 +70,13 @@ const ResetPassword = () => {
                         className={styles.toggleButton}
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
                     </button>
                 </div>
 
-                <button type="submit" className={styles.button}>
+                <Button type="submit" variant="primary" size="lg">
                     Cambiar contraseña
-                </button>
+                </Button>
 
                 {error && <p className={styles.error}>{error}</p>}
             </form>
