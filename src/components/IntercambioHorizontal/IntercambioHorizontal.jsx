@@ -18,9 +18,6 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
   const cartaUsuarioActual = isOrigen ? intercambio.cartaOrigen : intercambio.cartaDestino;
   const cartaOtroUsuario = isOrigen ? intercambio.cartaDestino : intercambio.cartaOrigen;
 
-  const titleUsuarioActual = isOrigen ? "Das" : "Recibes";
-  const titleOtroUsuario = isOrigen ? "Recibes" : "Das";
-
   const usernameOtro = isOrigen ? intercambio.usernameDestino : intercambio.usernameOrigen;
   const estadoIntercambio = intercambio.estado || "PENDIENTE";
 
@@ -35,18 +32,16 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
         {/* Cartas */}
         <div className="col-12 col-md-6 d-flex justify-content-center gap-3 flex-wrap">
           <CartaUnificada 
-          carta={cartaUsuarioActual} 
-          placeholderText={titleUsuarioActual} 
+          carta={cartaOtroUsuario} 
           isSelectable={false}
-          disabled={!cartaUsuarioActual?.disponible}
-          subTitle={titleUsuarioActual}
+          subTitle={"Recibes"}
+          // disabled={!cartaUsuarioActual?.disponible}
           />
           <CartaUnificada 
-          carta={cartaOtroUsuario} 
-          placeholderText={titleOtroUsuario} 
+          carta={cartaUsuarioActual} 
           isSelectable={false}
-          disabled={!cartaOtroUsuario?.disponible}
-          subTitle={titleOtroUsuario}
+          subTitle={"Das"}
+          // disabled={!cartaOtroUsuario?.disponible}
           />
         </div>
 

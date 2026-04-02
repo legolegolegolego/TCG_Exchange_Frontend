@@ -6,40 +6,12 @@ import Notification from "../../components/Notification/Notification";
 import Button from "../../components/Button/Button";
 import styles from "./DetalleIntercambio.module.css";
 import { aceptarIntercambio, rechazarIntercambio } from "../../services/intercambios";
+import CartaUnificada from "../../components/CartaUnificada/CartaUnificada";
 
 const estadoIntercambioColores = {
   ACEPTADO: { bg: "success", text: "white" },
   RECHAZADO: { bg: "danger", text: "white" },
   PENDIENTE: { bg: "warning", text: "dark" },
-};
-
-const titleColores = {
-  Das: { bg: "primary", text: "white" },
-  Recibes: { bg: "info", text: "white" },
-};
-
-const DetalleCarta = ({ carta, title }) => {
-  if (!carta) return null;
-
-  const { bg: bgTitle, text: textTitle } = titleColores[title] || { bg: "secondary", text: "white" };
-  const estadoCartaColores = {
-    EXCELENTE: { bg: "success", text: "white" },
-    ACEPTABLE: { bg: "warning", text: "white" },
-  };
-  const { bg: bgEstado, text: textEstado } = estadoCartaColores[carta.estadoCarta] || { bg: "secondary", text: "white" };
-
-  return (
-    <div className={`card shadow-sm ${styles.cartaContainer}`}>
-      <span className={`badge bg-${bgTitle} text-${textTitle} ${styles.titleBadge}`}>{title}</span>
-      <div className={styles.imageWrapper}>
-        <img src={carta.imagenUrl || "/placeholder.png"} alt={carta.nombre || "Carta"} className={styles.imagen} />
-      </div>
-      <p className="fw-semibold mb-1">{carta.nombre || "Desconocido"} #{carta.numero || "?"}</p>
-      <span className={`badge bg-${bgEstado} text-${textEstado} ${styles.estadoBadge}`}>
-        {carta.estadoCarta || "?"}
-      </span>
-    </div>
-  );
 };
 
 const DetalleIntercambio = () => {
@@ -114,6 +86,8 @@ const DetalleIntercambio = () => {
   const esDestino = currentUser?.username === intercambio.usernameDestino;
   const puedeActuar = esDestino && intercambio.estado === "PENDIENTE";
   const direccionOtroUsuario = isOrigen ? intercambio.direccionDestino : intercambio.direccionOrigen;
+  const cartaUsuarioActual = isOrigen ? intercambio.cartaOrigen : intercambio.cartaDestino;
+  const cartaOtroUsuario = isOrigen ? intercambio.cartaDestino : intercambio.cartaOrigen;
 
   const { bg: bgEstadoIntercambio, text: textEstadoIntercambio } =
     estadoIntercambioColores[intercambio.estado] || { bg: "secondary", text: "white" };
@@ -153,13 +127,17 @@ const DetalleIntercambio = () => {
       </p>
 
       <div className={styles.cartas}>
-        <DetalleCarta
-          carta={isOrigen ? intercambio.cartaDestino : intercambio.cartaOrigen}
-          title={isOrigen ? "Recibes" : "Das"}
+        <CartaUnificada
+          carta={cartaOtroUsuario}
+          subTitle={"Recibes"}
+          isSelectable={false}
+          // disabled={!intercambio.cartaOrigen?.disponible}
         />
-        <DetalleCarta
-          carta={isOrigen ? intercambio.cartaOrigen : intercambio.cartaDestino}
-          title={isOrigen ? "Das" : "Recibes"}
+        <CartaUnificada
+          carta={cartaUsuarioActual}
+          subTitle={"Das"}
+          isSelectable={false}
+          // disabled={!intercambio.cartaDestino?.disponible}
         />
       </div>
 
