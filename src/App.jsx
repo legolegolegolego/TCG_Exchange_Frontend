@@ -36,106 +36,103 @@ const AppContent = () => {
   const location = useLocation();
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Header />
       {location.pathname !== "/" && <BackTab />}
 
-      <Routes>
-        {/* Rutas públicas */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/resend-verification" element={<ResendVerification />} />
-        <Route path="/soporte" element={<Soporte />} />
-
-        <Route path="/usuario/:username" element={<UsuarioCartas />} />
-        <Route
-          path="/cartas-modelo/:id"
-          element={
-            <CardDetail />
-          }
-        />
-        <Route path="/no-disponible" element={<NotFound />} />
-        {/* Ruta para URLs no existentes */}
-        <Route path="*" element={<Navigate to="/no-disponible" replace />} />
-
-        <Route
-          path="/"
-          element={
-            <Home />
-          }
-        />
-        <Route
-          path="/explorar"
-          element={
-            <Explorar />
-          }
-        />
-
-        {/* Rutas protegidas */}
-        <Route
-          path="/intercambios/:username"
-          element={
-            <ProtectedRoute matchUsernameOrAdmin={true}>
-              <MisIntercambios />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/intercambio/:id"
-          element={
-            <ProtectedRoute>
-              <DetalleIntercambio />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/proponer-intercambio/:idCartaDestino"
-          element={
-            <ProtectedRoute>
-              <ProponerIntercambio />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/cartas/:username"
-          element={
-            <ProtectedRoute matchUsernameOrAdmin={true}>
-              <MisCartas />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/editar-perfil"
-          element={
-            <ProtectedRoute>
-              <EditarPerfil />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* solo ADMIN: */}
-        <Route
-          path="/usuarios"
-          element={
-            <ProtectedRoute requireAdmin={true}>
-              <Usuarios />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute requireAdmin={true}>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-      </Routes>
+      <main className="flex-grow-1">
+        <Routes>
+          {/* Rutas públicas */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/resend-verification" element={<ResendVerification />} />
+          <Route path="/soporte" element={<Soporte />} />
+          <Route path="/usuario/:username" element={<UsuarioCartas />} />
+          <Route
+            path="/cartas-modelo/:id"
+            element={
+              <CardDetail />
+            }
+          />
+          <Route path="/no-disponible" element={<NotFound />} />
+          {/* Ruta para URLs no existentes */}
+          <Route path="*" element={<Navigate to="/no-disponible" replace />} />
+          <Route
+            path="/"
+            element={
+              <Home />
+            }
+          />
+          <Route
+            path="/explorar"
+            element={
+              <Explorar />
+            }
+          />
+          {/* Rutas protegidas */}
+          <Route
+            path="/intercambios/:username"
+            element={
+              <ProtectedRoute matchUsernameOrAdmin={true}>
+                <MisIntercambios />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/intercambio/:id"
+            element={
+              <ProtectedRoute>
+                <DetalleIntercambio />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/proponer-intercambio/:idCartaDestino"
+            element={
+              <ProtectedRoute>
+                <ProponerIntercambio />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cartas/:username"
+            element={
+              <ProtectedRoute matchUsernameOrAdmin={true}>
+                <MisCartas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/editar-perfil"
+            element={
+              <ProtectedRoute>
+                <EditarPerfil />
+              </ProtectedRoute>
+            }
+          />
+          {/* solo ADMIN: */}
+          <Route
+            path="/usuarios"
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <Usuarios />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

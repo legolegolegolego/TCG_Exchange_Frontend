@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import CartaVisual from "../CartaVisual/CartaVisual";
 import Button from "../Button/Button";
+import CartaUnificada from "../CartaUnificada/CartaUnificada";
 import styles from "./IntercambioHorizontal.module.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const estadoColores = {
   ACEPTADO: { bg: "success", text: "white" },
@@ -35,8 +34,20 @@ const IntercambioHorizontal = ({ intercambio, currentUsername }) => {
       <div className="row g-3 align-items-center p-3">
         {/* Cartas */}
         <div className="col-12 col-md-6 d-flex justify-content-center gap-3 flex-wrap">
-          <CartaVisual carta={cartaUsuarioActual} title={titleUsuarioActual} />
-          <CartaVisual carta={cartaOtroUsuario} title={titleOtroUsuario} />
+          <CartaUnificada 
+          carta={cartaUsuarioActual} 
+          placeholderText={titleUsuarioActual} 
+          isSelectable={false}
+          disabled={!cartaUsuarioActual?.disponible}
+          subTitle={titleUsuarioActual}
+          />
+          <CartaUnificada 
+          carta={cartaOtroUsuario} 
+          placeholderText={titleOtroUsuario} 
+          isSelectable={false}
+          disabled={!cartaOtroUsuario?.disponible}
+          subTitle={titleOtroUsuario}
+          />
         </div>
 
         {/* Detalles */}

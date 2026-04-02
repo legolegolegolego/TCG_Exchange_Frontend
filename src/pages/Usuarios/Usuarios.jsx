@@ -12,7 +12,7 @@ const Usuarios = () => {
 
     // PAGINACIÓN
     const [page, setPage] = useState(1);
-    const itemsPerPage = 2;
+    const itemsPerPage = 10;
 
     // ORDENACIÓN POR DEFECTO
     const [sortField, setSortField] = useState("id");

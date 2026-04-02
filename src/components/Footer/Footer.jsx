@@ -9,16 +9,17 @@ const Footer = () => {
           <img src={logo} alt="Logo App" className={styles.logo} />
           <h2 className={styles.appName}>TCG Exchange</h2>
           <p className={styles.description}>
-            Proyecto académico desarrollado con fines educativos.<br/><br/>
-            Esta aplicación no tiene fines comerciales ni está destinada a uso público.<br/><br/>
-            Las imágenes, nombres y referencias a Pokémon TCG se utilizan únicamente con fines de aprendizaje y demostración, sin intención de infringir derechos de autor.<br/><br/>
+            Proyecto académico desarrollado con fines educativos.<br /><br />
+            Esta aplicación no tiene fines comerciales ni está destinada a uso público.<br /><br />
+            El código fuente y diseño de esta aplicación son propiedad intelectual del autor y no puede ser copiado, modificado ni distribuido sin autorización expresa.<br /><br />
+            Las imágenes, nombres y referencias a Pokémon TCG se utilizan únicamente con fines de aprendizaje y demostración, sin intención de infringir derechos de autor.<br /><br />
             Pokémon y Pokémon TCG son marcas registradas de Nintendo, Game Freak y Creatures Inc.
           </p>
         </div>
 
         <div className={styles.line}></div>
 
-        <p className={styles.copy}>© 2026 TCG Exchange.</p>
+        <p className={styles.copy}>© 2026 TCG Exchange</p>
       </div>
     </footer>
   );

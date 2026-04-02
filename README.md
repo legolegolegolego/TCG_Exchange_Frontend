@@ -89,4 +89,15 @@ src/
 
 ## Licencia
 
-Proyecto académico con fines educativos.
+Proyecto académico desarrollado con fines educativos
+
+Esta aplicación no tiene fines comerciales ni está destinada a uso público.
+
+Este repositorio y su código fuente son propiedad intelectual del autor.
+Ninguna parte de este código puede ser copiada, modificada o distribuida sin permiso explícito.
+
+Las imágenes, nombres y referencias a Pokémon TCG se utilizan únicamente con fines de aprendizaje y demostración, sin intención de infringir derechos de autor.
+
+Pokémon y Pokémon TCG son marcas registradas de Nintendo, Game Freak y Creatures Inc.
+
+© 2026 TCG Exchange. 

@@ -21,6 +21,7 @@ const CartaUnificada = ({
   onClick,
   actions = [],
   disabled = false,
+  subTitle,
 }) => {
   const [cartaEnriquecida, setCartaEnriquecida] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -84,12 +85,21 @@ const CartaUnificada = ({
     >
       <div className={styles.imageWrapper}>
         <img src={imagenUrl} alt={nombre} className={styles.image} />
+        {/* SUBTÍTULO */}
+        {subTitle && (
+          <div className={styles.subTitleOverlay}>
+            {subTitle}
+          </div>
+        )}
         {estadoCarta && (
           <span className={`badge bg-${bg} text-${text} ${styles.estadoBadge}`}>
             {formatEstado(estadoCarta)}
           </span>
         )}
       </div>
+
+
+      {/* NOMBRE Y NÚMERO DE LA CARTA */}
       <p className="fw-semibold mt-2 mb-0 text-center">
         {nombre} #{numero}
       </p>

@@ -179,11 +179,11 @@ const DetalleIntercambio = () => {
 
       {puedeActuar && (
         <div className={styles.actions}>
-          <Button variant="success" onClick={() => setShowAceptarModal(true)}>
-            Aceptar intercambio
-          </Button>
-          <Button variant="danger" onClick={() => setShowRechazarModal(true)}>
+          <Button variant="outline-danger" onClick={() => setShowRechazarModal(true)}>
             Rechazar intercambio
+          </Button>
+          <Button variant="outline-primary" onClick={() => setShowAceptarModal(true)}>
+            Aceptar intercambio
           </Button>
         </div>
       )}
@@ -194,11 +194,11 @@ const DetalleIntercambio = () => {
             <h5>¿Aceptar intercambio?</h5>
             {actionError && <p className={styles.error}>{actionError}</p>}
             <div className="d-flex justify-content-end gap-2 mt-3">
-              <Button variant="primary" onClick={() => setShowAceptarModal(false)}>
+              <Button variant="cancel" onClick={() => setShowAceptarModal(false)}>
                 Volver
               </Button>
               <Button
-                variant="success"
+                variant="primary"
                 onClick={async () => {
                   setShowAceptarModal(false);
                   await handleAccion("ACEPTAR");
@@ -217,7 +217,7 @@ const DetalleIntercambio = () => {
             <h5>¿Rechazar intercambio?</h5>
             {actionError && <p className={styles.error}>{actionError}</p>}
             <div className="d-flex justify-content-end gap-2 mt-3">
-              <Button variant="primary" onClick={() => setShowRechazarModal(false)}>
+              <Button variant="cancel" onClick={() => setShowRechazarModal(false)}>
                 Volver
               </Button>
               <Button

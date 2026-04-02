@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
 import CartaUnificada from "../../components/CartaUnificada/CartaUnificada";
@@ -20,6 +20,9 @@ const ProponerIntercambio = () => {
   const [loading, setLoading] = useState(true);
   const [enviando, setEnviando] = useState(false);
   const [notification, setNotification] = useState(null);
+
+  const location = useLocation();
+
 
   useEffect(() => {
     if (!username) return;
@@ -151,9 +154,9 @@ const ProponerIntercambio = () => {
 
       {/* Mis cartas disponibles */}
       <h2 className="mt-4 text-center w-100">Mis cartas disponibles:</h2>
-      <div className="row g-3 mt-2">
+      <div className="row g-3 mt-2 justify-content-center">
         {misCartas.map((c) => (
-          <div key={c.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
+          <div key={c.id} className="col-auto">
             <CartaUnificada
               carta={c}
               isSelectable
@@ -166,8 +169,14 @@ const ProponerIntercambio = () => {
 
       {/* Botones */}
       <div className="d-flex gap-2 justify-content-center mt-4 flex-wrap w-100">
-        <Button variant="cancel" onClick={() => navigate("/")}>
-          Volver a la página principal
+        <Button variant="cancel" onClick={() => {
+          if (location.key !== "default") {
+            navigate(-1);
+          } else {
+            navigate("/");
+          }
+        }}>
+          Cancelar
         </Button>
         <Button
           variant="primary"
