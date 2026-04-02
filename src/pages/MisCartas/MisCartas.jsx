@@ -216,7 +216,7 @@ const MisCartas = () => {
       {deleteTarget && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h5>¿Seguro que quieres eliminar esta carta?</h5>
+            <h3>¿Seguro que quieres eliminar esta carta?</h3>
             <div className="d-flex justify-content-end gap-2 mt-3">
               <Button variant="cancel" onClick={() => setDeleteTarget(null)}>Cancelar</Button>
               <Button variant="danger" onClick={handleDelete}>Eliminar</Button>

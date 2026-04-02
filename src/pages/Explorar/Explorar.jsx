@@ -120,7 +120,7 @@ const Explorar = () => {
       <div className="row">
         {/* Sidebar filtros */}
         <aside className="col-md-3 mb-3">
-          <h4>Filtros</h4>
+          <h3>Filtros</h3>
 
           <div className="mb-3">
             <label className="form-label">Número</label>

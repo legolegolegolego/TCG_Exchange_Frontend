@@ -147,7 +147,7 @@ const CardUser = ({ user, onDelete }) => {
             {showDeleteModal && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modal}>
-                        <h5>¿Eliminar usuario?</h5>
+                        <h3>¿Eliminar usuario?</h3>
                         <p>No se podrá recuperar.</p>
 
                         {deleteErr && <p className={styles.error}>{deleteErr}</p>}

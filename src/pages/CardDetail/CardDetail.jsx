@@ -204,7 +204,7 @@ const CardDetail = () => {
                         <div className={styles.userName}>{uname}</div>
                         <Button
                           variant="primary"
-                          size="sm"
+                          size="md"
                           onClick={() => navigate(`/usuario/${uname}`, {
                             state: { from: location.pathname, fromLabel: 'vista de carta modelo' }
                           })}
@@ -241,7 +241,7 @@ const CardDetail = () => {
       {showDeleteModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h5>¿Eliminar carta?</h5>
+            <h3>¿Eliminar carta?</h3>
             <p>No se podrá recuperar.</p>
 
             {deleteError && <p className={styles.error}>{deleteError}</p>}

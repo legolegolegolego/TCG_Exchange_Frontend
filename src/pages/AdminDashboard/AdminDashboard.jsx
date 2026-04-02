@@ -58,7 +58,7 @@ const AdminDashboard = () => {
                 <div className={styles.cardSummary}
                     onClick={() => navigate("/usuarios")}>
                     <div className="card-body">
-                        <h5 className="card-title">Usuarios</h5>
+                        <h2 className="card-title">Usuarios</h2>
                         <p className="card-text display-5">{stats.totalUsers}</p>
                         <Button onClick={(e) => {
                             e.stopPropagation();
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
                     onClick={() => navigate("/explorar")}
                 >
                     <div className="card-body">
-                        <h5 className="card-title">Cartas</h5>
+                        <h2 className="card-title">Cartas</h2>
                         <p className="card-text display-5">{stats.totalCards}</p>
                         <Button onClick={(e) => {
                             e.stopPropagation();
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
             {/* Actividad reciente */}
             <div className={styles.recentActivityRow}>
                 <div className={styles.recentActivityColumn}>
-                    <h4>Usuarios recientes</h4>
+                    <h3>Usuarios recientes</h3>
                     <ul className={styles.list}>
                         {stats.recentUsers.map((user) => (
                             <li key={user.id}>{user.username || user.nombre || `ID ${user.id}`}</li>
@@ -95,7 +95,7 @@ const AdminDashboard = () => {
                     </ul>
                 </div>
                 <div className={styles.recentActivityColumn}>
-                    <h4>Cartas recientes</h4>
+                    <h3>Cartas recientes</h3>
                     <ul className={styles.list}>
                         {stats.recentCards.map((card) => (
                             <li key={card.id}>{card.nombre || `Carta ${card.id}`}</li>

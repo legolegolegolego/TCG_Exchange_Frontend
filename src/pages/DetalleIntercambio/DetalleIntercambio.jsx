@@ -191,7 +191,7 @@ const DetalleIntercambio = () => {
       {showAceptarModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h5>¿Aceptar intercambio?</h5>
+            <h3>¿Aceptar intercambio?</h3>
             {actionError && <p className={styles.error}>{actionError}</p>}
             <div className="d-flex justify-content-end gap-2 mt-3">
               <Button variant="cancel" onClick={() => setShowAceptarModal(false)}>
@@ -214,7 +214,7 @@ const DetalleIntercambio = () => {
       {showRechazarModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h5>¿Rechazar intercambio?</h5>
+            <h3>¿Rechazar intercambio?</h3>
             {actionError && <p className={styles.error}>{actionError}</p>}
             <div className="d-flex justify-content-end gap-2 mt-3">
               <Button variant="cancel" onClick={() => setShowRechazarModal(false)}>
@@ -241,7 +241,7 @@ const DetalleIntercambio = () => {
 
               {/* HEADER */}
               <div className="modal-header pe-1">
-                <h5 className="modal-title">Dirección de envío</h5>
+                <h3 className="modal-title">Dirección de envío</h3>
                 <button
                   type="button"
                   className="btn-close"
