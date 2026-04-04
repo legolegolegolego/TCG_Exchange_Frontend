@@ -43,7 +43,7 @@ const Header = () => {
         <div className="d-flex align-items-center gap-2 flex-shrink-0">
           <a href="/" className="d-flex align-items-center text-decoration-none">
             <img src={logo} alt="Logo App" className={styles.logo} />
-            <span className={`h5 mb-0 fw-bold ${styles.appName}`}>TCG Exchange</span>
+            <span className={`fw-bold ${styles.appName}`}>TCG Exchange</span>
           </a>
         </div>
 

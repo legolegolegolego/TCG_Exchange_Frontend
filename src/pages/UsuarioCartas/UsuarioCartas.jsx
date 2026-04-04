@@ -4,7 +4,6 @@ import { getDisponiblesByUsername } from "../../services/cartasFisicas";
 import { getCurrentUser } from "../../utils/token";
 import CartaUnificada from "../../components/CartaUnificada/CartaUnificada";
 import Notification from "../../components/Notification/Notification";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './UsuarioCartas.module.css';
 
 const UsuarioCartas = () => {

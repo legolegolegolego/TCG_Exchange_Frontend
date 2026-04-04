@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './CardModel.module.css';
 import Button from "../Button/Button";
 

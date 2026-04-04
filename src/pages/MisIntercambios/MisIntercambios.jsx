@@ -6,7 +6,6 @@ import IntercambioHorizontal from "../../components/IntercambioHorizontal/Interc
 import Notification from "../../components/Notification/Notification";
 import Button from "../../components/Button/Button";
 import styles from "./MisIntercambios.module.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useParams } from "react-router-dom";
 
 const MisIntercambios = () => {
