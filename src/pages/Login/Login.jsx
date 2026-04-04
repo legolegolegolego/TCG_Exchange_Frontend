@@ -16,6 +16,7 @@ const Login = () => {
     const [errorLink, setErrorLink] = useState(null);
     const [notification, setNotification] = useState(null);
     const location = useLocation();
+    const [iniciandoSesion, setIniciandoSesion] = useState(false);
 
     useEffect(() => {
         
@@ -41,6 +42,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIniciandoSesion(true);
         setError("");
         setErrorLink(null);
 
@@ -62,6 +64,7 @@ const Login = () => {
             } else {
                 setError(mensaje);
                 setErrorLink(null);
+                setIniciandoSesion(false);
             }
         }
     };
@@ -85,6 +88,7 @@ const Login = () => {
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
                     className={styles.input}
+                    disabled={iniciandoSesion}
                 />
 
                 <input
@@ -93,9 +97,12 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className={styles.input}
+                    disabled={iniciandoSesion}
                 />
 
-                <Button type="submit" variant="primary" size="lg">Iniciar sesión</Button>
+                <Button type="submit" variant="primary" size="lg" disabled={iniciandoSesion}>
+                    {iniciandoSesion ? "Iniciando sesión..." : "Iniciar sesión"}
+                </Button>
 
                 <hr />
                 <p>

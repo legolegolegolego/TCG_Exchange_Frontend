@@ -15,6 +15,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
     });
 
     const [errors, setErrors] = useState({});
+    const [guardando, setGuardando] = useState(false);
 
     useEffect(() => {
         if (!isOpen) return;
@@ -46,6 +47,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
     const handleSubmit = async () => {
         try {
             setErrors({});
+            setGuardando(true);
 
             // Si no es Pokemon, pone los campos null para evitar problemas de validación de enum en el backend
             const dataToSend = {
@@ -66,6 +68,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
         } catch (error) {
             const backendErrors = error.response?.data?.errors || {};
             setErrors(backendErrors);
+            setGuardando(false);
 
             // Notificación global al padre
             const msg = error.response?.data?.mensaje || "Error al guardar la carta modelo";
@@ -101,6 +104,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                                     value={form.numero}
                                     onChange={(e) => setForm({ ...form, numero: e.target.value })}
                                     required
+                                    disabled={guardando}
                                 />
                                 {errors.numero && <div className="invalid-feedback">{errors.numero}</div>}
                             </div>
@@ -115,6 +119,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                                     value={form.nombre}
                                     onChange={(e) => setForm({ ...form, nombre: e.target.value })}
                                     required
+                                    disabled={guardando}
                                 />
                                 {errors.nombre && <div className="invalid-feedback">{errors.nombre}</div>}
                             </div>
@@ -127,6 +132,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                                     value={form.tipoCarta}
                                     onChange={(e) => setForm({ ...form, tipoCarta: e.target.value, tipoPokemon: "", evolucion: "" })}
                                     required
+                                    disabled={guardando}
                                 >
                                     <option value="">Selecciona tipo</option>
                                     <option value="POKEMON">POKEMON</option>
@@ -143,6 +149,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                                     value={form.rareza}
                                     onChange={(e) => setForm({ ...form, rareza: e.target.value })}
                                     required
+                                    disabled={guardando}
                                 >
                                     <option value="">Selecciona rareza</option>
                                     <option value="COMUN">COMÚN</option>
@@ -160,7 +167,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                                     className={`form-select ${errors.tipoPokemon ? "is-invalid" : ""}`}
                                     value={form.tipoPokemon}
                                     onChange={(e) => setForm({ ...form, tipoPokemon: e.target.value })}
-                                    disabled={disabledPokemon}
+                                    disabled={disabledPokemon || guardando}
                                     title={disabledPokemon ? "Solo aplicable si tipo carta es POKEMON" : ""}
                                     required={isPokemon}
                                 >
@@ -183,7 +190,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                                     className={`form-select ${errors.evolucion ? "is-invalid" : ""}`}
                                     value={form.evolucion}
                                     onChange={(e) => setForm({ ...form, evolucion: e.target.value })}
-                                    disabled={disabledPokemon}
+                                    disabled={disabledPokemon || guardando}
                                     title={disabledPokemon ? "Solo aplicable si tipo carta es POKEMON" : ""}
                                     required={isPokemon}
                                 >
@@ -205,6 +212,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                                     value={form.imagenUrl}
                                     onChange={(e) => setForm({ ...form, imagenUrl: e.target.value })}
                                     required
+                                    disabled={guardando}
                                 />
                                 {errors.imagenUrl && <div className="invalid-feedback">{errors.imagenUrl}</div>}
                             </div>
@@ -215,8 +223,8 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                         <Button variant="cancel" onClick={onClose}>
                             Cancelar
                         </Button>
-                        <Button variant="primary" onClick={handleSubmit}>
-                            Guardar
+                        <Button variant="primary" onClick={handleSubmit} disabled={guardando}> 
+                            {guardando ? "Guardando..." : "Guardar"}
                         </Button>
                     </div>
                 </div>

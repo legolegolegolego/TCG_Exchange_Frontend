@@ -11,11 +11,13 @@ const ForgotPassword = () => {
     const [error, setError] = useState("");
     const [errorLink, setErrorLink] = useState(null);
     const navigate = useNavigate();
+    const [enviando, setEnviando] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setErrorLink(null);
+        setEnviando(true);
 
         try {
             await forgotPassword(email);
@@ -41,6 +43,8 @@ const ForgotPassword = () => {
                 setError(mensaje);
                 setErrorLink(null);
             }
+        } finally {
+            setEnviando(false);
         }
     };
 
@@ -63,10 +67,11 @@ const ForgotPassword = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={styles.input}
+                    disabled={enviando}
                 />
 
-                <Button type="submit"variant="primary" size="lg">
-                    Enviar email
+                <Button type="submit" variant="primary" size="lg" disabled={enviando}>
+                    {enviando ? "Enviando..." : "Enviar email"}
                 </Button>
 
                 {error && <p className={styles.error}>{error}</p>}

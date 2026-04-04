@@ -8,7 +8,6 @@ import Notification from "../../components/Notification/Notification";
 import EditarCrearCartaModelo from "../../components/EditarCrearCartaModelo/EditarCrearCartaModelo";
 import styles from "./Explorar.module.css";
 import Button from "../../components/Button/Button";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SORT_OPTIONS = [
   { label: "Número ↑", value: "numero,asc" },

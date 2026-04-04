@@ -3,7 +3,7 @@ import styles from "./EditarCrearCartaFisica.module.css";
 import { getCartasModelo } from "../../services/cartasModelo";
 import Button from "../Button/Button";
 
-const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
+const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData, guardando }) => {
   const [modelos, setModelos] = useState([]);
   const [form, setForm] = useState({
     idCartaModelo: "",
@@ -73,6 +73,7 @@ const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
                 className="form-select"
                 value={form.idCartaModelo}
                 onChange={(e) => setForm({ ...form, idCartaModelo: e.target.value })}
+                disabled={guardando}
               >
                 <option value="">Selecciona carta</option>
                 {modelos.map((m) => (
@@ -90,6 +91,7 @@ const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
                 className="form-select"
                 value={form.estadoCarta}
                 onChange={(e) => setForm({ ...form, estadoCarta: e.target.value })}
+                disabled={guardando}
               >
                 <option value="EXCELENTE">EXCELENTE</option>
                 <option value="ACEPTABLE">ACEPTABLE</option>
@@ -105,6 +107,7 @@ const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
                 placeholder="URL imagen"
                 value={form.imagenUrl}
                 onChange={(e) => setForm({ ...form, imagenUrl: e.target.value })}
+                disabled={guardando}
               />
             </div>
           </div>
@@ -113,8 +116,8 @@ const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData }) => {
             <Button variant="cancel" onClick={onClose}>
               Cancelar
             </Button>
-            <Button variant="primary" onClick={handleSubmit}>
-              Guardar
+            <Button variant="primary" onClick={handleSubmit} disabled={guardando}>
+              {guardando ? "Guardando..." : "Guardar"}
             </Button>
           </div>
         </div>

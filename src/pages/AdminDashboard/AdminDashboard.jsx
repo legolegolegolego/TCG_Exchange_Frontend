@@ -13,6 +13,7 @@ const AdminDashboard = () => {
         recentUsers: [],
         recentCards: [],
     });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Cargar cartas recientes y total
@@ -27,6 +28,8 @@ const AdminDashboard = () => {
                 }));
             } catch (err) {
                 console.error("Error fetching cartas:", err);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -48,6 +51,15 @@ const AdminDashboard = () => {
         fetchCartas();
         fetchUsuarios();
     }, []);
+
+    if (loading) {
+        return (
+            <div className="py-5 text-center">
+                <div className="spinner-border mb-3" role="status" />
+                <div>Cargando datos...</div>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.dashboardContainer}>

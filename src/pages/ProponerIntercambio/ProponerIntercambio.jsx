@@ -6,7 +6,6 @@ import CartaUnificada from "../../components/CartaUnificada/CartaUnificada";
 import Notification from "../../components/Notification/Notification";
 import Button from "../../components/Button/Button";
 import styles from "./ProponerIntercambio.module.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ProponerIntercambio = () => {
   const { idCartaDestino } = useParams();
@@ -113,7 +112,14 @@ const ProponerIntercambio = () => {
     }
   };
 
-  if (loading) return <p>Cargando datos...</p>;
+  if (loading) {
+    return (
+      <div className="py-5 text-center">
+        <div className="spinner-border mb-3" role="status" />
+        <div>Cargando...</div>
+      </div>
+    );
+  }
   if (!cartaDestino) {
     navigate("/", { state: { notification: { type: "error", message: "La carta solicitada no existe." } } });
     return null;
@@ -154,14 +160,14 @@ const ProponerIntercambio = () => {
 
       {/* Mis cartas disponibles */}
       <h2 className="mt-4 text-center w-100">Mis cartas disponibles:</h2>
-      <div className="row g-3 mt-2 justify-content-center">
+      <div className="row g-3 mt-2 mb-4 justify-content-center">
         {misCartas.map((c) => (
           <div key={c.id} className="col-auto">
             <CartaUnificada
               carta={c}
               isSelectable
               isSelected={cartaSeleccionada?.id === c.id}
-              onClick={enviando ? undefined : () => setCartaSeleccionada(c)}
+              onClick={enviando ? undefined : () => setCartaSeleccionada(c)} // Deshabilitar selección al enviar
             />
           </div>
         ))}

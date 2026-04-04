@@ -75,9 +75,9 @@ const MisIntercambios = () => {
 
       {/* LISTADO DE INTERCAMBIOS */}
       {loading ? (
-        <p className="text-center fst-italic text-secondary">Cargando intercambios...</p>
+        <p className="text-center text-secondary">Cargando intercambios...</p>
       ) : intercambios.length === 0 ? (
-        <p className="text-center fst-italic text-secondary">No hay intercambios para mostrar</p>
+        <p className="text-center text-secondary">No hay intercambios para mostrar</p>
       ) : (
         <div className="d-flex flex-column gap-3">
           {intercambios.map((i) => (

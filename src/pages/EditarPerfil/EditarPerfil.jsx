@@ -40,6 +40,12 @@ const EditarPerfil = () => {
     const [ciudad, setCiudad] = useState("");
     const [pais, setPais] = useState("");
 
+    // --- Controles de carga ---
+    const [updatingUsername, setUpdatingUsername] = useState(false);
+    const [updatingPassword, setUpdatingPassword] = useState(false);
+    const [updatingDireccion, setUpdatingDireccion] = useState(false);
+    const [deletingAccount, setDeletingAccount] = useState(false);
+
     useEffect(() => {
         if (location.state?.tab) {
             setActiveTab(location.state.tab);
@@ -84,7 +90,10 @@ const EditarPerfil = () => {
     // --- Manejo de credenciales ---
     const handleUsernameSubmit = async (e) => {
         e.preventDefault();
+        if (updatingUsername) return;
+
         setUserErr("");
+        setUpdatingUsername(true);
 
         try {
             if (!userId) throw new Error("Usuario no identificado");
@@ -100,12 +109,17 @@ const EditarPerfil = () => {
             navigate("/login", { replace: true });
         } catch (err) {
             setUserErr(err.response?.data?.mensaje || err.message || "Error al actualizar usuario");
+        } finally {
+            setUpdatingUsername(false);
         }
     };
 
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
+        if (updatingPassword) return;
+
         setPassErr("");
+        setUpdatingPassword(true);
 
         try {
             if (!userId) throw new Error("Usuario no identificado");
@@ -126,11 +140,16 @@ const EditarPerfil = () => {
 
         } catch (err) {
             setPassErr(err.response?.data?.mensaje || err.message || "Error al actualizar contraseña");
+        } finally {
+            setUpdatingPassword(false);
         }
     };
 
     const handleDeleteAccount = async () => {
+        if (deletingAccount) return;
+
         setDeleteErr("");
+        setDeletingAccount(true);
 
         try {
             if (!userId) throw new Error("Usuario no identificado");
@@ -150,12 +169,18 @@ const EditarPerfil = () => {
 
         } catch (err) {
             setDeleteErr(err.response?.data?.mensaje || err.message || "Error al eliminar cuenta");
+        } finally {
+            setDeletingAccount(false);
         }
     };
 
     // --- Manejo de dirección ---
     const handleDireccionSubmit = async (e) => {
         e.preventDefault();
+        if (updatingDireccion) return;
+
+        setUpdatingDireccion(true);
+
         try {
             const direccionDTO = {
                 nombre,
@@ -181,6 +206,8 @@ const EditarPerfil = () => {
                 type: "error",
                 message: err.response?.data?.mensaje || err.message || "Error al actualizar dirección"
             });
+        } finally {
+            setUpdatingDireccion(false);
         }
     };
 
@@ -224,7 +251,11 @@ const EditarPerfil = () => {
                                 </div>
                                 <Button
                                     variant="primary"
-                                    type="submit">Actualizar nombre de usuario</Button>
+                                    type="submit"
+                                    disabled={updatingUsername}
+                                >
+                                    {updatingUsername ? "Actualizando…" : "Actualizar nombre de usuario"}
+                                </Button>
                                 {userErr && <p className={styles.error}>{userErr}</p>}
                             </form>
                         </section>
@@ -260,8 +291,12 @@ const EditarPerfil = () => {
                                         onChange={(e) => setPasswordNueva2(e.target.value)}
                                     />
                                 </div>
-                                <Button variant="primary" type="submit">
-                                    Actualizar contraseña
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    disabled={updatingPassword}
+                                >
+                                    {updatingPassword ? "Actualizando…" : "Actualizar contraseña"}
                                 </Button>
                                 {passErr && <p className={styles.error}>{passErr}</p>}
                             </form>
@@ -326,7 +361,13 @@ const EditarPerfil = () => {
                                     required
                                 />
                             </div>
-                            <Button variant="primary" type="submit" size="md">Actualizar dirección</Button>
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                disabled={updatingDireccion}
+                            >
+                                {updatingDireccion ? "Actualizando…" : "Actualizar dirección"}
+                            </Button>
                         </form>
                     </section>
                 )}
@@ -363,8 +404,9 @@ const EditarPerfil = () => {
                                 <Button
                                     variant="danger"
                                     onClick={handleDeleteAccount}
+                                    disabled={deletingAccount}
                                 >
-                                    Eliminar cuenta
+                                    {deletingAccount ? "Eliminando…" : "Eliminar cuenta"}
                                 </Button>
                             </div>
                         </div>

@@ -16,10 +16,12 @@ const ResetPassword = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [message, setMessage] = useState(null);
+    const [cambiando, setCambiando] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setCambiando(true);
 
         try {
             await resetPassword({
@@ -36,6 +38,8 @@ const ResetPassword = () => {
 
         } catch (err) {
             setError(err.response?.data?.mensaje || "Error al restablecer la contraseña");
+        } finally {
+            setCambiando(false);
         }
     };
 
@@ -63,6 +67,7 @@ const ResetPassword = () => {
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         className={styles.input}
+                        disabled={cambiando}
                     />
 
                     <button
@@ -74,8 +79,8 @@ const ResetPassword = () => {
                     </button>
                 </div>
 
-                <Button type="submit" variant="primary" size="lg">
-                    Cambiar contraseña
+                <Button type="submit" variant="primary" size="lg" disabled={cambiando}>
+                    {cambiando ? "Cambiando contraseña..." : "Cambiar contraseña"}
                 </Button>
 
                 {error && <p className={styles.error}>{error}</p>}

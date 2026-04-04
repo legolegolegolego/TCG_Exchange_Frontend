@@ -37,6 +37,10 @@ const MisCartas = () => {
   const [editingCarta, setEditingCarta] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [notification, setNotification] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [guardando, setGuardando] = useState(false);
+  const [eliminando, setEliminando] = useState(false);
+
   const navigate = useNavigate();
 
 
@@ -47,6 +51,8 @@ const MisCartas = () => {
   const fetchCartas = async () => {
     if (!user) return;
     if (user.username !== username && !isAdmin) return;
+
+    setLoading(true);
     try {
       const [disp, noDisp] = await Promise.all([
         getDisponiblesByUsername(username),
@@ -64,6 +70,8 @@ const MisCartas = () => {
       const msg = err.response?.data?.mensaje || "No se pudieron cargar tus cartas. Intenta de nuevo.";
       setNotification({ type: "error", message: msg });
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,6 +79,7 @@ const MisCartas = () => {
 
   const handleSave = async (data) => {
     try {
+      setGuardando(true);
       if (editingCarta) {
         await updateCartaFisica(editingCarta.id, data);
         setNotification({ type: "success", message: "Carta editada correctamente" });
@@ -95,12 +104,16 @@ const MisCartas = () => {
         return;
       }
       console.error(err);
+    } finally {
+      setGuardando(false);
     }
 
   };
 
   const handleDelete = async () => {
     try {
+      setEliminando(true);
+
       await deleteCartaFisica(deleteTarget.id);
       setNotification({ type: "success", message: "Carta eliminada correctamente" });
       setDeleteTarget(null);
@@ -109,6 +122,8 @@ const MisCartas = () => {
       const msg = err.response?.data?.mensaje || "Error al eliminar la carta";
       setNotification({ type: "error", message: msg });
       console.error(err);
+    } finally {
+      setEliminando(false);
     }
   };
 
@@ -150,6 +165,12 @@ const MisCartas = () => {
       </div>
 
       {/* CARTAS GRID */}
+
+      {loading ? (
+      <p className="text-center text-secondary">Cargando cartas...</p>
+      ) : filteredCartas.length === 0 ? (
+      <p className="text-center text-secondary">No hay cartas para mostrar</p>
+      ) : (
       <div className="row g-3">
         {filteredCartas.map(carta => (
           <div key={carta.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
@@ -188,6 +209,7 @@ const MisCartas = () => {
           </div>
         ))}
       </div>
+      )}
 
       {/* BOTÓN CREAR */}
       {!isAdmin && (
@@ -210,6 +232,7 @@ const MisCartas = () => {
         onClose={() => setShowModal(false)}
         onSave={handleSave}
         initialData={editingCarta}
+        guardando={guardando}
       />
 
       {/* MODAL ELIMINAR */}
@@ -219,7 +242,8 @@ const MisCartas = () => {
             <h3>¿Seguro que quieres eliminar esta carta?</h3>
             <div className="d-flex justify-content-end gap-2 mt-3">
               <Button variant="cancel" onClick={() => setDeleteTarget(null)}>Cancelar</Button>
-              <Button variant="danger" onClick={handleDelete}>Eliminar</Button>
+              <Button variant="danger" onClick={handleDelete} disabled={eliminando}>
+                {eliminando ? "Eliminando..." : "Eliminar"}</Button>
             </div>
           </div>
         </div>

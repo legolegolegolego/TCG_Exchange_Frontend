@@ -14,9 +14,15 @@ const Register = () => {
     const [password2, setPassword2] = useState("");
     const [error, setError] = useState("");
     const [notification, setNotification] = useState(null);
+    const [registrando, setRegistrando] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (registrando) return; // Evitar múltiples envíos
+
+        setRegistrando(true);
+        setError("");
 
         try {
             await registerUser(username, email, password, password2);
@@ -30,6 +36,7 @@ const Register = () => {
             navigate("/login"); // Navega inmediatamente a login
         } catch (err) {
             setError(err.response?.data?.mensaje || "Error en registro");
+            setRegistrando(false);
         }
     };
 
@@ -52,6 +59,7 @@ const Register = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     className={styles.input}
+                    disabled={registrando}
                 />
 
                 <input
@@ -60,6 +68,7 @@ const Register = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={styles.input}
+                    disabled={registrando}
                 />
 
                 <input
@@ -68,6 +77,7 @@ const Register = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className={styles.input}
+                    disabled={registrando}
                 />
 
                 <input
@@ -76,9 +86,12 @@ const Register = () => {
                     value={password2}
                     onChange={(e) => setPassword2(e.target.value)}
                     className={styles.input}
+                    disabled={registrando}
                 />
 
-                <Button type="submit" variant="primary" size="lg">Registrarse</Button>
+                <Button type="submit" variant="primary" size="lg" disabled={registrando}>
+                    {registrando ? "Registrando..." : "Registrarse"}
+                </Button>
 
                 <hr />
                 <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>

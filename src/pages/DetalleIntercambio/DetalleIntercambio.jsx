@@ -78,7 +78,12 @@ const DetalleIntercambio = () => {
     if (id) fetchIntercambio();
   }, [id]);
 
-  if (loading) return <p>Cargando intercambio...</p>;
+  if (loading) return (
+    <div className="py-5 text-center">
+      <div className="spinner-border mb-3" role="status" />
+      <div>Cargando...</div>
+    </div>
+  );
   if (!intercambio) return null;
 
   const isOrigen = currentUser?.username === intercambio.usernameOrigen;
@@ -131,17 +136,17 @@ const DetalleIntercambio = () => {
           carta={cartaOtroUsuario}
           subTitle={"Recibes"}
           isSelectable={false}
-          // disabled={!intercambio.cartaOrigen?.disponible}
+        // disabled={!intercambio.cartaOrigen?.disponible}
         />
         <CartaUnificada
           carta={cartaUsuarioActual}
           subTitle={"Das"}
           isSelectable={false}
-          // disabled={!intercambio.cartaDestino?.disponible}
+        // disabled={!intercambio.cartaDestino?.disponible}
         />
       </div>
 
-      <div className="text-center mt-3">
+      <div className="text-center mt-3 mb-4">
         <span className={`badge bg-${bgEstadoIntercambio} text-${textEstadoIntercambio} ${styles.estadoIntercambioBadge}`}>
           {intercambio.estado}
         </span>

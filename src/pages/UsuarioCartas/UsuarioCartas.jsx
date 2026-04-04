@@ -59,7 +59,12 @@ const UsuarioCartas = () => {
       </h1>
 
       {loading ? (
-        <div className="loading text-center">Cargando...</div>
+
+        <div className="py-5 text-center">
+          <div className="spinner-border mb-3" role="status" />
+          <div>Cargando...</div>
+        </div>
+
       ) : (
         <>
           {cartas.length === 0 ? (

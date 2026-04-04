@@ -85,7 +85,12 @@ const CardDetail = () => {
     if (id) load();
   }, [id, navigate]);
 
-  if (loading) return <div className={styles.container}>Cargando...</div>;
+  if (loading) return (
+    <div className="py-5 text-center">
+      <div className="spinner-border mb-3" role="status" />
+      <div>Cargando...</div>
+    </div>
+  );
   if (!carta) return null;
 
   const { nombre, numero, rareza, tipoPokemon, tipoCarta, evolucion, imagenUrl } = carta;
