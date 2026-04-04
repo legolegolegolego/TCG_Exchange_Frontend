@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./AdminDashboard.module.css";
 import Button from "../../components/Button/Button";
 import { getCartasModelo } from "../../services/cartasModelo";
 import { getAllUsers } from "../../services/usuarios";
+import Notification from "../../components/Notification/Notification";
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const [notification, setNotification] = useState(location.state?.notification || null);
     const [stats, setStats] = useState({
         totalUsers: 0,
         totalCards: 0,
@@ -14,6 +17,10 @@ const AdminDashboard = () => {
         recentCards: [],
     });
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        window.history.replaceState({}, document.title);
+    }, []);
 
     useEffect(() => {
         // Cargar cartas recientes y total
@@ -63,6 +70,13 @@ const AdminDashboard = () => {
 
     return (
         <div className={styles.dashboardContainer}>
+            {notification && (
+                <Notification
+                    type={notification.type}
+                    message={notification.message}
+                    onClose={() => setNotification(null)}
+                />
+            )}
             <h1 className={styles.title}>Panel de Administración</h1>
 
             {/* Resumen rápido */}

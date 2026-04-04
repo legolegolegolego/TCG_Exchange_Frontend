@@ -68,11 +68,12 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
         } catch (error) {
             const backendErrors = error.response?.data?.errors || {};
             setErrors(backendErrors);
-            setGuardando(false);
 
             // Notificación global al padre
             const msg = error.response?.data?.mensaje || "Error al guardar la carta modelo";
             if (onError) onError({ fieldErrors: backendErrors, message: msg });
+        } finally {
+            setGuardando(false);
         }
     };
 

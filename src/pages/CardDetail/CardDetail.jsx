@@ -47,7 +47,7 @@ const CardDetail = () => {
       setDeleting(true);
       await deleteCartaModelo(carta.id);
 
-      navigate("/", {
+      navigate("/dashboard", {
         state: {
           notification: {
             type: "success",

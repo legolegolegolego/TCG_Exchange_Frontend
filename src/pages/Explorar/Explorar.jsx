@@ -245,10 +245,8 @@ const Explorar = () => {
           fetchCards();
           setNotification({ type: "success", message: editingCarta ? "Carta modelo editada correctamente" : "Carta modelo creada correctamente" });
           setEditingCarta(null);
-          setModalErrors(null);
         }}
         onError={(err) => {
-          setModalErrors(err.fieldErrors || {});
           setNotification({ type: "error", message: err.message || "Error al guardar la carta modelo" });
         }}
         initialData={editingCarta}
