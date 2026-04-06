@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./Register.module.css";
 import Button from "../../components/Button/Button.jsx";
+import PasswordInput from "../../components/PasswordInput/PasswordInput.jsx";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -71,21 +72,17 @@ const Register = () => {
                     disabled={registrando}
                 />
 
-                <input
-                    type="password"
-                    placeholder="Contraseña"
+                <PasswordInput
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className={styles.input}
+                    placeholder="Contraseña"
                     disabled={registrando}
                 />
 
-                <input
-                    type="password"
-                    placeholder="Repetir contraseña"
+                <PasswordInput
                     value={password2}
                     onChange={(e) => setPassword2(e.target.value)}
-                    className={styles.input}
+                    placeholder="Repetir contraseña"
                     disabled={registrando}
                 />
 

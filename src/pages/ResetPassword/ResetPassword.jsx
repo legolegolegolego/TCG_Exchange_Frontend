@@ -5,6 +5,7 @@ import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./ResetPassword.module.css";
 import { Eye, EyeOff } from "lucide-react";
 import Button from "../../components/Button/Button.jsx";
+import PasswordInput from "../../components/PasswordInput/PasswordInput.jsx";
 
 const ResetPassword = () => {
     const [searchParams] = useSearchParams();
@@ -13,7 +14,6 @@ const ResetPassword = () => {
     const token = searchParams.get("token");
 
     const [newPassword, setNewPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [message, setMessage] = useState(null);
     const [cambiando, setCambiando] = useState(false);
@@ -60,24 +60,12 @@ const ResetPassword = () => {
             <form onSubmit={handleSubmit} className={styles.formContainer}>
                 <h2 className={styles.title}>Nueva contraseña</h2>
 
-                <div className={styles.passwordWrapper}>
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Nueva contraseña"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        className={styles.input}
-                        disabled={cambiando}
-                    />
-
-                    <button
-                        type="button"
-                        className={styles.toggleButton}
-                        onClick={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-                    </button>
-                </div>
+                <PasswordInput
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Ingresa tu nueva contraseña"
+                    disabled={cambiando}
+                />
 
                 <Button type="submit" variant="primary" size="lg" disabled={cambiando}>
                     {cambiando ? "Cambiando contraseña..." : "Cambiar contraseña"}

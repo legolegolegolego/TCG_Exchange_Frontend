@@ -7,6 +7,7 @@ import { getCurrentUser } from "../../utils/token.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import Button from "../../components/Button/Button.jsx";
+import PasswordInput from "../../components/PasswordInput/PasswordInput.jsx";
 
 const EditarPerfil = () => {
     const [activeTab, setActiveTab] = useState("credenciales"); // Tab activa: credenciales, direccion, eliminar
@@ -266,29 +267,26 @@ const EditarPerfil = () => {
                             <form onSubmit={handlePasswordSubmit}>
                                 <div className={styles.field}>
                                     <label>Contraseña actual</label>
-                                    <input
-                                        className={styles.input}
-                                        type="password"
+                                    <PasswordInput
                                         value={passwordActual}
                                         onChange={(e) => setPasswordActual(e.target.value)}
+                                        disabled={updatingPassword}
                                     />
                                 </div>
                                 <div className={styles.field}>
                                     <label>Nueva contraseña</label>
-                                    <input
-                                        className={styles.input}
-                                        type="password"
+                                    <PasswordInput
                                         value={passwordNueva}
                                         onChange={(e) => setPasswordNueva(e.target.value)}
+                                        disabled={updatingPassword}
                                     />
                                 </div>
                                 <div className={styles.field}>
                                     <label>Repetir nueva contraseña</label>
-                                    <input
-                                        className={styles.input}
-                                        type="password"
+                                    <PasswordInput
                                         value={passwordNueva2}
                                         onChange={(e) => setPasswordNueva2(e.target.value)}
+                                        disabled={updatingPassword}
                                     />
                                 </div>
                                 <Button

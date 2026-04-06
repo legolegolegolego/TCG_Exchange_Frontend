@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./Login.module.css";
 import Button from "../../components/Button/Button.jsx";
+import PasswordInput from "../../components/PasswordInput/PasswordInput.jsx";
 
 const Login = () => {
     const { login } = useAuth();
@@ -19,7 +20,7 @@ const Login = () => {
     const [iniciandoSesion, setIniciandoSesion] = useState(false);
 
     useEffect(() => {
-        
+
         // Revisar si viene ?verified=true en la URL
         const params = new URLSearchParams(location.search);
         if (params.get("verified") === "true") {
@@ -27,11 +28,11 @@ const Login = () => {
                 type: "success",
                 message: "Email verificado"
             });
-            
+
             // Limpiar query param de la URL para no mostrarlo otra vez
             navigate("/login", { replace: true });
         }
-        
+
         // Mostrar notificaciones de páginas hijas
         const stored = sessionStorage.getItem("notification");
         if (stored) {
@@ -91,12 +92,10 @@ const Login = () => {
                     disabled={iniciandoSesion}
                 />
 
-                <input
-                    type="password"
-                    placeholder="Contraseña"
+                <PasswordInput
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className={styles.input}
+                    placeholder="Contraseña"
                     disabled={iniciandoSesion}
                 />
 
