@@ -125,7 +125,7 @@
   justify-content: center;
   font-size: 0.95rem;
   color: #666;
-  background-color: var(--graylight);
+  background-color: var(--graylight) !important;
   border-radius: 0.75rem;
 }
 
