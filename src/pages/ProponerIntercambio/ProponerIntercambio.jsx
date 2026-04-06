@@ -161,16 +161,20 @@ const ProponerIntercambio = () => {
       {/* Mis cartas disponibles */}
       <h2 className="mt-4 text-center w-100">Mis cartas disponibles:</h2>
       <div className="row g-3 mt-2 mb-4 justify-content-center">
-        {misCartas.map((c) => (
-          <div key={c.id} className="col-auto">
-            <CartaUnificada
-              carta={c}
-              isSelectable
-              isSelected={cartaSeleccionada?.id === c.id}
-              onClick={enviando ? undefined : () => setCartaSeleccionada(c)} // Deshabilitar selección al enviar
-            />
-          </div>
-        ))}
+        {misCartas.length === 0 ? (
+          <p className="text-center text-secondary">No tienes cartas disponibles para intercambio</p>
+        ) : (
+          misCartas.map((c) => (
+            <div key={c.id} className="col-auto">
+              <CartaUnificada
+                carta={c}
+                isSelectable
+                isSelected={cartaSeleccionada?.id === c.id}
+                onClick={enviando ? undefined : () => setCartaSeleccionada(c)} // Deshabilitar selección al enviar
+              />
+            </div>
+          ))
+        )}
       </div>
 
       {/* Botones */}
