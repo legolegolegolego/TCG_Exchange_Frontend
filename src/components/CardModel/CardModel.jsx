@@ -31,7 +31,7 @@ const rarezaColores = {
   RARA_HOLO: "#c00ff1"
 };
 
-const CardModel = ({ carta }) => {
+const CardModel = ({ carta, disabled }) => {
   const navigate = useNavigate();
   const { id, numero, nombre, rareza, tipoPokemon, tipoCarta, imagenUrl } = carta || {};
 
@@ -44,12 +44,16 @@ const CardModel = ({ carta }) => {
 
   return (
     <div
-      className={`card h-100 shadow-sm rounded ${styles.clickable} ${styles.card}`}
+      className={`card h-100 shadow-sm rounded 
+        ${styles.clickable} 
+        ${styles.card} 
+        ${disabled ? styles.disabled : ""}`}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       role={id ? "link" : undefined}
       tabIndex={id ? 0 : undefined}
       style={{ "--glow": glowColor }}
+      title={disabled ? "Inactiva" : undefined}
     >
       <div className={styles.imageContainer}>
         {imagenUrl ? (

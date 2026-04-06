@@ -93,7 +93,7 @@ const CardDetail = () => {
   );
   if (!carta) return null;
 
-  const { nombre, numero, rareza, tipoPokemon, tipoCarta, evolucion, imagenUrl } = carta;
+  const { nombre, numero, rareza, tipoPokemon, tipoCarta, evolucion, imagenUrl, activo } = carta;
   const glowColor = tipoColores[tipoPokemon] || "#999";
   const rarezaColor = rarezaColores[rareza] || "#777";
 
@@ -119,14 +119,15 @@ const CardDetail = () => {
         <div className={styles.left}>
           <div className={styles.top}>
             <div
-              className={styles.imageWrap}
+              className={`${styles.imageWrap} ${!activo ? styles.inactive : ""}`}
               style={{
                 borderColor: glowColor,
                 boxShadow: `0 0 18px ${glowColor}`
               }}
+              title={activo ? "" : "Inactiva"}
             >
               {imagenUrl ? (
-                <img src={imagenUrl} alt={nombre} />
+                <img src={imagenUrl} alt={nombre} className={`${!activo ? styles.inactiveImage : ""}`} />
               ) : (
                 <div className={styles.noImage}>No image</div>
               )}
@@ -163,6 +164,12 @@ const CardDetail = () => {
               {tipoPokemon && tipoPokemon !== "ENTRENADOR" && (
                 <div className={styles.row}><strong>Evolución:</strong> {evolucion || '-'}</div>
               )}
+
+              {isAdmin && (
+                <div className={styles.row}>
+                  <strong>Estado:</strong> {activo ? "Activa" : "Inactiva"}
+                </div>
+              )}
             </div>
           </div>
 
@@ -171,7 +178,10 @@ const CardDetail = () => {
               <Button
                 variant="outline-primary"
                 size="md"
+                disabled={!activo}
+                title={!activo ? "No se puede editar una carta inactiva" : undefined}
                 onClick={() => {
+                  if (!activo) return;
                   setEditingCarta(carta);
                   setShowModal(true);
                 }}
@@ -181,7 +191,11 @@ const CardDetail = () => {
 
               <Button
                 variant="outline-danger"
+                size="md"
+                disabled={!activo}
+                title={!activo ? "No se puede eliminar una carta inactiva" : undefined}
                 onClick={() => {
+                  if (!activo) return;
                   setDeleteError(null);
                   setShowDeleteModal(true);
                 }}

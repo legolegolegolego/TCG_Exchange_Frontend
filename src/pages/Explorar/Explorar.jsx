@@ -229,7 +229,7 @@ const Explorar = () => {
             {cards.length === 0 && !loading && <p>No se encontraron cartas.</p>}
             {cards.map(c => (
               <div key={c.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                <CardModel carta={c} />
+                <CardModel carta={c} disabled={!c.activo} />
               </div>
             ))}
           </div>
