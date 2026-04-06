@@ -27,6 +27,8 @@ const DetalleIntercambio = () => {
   const [showRechazarModal, setShowRechazarModal] = useState(false);
   const [showDireccionModal, setShowDireccionModal] = useState(false);
   const [actionError, setActionError] = useState("");
+  const [accionando, setAccionando] = useState(false);
+  const [accionActual, setAccionActual] = useState(""); // "ACEPTAR" o "RECHAZAR"
 
   // Función para cargar intercambio desde API
   const fetchIntercambio = async () => {
@@ -99,7 +101,11 @@ const DetalleIntercambio = () => {
 
   // Función para manejar acción de aceptar/rechazar
   const handleAccion = async (accion) => {
+
     setActionError("");
+    setAccionando(true);
+    setAccionActual(accion);
+
     try {
       if (accion === "ACEPTAR") await aceptarIntercambio(intercambio.id);
       else if (accion === "RECHAZAR") await rechazarIntercambio(intercambio.id);
@@ -113,6 +119,11 @@ const DetalleIntercambio = () => {
       });
     } catch (err) {
       setActionError(err.response?.data?.mensaje || "Error al procesar la acción");
+    } finally {
+      setAccionando(false);
+      setAccionActual("");
+      setShowAceptarModal(false);
+      setShowRechazarModal(false);
     }
   };
 
@@ -182,12 +193,12 @@ const DetalleIntercambio = () => {
               </Button>
               <Button
                 variant="primary"
-                onClick={async () => {
-                  setShowAceptarModal(false);
-                  await handleAccion("ACEPTAR");
+                onClick={() => {
+                  handleAccion("ACEPTAR");
                 }}
+                disabled={accionando && accionActual === "ACEPTAR"}
               >
-                Sí, aceptar
+                {accionando && accionActual === "ACEPTAR" ? "Aceptando..." : "Sí, aceptar"}
               </Button>
             </div>
           </div>
@@ -205,12 +216,12 @@ const DetalleIntercambio = () => {
               </Button>
               <Button
                 variant="danger"
-                onClick={async () => {
-                  setShowRechazarModal(false);
-                  await handleAccion("RECHAZAR");
+                onClick={() => {
+                  handleAccion("RECHAZAR");
                 }}
+                disabled={accionando && accionActual === "RECHAZAR"}
               >
-                Sí, rechazar
+                {accionando && accionActual === "RECHAZAR" ? "Rechazando..." : "Sí, rechazar"}
               </Button>
             </div>
           </div>
