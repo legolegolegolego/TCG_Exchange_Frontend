@@ -3,12 +3,15 @@ import CardUser from "../../components/CardUser/CardUser";
 import { getAllUsers } from "../../services/usuarios";
 import styles from "./Usuarios.module.css";
 import Button from "../../components/Button/Button";
+import Notification from "../../components/Notification/Notification";
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState("");
+
+    const [notification, setNotification] = useState(null);
 
     // PAGINACIÓN
     const [page, setPage] = useState(1);
@@ -77,6 +80,15 @@ const Usuarios = () => {
 
     return (
         <div className={`container ${styles.container}`}>
+
+            {/* Notificación global */}
+            {notification && (
+                <Notification
+                    type={notification.type}
+                    message={notification.message}
+                    onClose={() => setNotification(null)}
+                />
+            )}
             <h1 className="mb-4">Lista de Usuarios</h1>
 
             {loading && (
@@ -144,13 +156,16 @@ const Usuarios = () => {
                             </p>
                         ) : (
                             paginatedUsers.map((user) => (
-                                <CardUser key={user.id}
+                                <CardUser
+                                    key={user.id}
                                     user={user}
-                                    onDelete={(deletedId) =>
-                                        setUsuarios((prev) =>
-                                            prev.filter((u) => u.id !== deletedId)
-                                        )
-                                    }
+                                    onDelete={(deletedId) => {
+                                        setUsuarios(prev => prev.filter(u => u.id !== deletedId));
+                                        setNotification({
+                                            type: "success",
+                                            message: `Usuario ${user.username} eliminado correctamente`
+                                        });
+                                    }}
                                 />
                             ))
                         )}
