@@ -3,16 +3,19 @@ import { resendVerification } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./ResendVerification.module.css";
+import Button from "../../components/Button/Button.jsx";
 
 const ResendVerification = () => {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState(null);
     const [error, setError] = useState("");
+    const [enviando, setEnviando] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setEnviando(true);
 
         try {
             await resendVerification(email);
@@ -22,9 +25,11 @@ const ResendVerification = () => {
                 message: "Se ha enviado un email de verificación. Revisa tu bandeja de entrada.",
             }));
             
-            navigate("/")
+            navigate("/login");
         } catch (err) {
             setError(err.response?.data?.mensaje || "Error al enviar el email de verificación");
+        } finally {
+            setEnviando(false);
         }
     };
 
@@ -50,9 +55,9 @@ const ResendVerification = () => {
                     required
                 />
 
-                <button type="submit" className={styles.button}>
-                    Enviar correo
-                </button>
+                <Button type="submit" variant="primary" size="lg" disabled={enviando}>
+                    {enviando ? "Enviando..." : "Enviar correo"}
+                </Button>
 
                 {error && <p className={styles.error}>{error}</p>}
             </form>
