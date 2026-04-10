@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { loginUser } from "../../services/auth.js";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./Login.module.css";
 import Button from "../../components/Button/Button.jsx";
@@ -58,9 +58,9 @@ const Login = () => {
             if (mensaje.includes("Email no verificado")) {
                 setError(mensaje);
                 setErrorLink(
-                    <a href="/resend-verification" className={styles.link}>
+                    <Link to="/resend-verification" className={styles.link}>
                         Reenviar correo de verificación
-                    </a>
+                    </Link>
                 );
             } else {
                 setError(mensaje);
@@ -105,9 +105,9 @@ const Login = () => {
 
                 <hr />
                 <p>
-                    ¿Has olvidado tu contraseña? <a href="/forgot-password">Recuérdala</a>
+                    ¿Has olvidado tu contraseña? <Link to="/forgot-password">Recuérdala</Link>
                 </p>
-                <p>¿No tienes una cuenta? <a href="/register">Regístrate</a></p>
+                <p>¿No tienes una cuenta? <Link to="/register">Regístrate</Link></p>
 
                 {error && <p className={styles.error}>{error}</p>}
                 {errorLink && <p className={styles.error}>{errorLink}</p>}

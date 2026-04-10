@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useAuth } from "../../context/AuthContext.jsx";
 import WishlistButton from "../WishlistButton/WishlistButton.jsx";
@@ -41,63 +41,53 @@ const Header = () => {
       <div className="d-flex flex-wrap align-items-center justify-content-between">
         {/* Logo */}
         <div className="d-flex align-items-center gap-2 flex-shrink-0">
-          <a href="/" className="d-flex align-items-center text-decoration-none">
+          <Link to="/" className="d-flex align-items-center text-decoration-none">
             <img src={logo} alt="Logo App" className={styles.logo} />
             <span className={`fw-bold ${styles.appName}`}>TCG Exchange</span>
-          </a>
+          </Link>
         </div>
 
         {/* Navegación */}
         <nav className="d-flex flex-wrap align-items-center justify-content-center gap-3 flex-grow-1 my-2 my-md-0">
-          <span
+          <Link to={"/explorar"}
             className={`fw-semibold ${styles.navTitle}`}
-            onClick={() => navigate("/explorar")}
-            role="button"
           >
             {isAdmin ? "Cartas Modelo" : "Explorar Cartas"}
-          </span>
+          </Link>
 
           {username && (
             <>
               {/* Si USER */}
 
               {!isAdmin && (
-                <span
+                <Link to={"/intercambios/" + username}
                   className={`fw-semibold ${styles.navTitle}`}
-                  onClick={() => navigate("/intercambios/" + username)}
-                  role="button"
                 >
                   Mis Intercambios
-                </span>
+                </Link>
               )}
               {!isAdmin && (
-                <span
+                <Link to={"/cartas/" + username}
                   className={`fw-semibold ${styles.navTitle}`}
-                  onClick={() => navigate("/cartas/" + username)}
-                  role="button"
                 >
                   Mis Cartas
-                </span>
+                </Link>
               )}
               {/* Si ADMIN */}
               {isAdmin && (
-                <span
+                <Link to={"/usuarios"}
                   className={`fw-semibold ${styles.navTitle}`}
-                  onClick={() => navigate("/usuarios")}
-                  role="button"
                 >
                   Usuarios
-                </span>
+                </Link>
               )}
             </>
           )}
-          <span
+          <Link to={"/soporte"}
             className={`fw-semibold ${styles.navTitle} ${styles.navHelp}`}
-            onClick={() => navigate("/soporte")}
-            role="button"
           >
             Ayuda
-          </span>
+          </Link>
         </nav>
 
         {/* Botones de usuario */}

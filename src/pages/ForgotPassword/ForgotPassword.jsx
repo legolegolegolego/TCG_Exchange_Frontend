@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { forgotPassword } from "../../services/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./ForgotPassword.module.css";
 import Button from "../../components/Button/Button.jsx";
@@ -35,9 +35,9 @@ const ForgotPassword = () => {
             if (mensaje.includes("Debes verificar tu email antes de recuperar la contraseña.")) {
                 setError(mensaje);
                 setErrorLink(
-                    <a href="/resend-verification" className={styles.link}>
+                    <Link to="/resend-verification" className={styles.link}>
                         Reenviar correo de verificación
-                    </a>
+                    </Link>
                 );
             } else {
                 setError(mensaje);

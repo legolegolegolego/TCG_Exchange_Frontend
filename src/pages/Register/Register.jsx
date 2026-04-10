@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../../services/auth.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Notification from "../../components/Notification/Notification.jsx";
 import styles from "./Register.module.css";
 import Button from "../../components/Button/Button.jsx";
@@ -91,7 +91,7 @@ const Register = () => {
                 </Button>
 
                 <hr />
-                <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></p>
+                <p>¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link></p>
 
                 {error && <p className={styles.error}>{error}</p>}
             </form>
