@@ -49,6 +49,12 @@
   /* pequeño efecto de aumento */
 }
 
+/* Foco de teclado */
+/* .navTitle:focus {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+} */
+
 /* Variante más suave para Ayuda */
 .navHelp {
   color: rgba(0, 0, 0, 0.45);

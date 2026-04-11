@@ -1,6 +1,6 @@
 /* Animación del acordeón */
 :global(.accordion-collapse) {
-  transition: all 0.3s ease;
+  transition: height 0.3s ease;
 }
 
 :global(.accordion-body) {
