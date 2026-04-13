@@ -1,37 +1,79 @@
-/* Animación del acordeón */
-:global(.accordion-collapse) {
-  transition: height 0.3s ease;
+.container {
+  width: min(90vw, 50rem);
+  margin: 5vh auto 10vh auto;
+  padding: 0 1rem;
 }
 
-:global(.accordion-body) {
-  animation: fadeIn 0.3s ease;
+.title {
+  margin-bottom: 1.5rem;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.subtitle {
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
 }
 
-/* Botones */
-:global(.accordion-button) {
-  transition: background-color 0.2s ease, color 0.2s ease;
+/* ACCORDION */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-:global(.accordion-button:not(.collapsed)) {
-  background-color: #f8f9fa;
+/* ITEM */
+
+.item {
+  border: 0.0625rem solid #ddd;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #fff;
 }
 
-/* Flecha */
-:global(.accordion-button::after) {
-  transition: transform 0.3s ease;
+/* BUTTON */
+
+.button {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
 }
 
-:global(.accordion-button:not(.collapsed)::after) {
-  transform: rotate(180deg);
+.button:hover, .active {
+  background: var(--graylight);
+}
+
+/* ICON */
+
+.icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* COLLAPSE */
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.7s ease, opacity 0.25s ease;
+}
+
+.open {
+  max-height: 12rem;
+  opacity: 1;
+}
+
+/* BODY */
+
+.body {
+  padding: 1rem 1.25rem;
 }
