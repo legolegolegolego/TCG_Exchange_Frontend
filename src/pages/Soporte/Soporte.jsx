@@ -1,7 +1,12 @@
 import styles from "./Soporte.module.css";
+import { useEffect } from "react";
 import { getCurrentUser } from "../../utils/token";
 
 function Soporte() {
+  useEffect(() => {
+    // fuerza reflow del DOM para Bootstrap
+    window.dispatchEvent(new Event("load"));
+  }, []);
   const user = getCurrentUser();
   const isAdmin = user?.roles?.includes("ROLE_ADMIN");
 
@@ -158,104 +163,104 @@ function Soporte() {
           </div>
         </>
       ) : (
-      <>
-        <p>
-          Este panel está orientado a la gestión de la plataforma. Como administrador puedes supervisar
-          usuarios, cartas e intercambios para garantizar el correcto funcionamiento del sistema.
-        </p>
+        <>
+          <p>
+            Este panel está orientado a la gestión de la plataforma. Como administrador puedes supervisar
+            usuarios, cartas e intercambios para garantizar el correcto funcionamiento del sistema.
+          </p>
 
-        <h3 className="mt-5 mb-4">Gestión para administradores</h3>
+          <h3 className="mt-5 mb-4">Gestión para administradores</h3>
 
-        <div className="accordion" id="faqAccordionAdmin">
+          <div className="accordion" id="faqAccordionAdmin">
 
-          {/* 1 */}
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="adminHeadingOne">
-              <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#adminOne">
-                ¿Qué puede hacer un administrador?
-              </button>
-            </h2>
-            <div id="adminOne" className="accordion-collapse collapse show" data-bs-parent="#faqAccordionAdmin">
-              <div className="accordion-body">
-                Puede consultar usuarios, cartas modelo, cartas físicas e intercambios, además de eliminar
-                recursos cuando sea necesario.
+            {/* 1 */}
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="adminHeadingOne">
+                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#adminOne">
+                  ¿Qué puede hacer un administrador?
+                </button>
+              </h2>
+              <div id="adminOne" className="accordion-collapse collapse show" data-bs-parent="#faqAccordionAdmin">
+                <div className="accordion-body">
+                  Puede consultar usuarios, cartas modelo, cartas físicas e intercambios, además de eliminar
+                  recursos cuando sea necesario.
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* 2 */}
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="adminHeadingTwo">
-              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminTwo">
-                Gestión de usuarios
-              </button>
-            </h2>
-            <div id="adminTwo" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
-              <div className="accordion-body">
-                Puedes consultar cualquier usuario, actualizar username o contraseña y eliminar/desactivar cuentas.
+            {/* 2 */}
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="adminHeadingTwo">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminTwo">
+                  Gestión de usuarios
+                </button>
+              </h2>
+              <div id="adminTwo" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
+                <div className="accordion-body">
+                  Puedes consultar cualquier usuario, actualizar username o contraseña y eliminar/desactivar cuentas.
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* 3 */}
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="adminHeadingThree">
-              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminThree">
-                Gestión de cartas modelo
-              </button>
-            </h2>
-            <div id="adminThree" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
-              <div className="accordion-body">
-                Puedes crear, modificar y eliminar cartas modelo. Si tienen cartas físicas asociadas, se desactivan en lugar de eliminarse.
+            {/* 3 */}
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="adminHeadingThree">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminThree">
+                  Gestión de cartas modelo
+                </button>
+              </h2>
+              <div id="adminThree" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
+                <div className="accordion-body">
+                  Puedes crear, modificar y eliminar cartas modelo. Si tienen cartas físicas asociadas, se desactivan en lugar de eliminarse.
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* 4 */}
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="adminHeadingFour">
-              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminFour">
-                Gestión de cartas físicas
-              </button>
-            </h2>
-            <div id="adminFour" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
-              <div className="accordion-body">
-                Puedes eliminar/desactivar cartas físicas de cualquier usuario.
+            {/* 4 */}
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="adminHeadingFour">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminFour">
+                  Gestión de cartas físicas
+                </button>
+              </h2>
+              <div id="adminFour" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
+                <div className="accordion-body">
+                  Puedes eliminar/desactivar cartas físicas de cualquier usuario.
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* 5 */}
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="adminHeadingFive">
-              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminFive">
-                Gestión de intercambios
-              </button>
-            </h2>
-            <div id="adminFive" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
-              <div className="accordion-body">
-                Puedes consultar cualquier intercambio del sistema y supervisar su estado.
+            {/* 5 */}
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="adminHeadingFive">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminFive">
+                  Gestión de intercambios
+                </button>
+              </h2>
+              <div id="adminFive" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
+                <div className="accordion-body">
+                  Puedes consultar cualquier intercambio del sistema y supervisar su estado.
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* 6 */}
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="adminHeadingSix">
-              <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminSix">
-                Restricciones del administrador
-              </button>
-            </h2>
-            <div id="adminSix" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
-              <div className="accordion-body">
-                No puedes modificar recursos que pertenecen exclusivamente al usuario (como cartas físicas),
-                solo gestionarlos o eliminarlos según las reglas del sistema.
+            {/* 6 */}
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="adminHeadingSix">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#adminSix">
+                  Restricciones del administrador
+                </button>
+              </h2>
+              <div id="adminSix" className="accordion-collapse collapse" data-bs-parent="#faqAccordionAdmin">
+                <div className="accordion-body">
+                  No puedes modificar recursos que pertenecen exclusivamente al usuario (como cartas físicas),
+                  solo gestionarlos o eliminarlos según las reglas del sistema.
+                </div>
               </div>
             </div>
-          </div>
 
-        </div>
-      </>
+          </div>
+        </>
       )}
 
       {/* CONTACTO */}
