@@ -121,13 +121,12 @@ function Soporte() {
         </p>
       ) : (
         <p>
-          Panel de administración para supervisar usuarios, cartas e intercambios.
+          Este panel está orientado a la gestión de la plataforma. Como administrador, puedes supervisar
+          usuarios, cartas e intercambios.
         </p>
       )}
 
-      <h3 className={styles.subtitle}>
-        {isAdmin ? "Gestión para administradores" : "Preguntas frecuentes"}
-      </h3>
+      <h3 className={styles.subtitle}>Preguntas frecuentes</h3>
 
       <div className={styles.accordion}>
         {items.map((item) => {
@@ -155,7 +154,7 @@ function Soporte() {
 
       <h3 className={styles.subtitle}>Contacto</h3>
       <p>
-        Si tienes cualquier duda o problema:
+        Si tienes cualquier duda o problema, puedes escribir a:
       </p>
       <p>
         <strong>tcgexchange.automail@gmail.com</strong>
