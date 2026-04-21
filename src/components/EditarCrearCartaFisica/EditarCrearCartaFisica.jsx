@@ -38,19 +38,28 @@ const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData, guardand
       setForm({
         idCartaModelo: initialData.idCartaModelo,
         estadoCarta: initialData.estadoCarta,
-        imagenUrl: initialData.imagenUrl || ""
+        imagen: null
       });
     } else {
       setForm({
         idCartaModelo: "",
         estadoCarta: "EXCELENTE",
-        imagenUrl: ""
+        imagen: null
       });
     }
   }, [isOpen, initialData]);
 
   const handleSubmit = () => {
-    onSave(form);
+    const formData = new FormData();
+
+    formData.append("idCartaModelo", form.idCartaModelo);
+    formData.append("estadoCarta", form.estadoCarta);
+
+    if (form.imagen) {
+      formData.append("imagen", form.imagen);
+    }
+
+    onSave(formData);
   };
 
   if (!isOpen) return null;
@@ -100,15 +109,35 @@ const EditarCrearCartaFisica = ({ isOpen, onClose, onSave, initialData, guardand
 
             {/* Imagen */}
             <div className="mb-3">
-              <label className="form-label">URL Imagen</label>
+              <label className="form-label">Imagen</label>
               <input
-                type="text"
+                type="file"
                 className="form-control"
-                placeholder="URL imagen"
-                value={form.imagenUrl}
-                onChange={(e) => setForm({ ...form, imagenUrl: e.target.value })}
+                accept="image/jpeg, image/png, image/webp"
+                placeholder="imagen carta física"
+                onChange={(e) => setForm({ ...form, imagen: e.target.files[0] })}
                 disabled={guardando}
               />
+              {/* Preview de imagen actual */}
+              {initialData?.imagenUrl && !form.imagen && (
+                <div className={styles.previewContainer}>
+                  <img
+                    src={initialData.imagenUrl}
+                    alt="preview imagen actual"
+                    className={styles.previewImage}
+                  />
+                </div>
+              )}
+              {/* Preview nueva imagen */}
+              {form.imagen && (
+                <div className={styles.previewContainer}>
+                  <img
+                    src={URL.createObjectURL(form.imagen)}
+                    alt="preview nueva imagen"
+                    className={styles.previewImage}
+                  />
+                </div>
+              )}
             </div>
           </div>
 

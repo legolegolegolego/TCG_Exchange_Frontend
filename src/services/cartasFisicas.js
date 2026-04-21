@@ -16,13 +16,13 @@ export const getCartaFisicaById = async (id) => {
 };
 
 // Crear carta física
-export const createCartaFisica = async (cfCreateDTO) => {
-	return await api.post(`/cartas-fisicas`, cfCreateDTO);
+export const createCartaFisica = (formData) => {
+  return api.post("/cartas-fisicas", formData);
 };
 
 // Actualizar carta física
-export const updateCartaFisica = async (id, cfCreateDTO) => {
-	return await api.put(`/cartas-fisicas/${id}`, cfCreateDTO);
+export const updateCartaFisica = (id, formData) => {
+  return api.put(`/cartas-fisicas/${id}`, formData);
 };
 
 // Borrar carta física

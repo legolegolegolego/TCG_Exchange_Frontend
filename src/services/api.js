@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   // baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080",
-  baseURL: import.meta.env.VITE_API_URL || "https://tcg-exchange.onrender.com",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 // Interceptor para agregar token a todas las peticiones que lo requieran
