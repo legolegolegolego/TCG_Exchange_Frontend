@@ -209,7 +209,7 @@ const EditarCrearCartaModelo = ({ isOpen, onClose, onSave, onError, initialData 
                                 <input
                                     type="text"
                                     className={`form-control ${errors.imagenUrl ? "is-invalid" : ""}`}
-                                    placeholder="URL imagen"
+                                    placeholder="https://images.pokemontcg.io/base1/numero.png"
                                     value={form.imagenUrl}
                                     onChange={(e) => setForm({ ...form, imagenUrl: e.target.value })}
                                     required
