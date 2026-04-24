@@ -6,6 +6,11 @@ export const getAllUsers = async () => {
 	return await api.get("/usuarios");
 };
 
+// Obtener usuario por su ID (solo ADMIN)
+export const getUserById = async (id) => {
+	return await api.get(`/usuarios/id/${id}`);
+}
+
 // Obtener usuario por username (necesario si el JWT no contiene id)
 export const getByUsername = async (username) => {
 	return await api.get(`/usuarios/username/${encodeURIComponent(username)}`);
@@ -20,7 +25,6 @@ export const changeUsername = async (id, nuevoUsername) => {
 export const changePassword = async (id, passwordDto) => {
 	return await api.put(`/usuarios/${id}/password`, passwordDto);
 };
-
 
 // Eliminar usuario
 export const deleteUser = async (id) => {

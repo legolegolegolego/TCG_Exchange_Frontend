@@ -159,11 +159,28 @@ const Usuarios = () => {
                                 <CardUser
                                     key={user.id}
                                     user={user}
-                                    onDelete={(deletedId) => {
-                                        setUsuarios(prev => prev.filter(u => u.id !== deletedId));
+                                    onDelete={(updatedUser, deletedId) => {
+                                        setUsuarios(prev => {
+                                            // Caso: eliminado real
+                                            if (!updatedUser) {
+                                                return prev.filter(u => u.id !== deletedId);
+                                            }
+
+                                            // Caso: desactivado
+                                            if (updatedUser.desactivado) {
+                                                return prev.map(u =>
+                                                    u.id === updatedUser.id ? updatedUser : u
+                                                );
+                                            }
+
+                                            return prev;
+                                        });
+
                                         setNotification({
                                             type: "success",
-                                            message: `Usuario ${user.username} eliminado correctamente`
+                                            message: updatedUser?.desactivado
+                                                ? `Usuario ${updatedUser.username} desactivado`
+                                                : `Usuario ${user.username} eliminado`
                                         });
                                     }}
                                 />

@@ -5,6 +5,7 @@ import { getIntercambiosByUsuario } from "../../services/intercambios";
 import { deleteUser } from "../../services/usuarios";
 import styles from "./CardUser.module.css";
 import Button from "../Button/Button";
+import { getUserById } from "../../services/usuarios";
 
 const CardUser = ({ user, onDelete }) => {
     const navigate = useNavigate();
@@ -56,8 +57,19 @@ const CardUser = ({ user, onDelete }) => {
             setDeleting(true);
             await deleteUser(id);
 
-            // Notificar al padre para quitar el usuario de la lista
-            if (onDelete) onDelete(id);
+            // Volver a pedir el usuario actualizado
+            const updatedUser = user; // fallback
+            try {
+                const res = await getUserById(id);
+                if (res.data) {
+                    if (onDelete) onDelete(res.data);
+                } else {
+                    if (onDelete) onDelete(null, id); // eliminado real
+                }
+            } catch {
+                // Si falla el fetch, se asume eliminado
+                if (onDelete) onDelete(null, id);
+            }
 
             setShowDeleteModal(false);
         } catch (err) {
