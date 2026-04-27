@@ -167,7 +167,7 @@ const Explorar = () => {
               <option value="PLANTA">PLANTA</option>
               <option value="FUEGO">FUEGO</option>
               <option value="AGUA">AGUA</option>
-              <option value="ELÉCTRICO">ELÉCTRICO</option>
+              <option value="ELECTRICO">ELÉCTRICO</option>
               <option value="PSIQUICO">PSÍQUICO</option>
               <option value="LUCHA">LUCHA</option>
               <option value="INCOLORO">INCOLORO</option>
