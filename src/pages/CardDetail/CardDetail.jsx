@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import styles from "./CardDetail.module.css";
-import { getCartaModeloById, getUsuariosConCartaModelo } from "../../services/cartasModelo";
+import { getCartaModeloById, getUsuariosConCartaModelo, deleteCartaModelo } from "../../services/cartasModelo";
 import Notification from "../../components/Notification/Notification";
 import Button from "../../components/Button/Button";
 import { getCurrentUser } from "../../utils/token";
 import EditarCrearCartaModelo from "../../components/EditarCrearCartaModelo/EditarCrearCartaModelo";
-import { deleteCartaModelo } from "../../services/cartasModelo";
 
 const tipoColores = {
   PLANTA: "#2ecc71",
@@ -42,16 +41,37 @@ const CardDetail = () => {
   const [deleting, setDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
 
+
   const handleDelete = async () => {
     try {
       setDeleting(true);
       await deleteCartaModelo(carta.id);
 
-      navigate("/dashboard", {
+      let message = "Carta eliminada correctamente";
+
+      // Verificar si la carta fue realmente eliminada o solo desactivada
+      try {
+        const res = await getCartaModeloById(carta.id);
+
+        // Si existe → desactivada
+        if (res.data) {
+          message = `Carta ${res.data.nombre} desactivada`;
+        }
+      } catch (err) {
+        // Si da 404 → eliminada real
+        if (err.response?.status === 404) {
+          message = `Carta ${carta.nombre} eliminada correctamente`;
+        } else {
+          // otro error inesperado
+          message = "Acción realizada (estado no verificado)";
+        }
+      }
+
+      navigate("/explorar", {
         state: {
           notification: {
             type: "success",
-            message: "Carta eliminada correctamente"
+            message: message
           }
         }
       });

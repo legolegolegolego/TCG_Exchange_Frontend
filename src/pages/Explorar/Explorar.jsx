@@ -137,7 +137,7 @@ const Explorar = () => {
 
           <div className="mb-3">
             <label className="form-label">Nombre</label>
-            <input name="nombre" value={filters.nombre} onChange={handleChange} className="form-control" />
+            <input name="nombre" value={filters.nombre} onChange={handleChange} className="form-control" placeholder="Pika..." />
           </div>
 
           <div className="mb-3">
