@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDisponiblesByUsername, getNoDisponiblesByUsername, deleteCartaFisica, createCartaFisica, updateCartaFisica } from "../../services/cartasFisicas";
+import { getDisponiblesByUsername, getNoDisponiblesByUsername, deleteCartaFisica, createCartaFisica, updateCartaFisica, getCartaFisicaById } from "../../services/cartasFisicas";
 import { getCurrentUser } from "../../utils/token";
 import api from "../../services/api";
 import CartaUnificada from "../../components/CartaUnificada/CartaUnificada";
@@ -115,7 +115,23 @@ const MisCartas = () => {
       setEliminando(true);
 
       await deleteCartaFisica(deleteTarget.id);
-      setNotification({ type: "success", message: "Carta eliminada correctamente" });
+
+      let message = "Carta eliminada correctamente";
+
+      try {
+        const res = await getCartaFisicaById(deleteTarget.id);
+
+        if (res.data) {
+          message = `Carta desactivada (no se pudo eliminar)`;
+        }
+      } catch (err) {
+        if (err.response?.status === 404) {
+          message = `Carta eliminada correctamente`;
+        } else {
+          message = "Acción realizada (estado no verificado)";
+        }
+      }
+      setNotification({ type: "success", message });
       setDeleteTarget(null);
       fetchCartas();
     } catch (err) {
@@ -167,48 +183,48 @@ const MisCartas = () => {
       {/* CARTAS GRID */}
 
       {loading ? (
-      <p className="text-center text-secondary">Cargando cartas...</p>
+        <p className="text-center text-secondary">Cargando cartas...</p>
       ) : filteredCartas.length === 0 ? (
-      <p className="text-center text-secondary">No hay cartas para mostrar</p>
+        <p className="text-center text-secondary">No hay cartas para mostrar</p>
       ) : (
-      <div className="row g-3">
-        {filteredCartas.map(carta => (
-          <div key={carta.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
-            <CartaUnificada
-              carta={carta}
-              isSelectable={!isAdmin && carta.disponible}
-              disabled={!carta.disponible}
-              onClick={() => {
-                // Click en carta = editar
-                if (!isAdmin) {
-                  setEditingCarta(carta);
-                  setShowModal(true);
-                }
-              }}
-              actions={carta.disponible ? [
-                // EDITAR
-                ...(!isAdmin
-                  ? [{
-                    label: "Editar",
-                    variant: "outline-primary",
-                    onClick: () => {
-                      setEditingCarta(carta);
-                      setShowModal(true);
-                    }
-                  }]
-                  : []),
+        <div className="row g-3">
+          {filteredCartas.map(carta => (
+            <div key={carta.id} className="col-6 col-sm-4 col-md-3 col-lg-2">
+              <CartaUnificada
+                carta={carta}
+                isSelectable={!isAdmin && carta.disponible}
+                disabled={!carta.disponible}
+                onClick={() => {
+                  // Click en carta = editar
+                  if (!isAdmin) {
+                    setEditingCarta(carta);
+                    setShowModal(true);
+                  }
+                }}
+                actions={carta.disponible ? [
+                  // EDITAR
+                  ...(!isAdmin
+                    ? [{
+                      label: "Editar",
+                      variant: "outline-primary",
+                      onClick: () => {
+                        setEditingCarta(carta);
+                        setShowModal(true);
+                      }
+                    }]
+                    : []),
 
-                // ELIMINAR
-                {
-                  label: "Eliminar",
-                  variant: "outline-danger",
-                  onClick: () => setDeleteTarget(carta)
-                }
-              ] : []}
-            />
-          </div>
-        ))}
-      </div>
+                  // ELIMINAR
+                  {
+                    label: "Eliminar",
+                    variant: "outline-danger",
+                    onClick: () => setDeleteTarget(carta)
+                  }
+                ] : []}
+              />
+            </div>
+          ))}
+        </div>
       )}
 
       {/* BOTÓN CREAR */}
