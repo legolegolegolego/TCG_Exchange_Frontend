@@ -6,7 +6,7 @@ Este repositorio contiene el **frontend** de la aplicación TCG Exchange.
 Proporciona la interfaz de usuario para interactuar con el sistema, permitiendo gestionar cuentas, visualizar cartas y realizar intercambios de forma intuitiva.
 
 👉 Para la documentación completa del sistema (modelo de datos, lógica de negocio, seguridad, endpoints, etc.), consultar el backend:  
-https://github.com/legolegolegolego/TCG_Exchange
+https://github.com/sergioleondev/TCG_Exchange
 
 ---
 
