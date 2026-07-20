@@ -8,6 +8,8 @@ Proporciona la interfaz de usuario para interactuar con el sistema, permitiendo 
 👉 Para la documentación completa del sistema (modelo de datos, lógica de negocio, seguridad, endpoints, etc.), consultar el backend:  
 https://github.com/sergioleondev/TCG_Exchange
 
+Web desplegada: https://tcg-exchange-frontend.vercel.app/
+
 ---
 
 ## Responsabilidades del Frontend
